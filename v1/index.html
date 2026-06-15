@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOOBIN — UX/UI Designer & Publisher</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar__logo">SB</div>
+    <nav class="sidebar__nav">
+      <a href="#hero"     class="active">Home</a>
+      <a href="#projects">Work</a>
+      <a href="#about">About</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Hero -->
+    <section class="hero" id="hero" data-section="hero">
+      <div class="hero__title" aria-label="SOOBIN">
+        <span class="hero__letter">S</span>
+        <span class="hero__letter">O</span>
+        <span class="hero__letter">O</span>
+        <span class="hero__letter">B</span>
+        <span class="hero__letter">I</span>
+        <span class="hero__letter">N</span>
+      </div>
+      <p class="hero__sub">UX/UI Designer &amp; Publisher<br>서울 / Seoul, Korea</p>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" data-section="projects">
+      <p class="section-label">Selected Work</p>
+      <div class="projects__grid">
+
+        <div class="project-card project-card--full">
+          <img class="project-card__thumb" src="assets/project1.jpg" alt="Project 1" onerror="this.style.background='#e3e1d1';this.removeAttribute('src')">
+          <div class="project-card__info">
+            <div class="project-card__title">프로젝트 이름</div>
+            <div class="project-card__tags">UX Design · Figma · 2024</div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img class="project-card__thumb" src="assets/project2.jpg" alt="Project 2" onerror="this.style.background='#d5d3c4';this.removeAttribute('src')">
+          <div class="project-card__info">
+            <div class="project-card__title">프로젝트 이름</div>
+            <div class="project-card__tags">UI Design · 2024</div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img class="project-card__thumb" src="assets/project3.jpg" alt="Project 3" onerror="this.style.background='#c8c6b7';this.removeAttribute('src')">
+          <div class="project-card__info">
+            <div class="project-card__title">퍼블리싱 작업물</div>
+            <div class="project-card__tags">HTML · CSS · JS · 2024</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" data-section="about">
+      <p class="section-label">About</p>
+      <div class="about__grid">
+        <div class="about__bio">
+          사용자 경험을 중심으로<br>
+          디자인과 퍼블리싱을 함께 하는<br>
+          UX/UI 디자이너입니다.<br><br>
+          Figma에서 시작해<br>
+          코드로 완성합니다.
+        </div>
+        <div class="about__tools">
+          <div class="tool-item">
+            <span class="tool-item__name">Figma</span>
+            <span class="tool-item__level">UI/UX Design</span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-item__name">HTML / CSS</span>
+            <span class="tool-item__level">Publishing</span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-item__name">JavaScript</span>
+            <span class="tool-item__level">Interaction</span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-item__name">Photoshop / Illustrator</span>
+            <span class="tool-item__level">Visual Design</span>
+          </div>
+          <div class="tool-item">
+            <span class="tool-item__name">After Effects</span>
+            <span class="tool-item__level">Motion</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ticker -->
+    <div class="ticker">
+      <div class="ticker__track">
+        <span class="ticker__item">GET IN TOUCH ✧ LET'S WORK TOGETHER ✧ </span>
+        <span class="ticker__item">GET IN TOUCH ✧ LET'S WORK TOGETHER ✧ </span>
+        <span class="ticker__item">GET IN TOUCH ✧ LET'S WORK TOGETHER ✧ </span>
+        <span class="ticker__item">GET IN TOUCH ✧ LET'S WORK TOGETHER ✧ </span>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span class="footer__copy">© 2025 SOOBIN</span>
+      <div class="footer__links">
+        <button
+          class="footer__email-btn"
+          data-email="itsmauvely@gmail.com"
+          aria-label="이메일 복사"
+        >
+          itsmauvely@gmail.com
+          <span class="tooltip">Copied!</span>
+        </button>
+        <div class="footer__social">
+          <a href="#" target="_blank" rel="noopener">LinkedIn ↗</a>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<!-- Lenis -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<!-- Main -->
+<script src="js/main.js"></script>
+
+</body>
+</html>

@@ -4,7 +4,7 @@
 
   const FONT_FAMILY = 'Syne';
   const FONT_WEIGHT = '800';
-  const SAMPLE_STEP = 4;
+  const SAMPLE_STEP = 3;
   const MOUSE_RADIUS = 100;
   const MOUSE_FORCE = 7;
   const DAMPING = 0.84;
@@ -99,6 +99,44 @@
     }
   }
 
+  function typeLogo(text) {
+    const el = document.getElementById('typedLogo');
+    if (!el) return;
+    el.textContent = '';
+
+    const TYPE_SPEED = 110;   // ms per char while typing
+    const DELETE_SPEED = 55;  // ms per char while deleting
+    const HOLD_FULL = 1800;   // pause once fully typed
+    const HOLD_EMPTY = 600;   // pause once fully deleted
+
+    let i = 0;
+    let deleting = false;
+
+    function step() {
+      if (!deleting) {
+        if (i < text.length) {
+          i++;
+          el.textContent = text.slice(0, i);
+          setTimeout(step, TYPE_SPEED);
+        } else {
+          deleting = true;
+          setTimeout(step, HOLD_FULL);
+        }
+      } else {
+        if (i > 0) {
+          i--;
+          el.textContent = text.slice(0, i);
+          setTimeout(step, DELETE_SPEED);
+        } else {
+          deleting = false;
+          setTimeout(step, HOLD_EMPTY);
+        }
+      }
+    }
+
+    step();
+  }
+
   function showSoobin(spawnDir) {
     const pts = sampleText('SOOBIN');
     particles = pts.map(p => new Particle(p.x, p.y, spawnDir));
@@ -116,22 +154,30 @@
     fallDir = 'down';
     phase = 'falling';
 
-    if (overlay) overlay.classList.add('active');
+    if (panel) {
+      panel.style.visibility = 'visible';
+      gsap.set(panel, { clipPath: 'circle(0% at 50% 100%)' });
+    }
 
-    setTimeout(() => {
-      if (panel) {
-        panel.style.visibility = 'visible';
-        panel.getBoundingClientRect();
-        panel.style.transform = 'translateY(0%)';
+    // Background color eases in slowly underneath everything — a soft
+    // sine wash rather than a hard fade, so the cream never "snaps" in.
+    if (overlay) gsap.to(overlay, { opacity: 1, duration: 1.4, ease: 'sine.inOut' });
+
+    // Particle screen pulls back (blur + slight zoom) while the panel
+    // expands outward from the scroll hint, like a lens opening up.
+    gsap.to(canvas, { filter: 'blur(14px)', scale: 1.08, duration: 0.9, ease: 'power2.in' });
+
+    gsap.to(panel, {
+      clipPath: 'circle(145% at 50% 100%)',
+      duration: 1.15,
+      ease: 'power4.inOut',
+      onComplete: () => {
+        canvas.style.opacity = '0';
+        panelOpen = true;
+        transitioning = false;
+        particles = [];
       }
-    }, 350);
-
-    setTimeout(() => {
-      canvas.style.opacity = '0';
-      panelOpen = true;
-      transitioning = false;
-      particles = [];
-    }, 1000);
+    });
   }
 
   function closePanel() {
@@ -139,19 +185,25 @@
     transitioning = true;
 
     canvas.style.opacity = '1';
-    if (overlay) overlay.classList.remove('active');
-    if (panel) panel.style.transform = 'translateY(100%)';
+    if (overlay) gsap.to(overlay, { opacity: 0, duration: 1.1, ease: 'sine.inOut' });
 
-    setTimeout(() => {
-      if (panel) panel.style.visibility = 'hidden';
-      panelOpen = false;
-      transitioning = false;
-      showSoobin('random');
-      setTimeout(() => {
-        const hint = document.getElementById('scrollHint');
-        if (hint) hint.classList.add('visible');
-      }, 1900);
-    }, 750);
+    gsap.fromTo(canvas, { filter: 'blur(14px)', scale: 1.08 }, { filter: 'blur(0px)', scale: 1, duration: 0.9, ease: 'power2.out' });
+
+    gsap.to(panel, {
+      clipPath: 'circle(0% at 50% 100%)',
+      duration: 0.9,
+      ease: 'power3.inOut',
+      onComplete: () => {
+        panel.style.visibility = 'hidden';
+        panelOpen = false;
+        transitioning = false;
+        showSoobin('random');
+        setTimeout(() => {
+          const hint = document.getElementById('scrollHint');
+          if (hint) hint.classList.add('visible');
+        }, 1900);
+      }
+    });
   }
 
   function tick() {
@@ -195,12 +247,13 @@
     window.scrollTo(0, 0);
     resize();
 
-    if (panel) { panel.style.transform = 'translateY(100%)'; panel.style.visibility = 'hidden'; }
+    if (panel) { gsap.set(panel, { clipPath: 'circle(0% at 50% 100%)' }); panel.style.visibility = 'hidden'; }
 
     setTimeout(() => {
       const header = document.querySelector('.header');
       if (header) header.classList.add('visible');
     }, 400);
+    setTimeout(() => typeLogo('SOOBIN PORTFOLIO'), 1300);
 
     try { await document.fonts.load(`${FONT_WEIGHT} 150px ${FONT_FAMILY}`); }
     catch (e) { await new Promise(r => setTimeout(r, 600)); }

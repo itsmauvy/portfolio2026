@@ -9,12 +9,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
 <body class="antialiased bg-black">
 
   <!-- Fixed header: z-100 -->
   <header class="header" id="header">
-    <a class="header__logo" href="#">SB</a>
+    <a class="header__logo" href="#" id="headerLogo"><span id="typedLogo"></span><span class="header__cursor">_</span></a>
     <nav class="header__nav">
       <a href="#work">WORK</a>
       <a href="#about">ABOUT</a>
@@ -43,16 +44,73 @@
   <div id="contentPanel">
     <div class="white-bg-content">
 
-      <!-- Section 1: DESIGNER (first thing user sees when sliding up) -->
-      <section class="section-designer" id="designer">
-        <div class="designer-inner">
-          <p class="designer-label">UX/UI DESIGNER & PUBLISHER</p>
-          <h2 class="designer-name">SOOBIN</h2>
-          <p class="designer-desc">
-            사용자 경험을 설계하고 코드로 구현하는<br>
-            디자이너 수빈의 포트폴리오입니다.
-          </p>
-          <a href="#work" class="designer-cta">VIEW WORK</a>
+      <!-- Section 1: ABOUT ME (first thing user sees when sliding up) -->
+      <section class="section-designer" id="about">
+        <div class="about-me">
+
+          <div class="about-me-left">
+            <p class="designer-label">UX / UI DESIGNER &amp; PUBLISHER</p>
+            <h2 class="designer-name">ABOUT ME</h2>
+            <p class="about-me-intro"><span class="cube-wrap"><strong class="cube-text" id="aboutCubeText">문제를 해결하는</strong></span> 디자이너 장수빈입니다.</p>
+
+            <div class="about-me-columns">
+              <div class="info-col">
+                <div class="info-group">
+                  <h3>EDUCATION</h3>
+                  <p>단국대학교(죽전) 졸업</p>
+                </div>
+                <div class="info-group">
+                  <h3>WORK EXPERIENCE</h3>
+                  <p><span class="info-date">2022.08 – 2026.02</span> (주) 웹시크코스메틱<br><span class="info-sub">해외영업 / 이커머스 MD</span></p>
+                </div>
+                <div class="info-group">
+                  <h3>LANGUAGES</h3>
+                  <p>중국어<br>영어<br>한국어<br>말레이시아어</p>
+                </div>
+                <div class="info-group">
+                  <h3>SKILLS</h3>
+                  <div class="skills-grid">
+                    <span>AI 활용 기획</span><span>콘텐츠 기획</span><span>UX/UI 디자인</span><span>멤버십 마케팅</span>
+                    <span>SNS 운영</span><span>카피라이팅</span><span>이커머스 MD</span><span>해외 영업</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-col">
+                <div class="info-group">
+                  <h3>CERTIFICATE</h3>
+                  <div class="cert-sub">
+                    <h4>WEB &amp; DEVELOPMENT</h4>
+                    <p>웹개발기능사 (취득 예정)<br>프로그래밍 기능사 (취득 예정)</p>
+                  </div>
+                  <div class="cert-sub">
+                    <h4>DESIGN</h4>
+                    <p>2026 GTQ 1급<br>2026 GTQi 1급</p>
+                  </div>
+                  <div class="cert-sub">
+                    <h4>LANGUAGE</h4>
+                    <p>2025 TOPIK 6급<br>2024 무역영어 1급<br>2022 ITT 비즈니스 영어 번역 2급<br>2021 TOEIC 910</p>
+                  </div>
+                  <div class="cert-sub">
+                    <h4>OTHERS</h4>
+                    <p>2025 네트워크관리사 2급<br>2025 운전면허 2종</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-me-right">
+            <div class="profile-photo"></div>
+            <p class="profile-name">장수빈</p>
+            <dl class="profile-table">
+              <div><dt>D.O.B</dt><dd>1997.03.01</dd></div>
+              <div><dt>EMAIL</dt><dd>itsmauvely@gmail.com</dd></div>
+              <div><dt>TEL</dt><dd>010-4580-2999</dd></div>
+              <div><dt>NATIONALITY</dt><dd>말레이시아 (F-2)</dd></div>
+            </dl>
+          </div>
+
         </div>
       </section>
 
@@ -82,8 +140,8 @@
         </div>
       </section>
 
-      <!-- Section 3: About -->
-      <section class="section-about" id="about">
+      <!-- Section 3: Skills -->
+      <section class="section-about" id="skills">
         <div class="about-inner">
           <div class="about-text">
             <h2>UX/UI DESIGNER<br>& PUBLISHER</h2>
@@ -111,5 +169,36 @@
   </div>
 
   <script src="js/particle.js"></script>
+  <script>
+    (function () {
+      const el = document.getElementById('aboutCubeText');
+      if (!el) return;
+      const words = ['문제를 해결하는', '경험을 설계하는', '새로운 도전을 좋아하는', '디테일에 집착하는'];
+      let idx = 0;
+
+      function rotate() {
+        el.classList.remove('is-entering');
+        el.classList.add('is-rotating');
+
+        setTimeout(() => {
+          idx = (idx + 1) % words.length;
+          el.textContent = words[idx];
+          el.classList.remove('is-rotating');
+          el.style.transform = 'rotateX(-90deg)';
+          el.style.opacity = '0';
+
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              el.style.transform = '';
+              el.style.opacity = '';
+              el.classList.add('is-entering');
+            });
+          });
+        }, 320);
+      }
+
+      setInterval(rotate, 2600);
+    })();
+  </script>
 </body>
 </html>

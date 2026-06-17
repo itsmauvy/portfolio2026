@@ -454,7 +454,8 @@
       }
 
       requestAnimationFrame(function () {
-        document.documentElement.style.opacity = '';
+        // 검정에서 부드럽게 fade in
+        gsap.to(document.documentElement, { opacity: 1, duration: 0.5, ease: 'power2.out' });
 
         var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
@@ -538,8 +539,8 @@
           backOverlay.style.pointerEvents = 'all';
           gsap.to(backOverlay, {
             opacity: 1,
-            duration: 0.18,
-            ease: 'power2.in',
+            duration: 0.28,
+            ease: 'power3.inOut',
             onComplete: function() { window.location.href = href.split('#')[0]; }
           });
         }

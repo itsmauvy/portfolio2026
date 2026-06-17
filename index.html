@@ -409,7 +409,7 @@
 
       // Page transition: 뷰포트 전체를 dark overlay로 덮고 이동 (파티클 노출 방지)
       const transOverlay = document.createElement('div');
-      transOverlay.style.cssText = 'position:fixed;inset:0;background:#2b3133;z-index:9999;opacity:0;pointer-events:none;transition:opacity 0.18s ease';
+      transOverlay.style.cssText = 'position:fixed;inset:0;background:#111;z-index:9999;opacity:0;pointer-events:none;';
       document.body.appendChild(transOverlay);
 
       document.querySelectorAll('.work-item[href]:not([href="#"])').forEach((link) => {
@@ -418,8 +418,12 @@
           if (!href || href === '#') return;
           e.preventDefault();
           transOverlay.style.pointerEvents = 'all';
-          transOverlay.style.opacity = '1';
-          setTimeout(() => { window.location.href = href; }, 180);
+          gsap.to(transOverlay, {
+            opacity: 1,
+            duration: 0.32,
+            ease: 'power3.inOut',
+            onComplete: () => { window.location.href = href; }
+          });
         });
       });
     })();

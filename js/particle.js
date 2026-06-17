@@ -292,17 +292,16 @@
     // 페이지 fade in → 스크롤
     gsap.to(document.documentElement, {
       opacity: 1,
-      duration: 0.45,
+      duration: 0.5,
       ease: 'power2.out',
       onComplete: function() {
         const _target = document.getElementById(_returnTo);
         if (_target && panel) {
           panel.scrollTop = _target.offsetTop - 80;
         }
-        // panel scale-in
-        gsap.from(panel, { scale: 0.98, duration: 0.4, ease: 'power2.out' });
       }
     });
+    gsap.from(panel, { scale: 0.97, duration: 0.55, ease: 'power2.out' });
 
     tick();
 

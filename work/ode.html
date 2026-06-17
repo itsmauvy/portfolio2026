@@ -527,25 +527,29 @@
           }, 0.4);
         });
 
-        // ── BACK 버튼: 흰 오버레이 페이드인 후 이동 ──
-        var backBtn = document.querySelector('.back-btn');
-        if (backBtn) {
-          var backOverlay = document.createElement('div');
-          backOverlay.style.cssText = 'position:fixed;inset:0;background:#000;z-index:9999;opacity:0;pointer-events:none;';
-          document.body.appendChild(backOverlay);
+        // ── 나가는 링크 전부: 오버레이 + sessionStorage ──
+        var backOverlay = document.createElement('div');
+        backOverlay.style.cssText = 'position:fixed;inset:0;background:#000;z-index:9999;opacity:0;pointer-events:none;';
+        document.body.appendChild(backOverlay);
 
-          backBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            var href = backBtn.getAttribute('href');
-            backOverlay.style.pointerEvents = 'all';
-            gsap.to(backOverlay, {
-              opacity: 1,
-              duration: 0.18,
-              ease: 'power2.in',
-              onComplete: function() { window.location.href = href; }
-            });
+        function navigateOut(href) {
+          var hash = href.split('#')[1];
+          if (hash) sessionStorage.setItem('returnTo', hash);
+          backOverlay.style.pointerEvents = 'all';
+          gsap.to(backOverlay, {
+            opacity: 1,
+            duration: 0.18,
+            ease: 'power2.in',
+            onComplete: function() { window.location.href = href.split('#')[0]; }
           });
         }
+
+        document.querySelectorAll('.back-btn, .detail-nav a').forEach(function(link) {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            navigateOut(link.getAttribute('href'));
+          });
+        });
       });
     })();
   </script>

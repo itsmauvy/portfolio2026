@@ -276,45 +276,54 @@
     }, 400);
     setTimeout(() => typeLogo('SOOBIN PORTFOLIO'), 1300);
 
-    try { await document.fonts.load(`${FONT_WEIGHT} 150px ${FONT_FAMILY}`); }
-    catch (e) { await new Promise(r => setTimeout(r, 600)); }
+    // 상세페이지에서 돌아온 경우: sessionStorage 또는 hash로 섹션 감지
+    // font await 전에 먼저 처리해서 지연 없이 패널 오픈
+    const returnTo = sessionStorage.getItem('returnTo')
+      || (window.location.hash ? window.location.hash.slice(1) : null);
+    const validSections = ['work', 'about', 'contact'];
 
-    // #work / #about / #contact 해시로 돌아온 경우: 패널 즉시 열고 해당 섹션으로 스크롤
-    const targetHash = window.location.hash;
-    const validHashes = ['#work', '#about', '#contact'];
-    if (validHashes.includes(targetHash)) {
-      const sectionId = targetHash.slice(1); // 'work' | 'about' | 'contact'
+    if (validSections.includes(returnTo)) {
+      sessionStorage.removeItem('returnTo');
       history.replaceState(null, '', window.location.pathname);
+
       setProgress(1);
       if (panel) { panel.style.visibility = 'visible'; panel.scrollTop = 0; }
       canvas.style.opacity = '0';
       panelOpen = true;
       phase = 'idle';
       particles = [];
-      // scroll to section first, then fade in page
-      const target = document.getElementById(sectionId);
+
+      // 섹션 스크롤
+      const target = document.getElementById(returnTo);
       if (target && panel) {
         const panelTop = panel.getBoundingClientRect().top;
         const targetTop = target.getBoundingClientRect().top;
         panel.scrollTop = targetTop - panelTop - 80;
       }
+
+      // 부드럽게 페이지 fade in
       gsap.to(document.documentElement, {
         opacity: 1,
-        duration: 0.35,
+        duration: 0.4,
         ease: 'power2.out',
         delay: 0.05
       });
-    } else {
-      // 일반 진입: 파티클 준비되면 fade in
-      showSoobin('random');
-      setTimeout(() => {
-        const hint = document.getElementById('scrollHint');
-        if (hint) hint.classList.add('visible');
-      }, 2200);
-      // 파티클 로드 후 자연스럽게 등장
-      document.documentElement.style.transition = 'opacity 0.4s ease';
-      document.documentElement.style.opacity = '';
+
+      tick();
+      return; // font await 스킵 — 파티클 불필요
     }
+
+    try { await document.fonts.load(`${FONT_WEIGHT} 150px ${FONT_FAMILY}`); }
+    catch (e) { await new Promise(r => setTimeout(r, 600)); }
+
+    // 일반 진입: 파티클 준비되면 fade in
+    showSoobin('random');
+    setTimeout(() => {
+      const hint = document.getElementById('scrollHint');
+      if (hint) hint.classList.add('visible');
+    }, 2200);
+    document.documentElement.style.transition = 'opacity 0.4s ease';
+    document.documentElement.style.opacity = '';
 
     tick();
 

@@ -244,11 +244,24 @@
       onComplete: () => {
         animating = false;
         commitOpen();
-        // 패널 잠깐 숨기고 → 스크롤 → fade in (about me 안 보이도록)
         if (panel) panel.style.opacity = '0';
-        setTimeout(() => {
-          scrollToSection(sectionId);
-          gsap.to(panel, { opacity: 1, duration: 0.35, ease: 'power2.out' });
+        setTimeout(function() {
+          var t = document.getElementById(sectionId);
+          var pos = t ? Math.max(0, t.offsetTop - 80) : 0;
+          function tryRevealNav() {
+            if (window.__lenis) {
+              window.__lenis.stop();
+              panel.scrollTop = pos;
+              window.__lenis.scroll = pos;
+              window.__lenis.targetScroll = pos;
+              window.__lenis.animatedScroll = pos;
+              window.__lenis.start();
+            } else if (panel) { panel.scrollTop = pos; }
+            if (!panel || Math.abs(panel.scrollTop - pos) < 5) {
+              gsap.to(panel, { opacity: 1, duration: 0.4, ease: 'power2.out' });
+            } else { requestAnimationFrame(tryRevealNav); }
+          }
+          tryRevealNav();
         }, 0);
       }
     });

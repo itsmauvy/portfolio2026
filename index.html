@@ -268,15 +268,15 @@
 
   <script src="js/particle.js"></script>
   <script>
-    // 상세페이지에서 돌아온 경우: load 이벤트 안 기다리고 즉시 fade-in
+    // 상세페이지에서 돌아온 경우: GSAP fade + scale
     if (sessionStorage.getItem('returnTo')) {
       requestAnimationFrame(function() {
         requestAnimationFrame(function() {
-          document.documentElement.style.transition = 'opacity 0.5s cubic-bezier(0.4,0,0.2,1)';
+          var panel = document.getElementById('contentPanel');
           document.documentElement.style.opacity = '1';
-          setTimeout(function() {
-            document.documentElement.style.transition = '';
-          }, 600);
+          if (panel && window.gsap) {
+            gsap.from(panel, { opacity: 0, scale: 0.97, duration: 0.55, ease: 'power2.out' });
+          }
         });
       });
     }

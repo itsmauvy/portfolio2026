@@ -861,21 +861,22 @@
       display: grid;
       grid-template-columns: 1fr 52% 1fr;
       gap: 40px;
-      align-items: start;
+      /* stretch so the side annotation columns take the SAME height as the
+         centre image — that lets each annotation be placed at a % of the
+         image height (width-invariant), instead of fragile fixed px. */
+      align-items: stretch;
     }
-    .mp__annotations-left {
-      display: flex;
-      flex-direction: column;
-      gap: 48px;
-      padding-top: 0;
-    }
+    /* Annotation columns are just positioning contexts: their children are
+       absolutely placed at `top: var(--at)` (a % of the image height). */
+    .mp__annotations-left,
     .mp__annotations-right {
-      display: flex;
-      flex-direction: column;
-      gap: 48px;
-      padding-top: 280px;
+      position: relative;
     }
     .mp__annotation {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: var(--at, 0);
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -951,12 +952,18 @@
       .mp__layout {
         grid-template-columns: 1fr;
       }
+      /* Back to normal flow on mobile — drop the %-anchored absolute layout. */
       .mp__annotations-left,
       .mp__annotations-right {
+        position: static;
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 28px;
         padding-top: 0;
+      }
+      .mp__annotation {
+        position: static;
+        top: auto;
       }
       .mp__annotation--right { text-align: left; }
       .mp__annotation--right .mp__annotation-line { margin-left: 0; }
@@ -975,14 +982,14 @@
     <div class="mp__layout">
       <!-- 좌측 주석 -->
       <div class="mp__annotations-left">
-        <div class="mp__annotation" style="top: 0px;">
+        <div class="mp__annotation" style="--at: 2%;">
           <div class="mp__annotation-head">
             <p class="mp__annotation-title">단순하지만 직관적인 GNB</p>
             <div class="mp__annotation-callout"></div>
           </div>
           <p class="mp__annotation-desc">단순하고 <strong>명료한 타이포로 구성</strong>된 GNB로<br>사용자가 직관적인 확인이<br>가능하도록 구성하였습니다.</p>
         </div>
-        <div class="mp__annotation" style="margin-top: 1300px;">
+        <div class="mp__annotation" style="--at: 66%;">
           <div class="mp__annotation-head">
             <p class="mp__annotation-title">라이프스타일 속 제품 발견</p>
             <div class="mp__annotation-callout"></div>
@@ -998,14 +1005,14 @@
 
       <!-- 우측 주석 -->
       <div class="mp__annotations-right">
-        <div class="mp__annotation mp__annotation--right" style="top: 100px;">
+        <div class="mp__annotation mp__annotation--right" style="--at: 11%;">
           <div class="mp__annotation-head">
             <p class="mp__annotation-title">브랜드 첫인상 전달</p>
             <div class="mp__annotation-callout"></div>
           </div>
           <p class="mp__annotation-desc">사이트에 진입하는 순간 브랜드만의<br><strong>감성과 분위기를 경험할 수 있도록</strong><br><strong>비주얼 중심의</strong> 히어로 섹션을 구성했습니다.</p>
         </div>
-        <div class="mp__annotation mp__annotation--right" style="margin-top: 160px;">
+        <div class="mp__annotation mp__annotation--right" style="--at: 34%;">
           <div class="mp__annotation-head">
             <p class="mp__annotation-title">제품 탐색 경험</p>
             <div class="mp__annotation-callout"></div>
@@ -1015,6 +1022,174 @@
       </div>
     </div>
   </section>
+
+  <!-- ──────────────────────────────────────────────
+       UI DESIGN — SHOP PAGE
+  ────────────────────────────────────────────── -->
+  <style>
+    .sh {
+      background: #f2ebe5;
+      padding: 120px 0 140px;
+      position: relative;
+      overflow: hidden;
+    }
+    .sh__header {
+      text-align: center;
+      width: 72%;
+      max-width: 640px;
+      margin: 0 auto 72px;
+    }
+    .sh__title {
+      font-size: clamp(36px, 3.6vw, 56px);
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      color: #1a1410;
+      font-family: 'Cormorant Garamond', serif;
+      margin-bottom: 20px;
+    }
+    .sh__desc {
+      font-size: 17px;
+      line-height: 2;
+      color: rgba(42,33,24,0.6);
+      font-family: 'Gowun Batang', serif;
+    }
+
+    /* 메인 샵 스크린샷 (중앙, 좁고 긴 비율) */
+    .sh__hero {
+      width: 44%;
+      max-width: 600px;
+      margin: 0 auto 130px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 24px 70px rgba(42,33,24,0.14);
+    }
+    .sh__hero img { width: 100%; height: auto; display: block; }
+
+    /* 공통 주석 스타일 (MAIN PAGE 주석과 동일한 룩) */
+    .sh__annotation { position: absolute; width: 360px; }
+    .sh__annotation-head { display: flex; align-items: center; }
+    .sh__annotation-title {
+      font-size: 17px; font-weight: 700; color: #1a1410;
+      line-height: 1.3; white-space: nowrap; flex-shrink: 0;
+    }
+    .sh__annotation-callout { display: flex; align-items: center; flex: 1; margin-left: 12px; }
+    .sh__annotation-callout::before { content: ''; display: block; flex: 1; height: 1px; background: rgba(42,33,24,0.35); }
+    .sh__annotation-callout::after { content: ''; display: block; width: 5px; height: 5px; border-radius: 50%; background: rgba(42,33,24,0.35); margin-left: 2px; }
+    .sh__annotation--right { text-align: right; }
+    .sh__annotation--right .sh__annotation-head { flex-direction: row-reverse; }
+    .sh__annotation--right .sh__annotation-callout { margin-left: 0; margin-right: 12px; flex-direction: row-reverse; }
+    .sh__annotation--right .sh__annotation-callout::after { margin-left: 0; margin-right: 2px; }
+    .sh__annotation-desc {
+      font-size: 15px; line-height: 1.85; color: rgba(42,33,24,0.8);
+      font-family: 'Gowun Batang', serif; margin-top: 12px;
+    }
+    .sh__annotation-desc strong { font-weight: 700; }
+    /* 꺾인(elbow) 화살표: 제목에서 오른쪽으로 뻗다가 위로 꺾여 카드를 가리킴.
+       border-bottom(가로) + border-right(세로)로 ㄱ자 코너를 만들고 끝에 점. */
+    .sh__annotation-head--elbow { display: flex; align-items: flex-end; }
+    .sh__annotation-elbow {
+      position: relative;
+      flex: none;
+      width: 92px;
+      align-self: flex-end;
+      height: 98px;           /* up-line just reaches the card bottom */
+      margin-left: 14px;
+      margin-bottom: 7px;
+      border-right: 1px solid rgba(42,33,24,0.35);
+      border-bottom: 1px solid rgba(42,33,24,0.35);
+    }
+    .sh__annotation-elbow::after {
+      content: '';
+      position: absolute;
+      top: -8px;             /* dot caps the line end with a small gap (no overlap) */
+      right: -3px;            /* exactly centered on the 1px vertical line */
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(42,33,24,0.35);
+    }
+
+    /* 제품 카드 2개 + 주석 블록 */
+    .sh__cards {
+      position: relative;
+      width: 82%;
+      max-width: 1080px;
+      margin: 0 auto 150px;
+      padding-bottom: 210px;
+    }
+    .sh__cards-row { display: flex; gap: 28px; width: 60%; }
+    .sh__card { flex: 1; border-radius: 4px; overflow: hidden; text-decoration: none; }
+    .sh__card img { width: 100%; height: auto; display: block; }
+    .sh__cards .sh__annotation--cart-ease { top: 28%; right: 0; }
+    .sh__cards .sh__annotation--explore { bottom: 0; left: 0; }
+    /* 메인 샵 스크린샷 → POCKET BLUSH 카드 연결선 (위 점/가로선 → 아래로 꺾임) */
+    .sh__link {
+      position: absolute;
+      top: -560px;          /* reach up to the POCKET BLUSH product in the shop grid */
+      left: 14%;
+      width: 172px;
+      height: 560px;
+      border-left: 1px solid rgba(42,33,24,0.35);
+      border-top: 1px solid rgba(42,33,24,0.35);
+      pointer-events: none;
+    }
+    .sh__link::after {
+      content: '';
+      position: absolute;
+      top: -3px;            /* vertically centered on the 1px horizontal line */
+      right: -7px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(42,33,24,0.35);
+    }
+
+    /* 장바구니 사이드패널 + 주석 블록 */
+    .sh__cart {
+      position: relative;
+      width: 82%;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .sh__cart-shot { width: 52%; margin-left: 14%; border-radius: 4px; overflow: hidden; box-shadow: 0 20px 60px rgba(42,33,24,0.12); }
+    .sh__cart-shot img { width: 100%; height: auto; display: block; }
+    .sh__cart .sh__annotation--optimize { top: 22%; right: 0; width: 360px; }
+    /* BAG(샵 스크린샷 우상단) → 오른쪽 → 아래 → 카트 연결 bracket.
+       가로선은 스크린샷 오른쪽 가장자리(calc(50%+302px))부터 시작해 이미지를
+       관통하지 않음. 세로선은 우측 여백, 하단 가로선은 별도 요소로 카트까지. */
+    .sh__bag-link {
+      position: absolute;
+      top: 362px;
+      left: calc(50% + 302px);
+      right: 60px;
+      height: 1758px;
+      border-top: 1px solid rgba(42,33,24,0.35);
+      border-right: 1px solid rgba(42,33,24,0.35);
+      pointer-events: none;
+    }
+    .sh__bag-link::before { content:''; position:absolute; top:-2.5px; left:-2.5px; width:5px; height:5px; border-radius:50%; background:rgba(42,33,24,0.35); }
+    .sh__bag-link-foot {
+      position: absolute;
+      top: 2120px;
+      left: 63%;
+      right: 60px;
+      border-top: 1px solid rgba(42,33,24,0.35);
+      pointer-events: none;
+    }
+    .sh__bag-link-foot::before { content:''; position:absolute; top:-2.5px; left:-2.5px; width:5px; height:5px; border-radius:50%; background:rgba(42,33,24,0.35); }
+
+    @media (max-width: 1024px) {
+      .sh__hero { width: 72%; }
+      .sh__cards, .sh__cart { padding-bottom: 0; }
+      .sh__cards-row, .sh__cart-shot { width: 100%; }
+      .sh__annotation { position: static; width: 100%; margin-top: 28px; text-align: left; }
+      .sh__annotation--right { text-align: left; }
+      .sh__annotation--right .sh__annotation-head { flex-direction: row; }
+      .sh__annotation--right .sh__annotation-callout { margin-left: 12px; margin-right: 0; flex-direction: row; }
+      .sh__annotation-elbow,
+      .sh__link { display: none; }
+    }
+  </style>
 
   <!-- ──────────────────────────────────────────────
        UI DESIGN — ABOUT PAGE
@@ -1132,11 +1307,13 @@
     .ab__annotation-desc strong {
       font-weight: 700;
     }
-    /* 세로 화살표 (Parallex Scrolling용) */
+    /* 세로 화살표 (Parallex Scrolling용) — 점·선을 서로 중심 정렬,
+       컨테이너는 점 너비로 줄여 좌측에 붙임 */
     .ab__annotation-callout--vertical {
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: fit-content;
       margin-bottom: 16px;
     }
     .ab__annotation-callout--vertical::before {
@@ -1151,9 +1328,9 @@
     .ab__annotation-callout--vertical::after {
       content: '';
       display: block;
-      width: 1px;
+      width: 0;
       height: 80px;
-      background: rgba(42,33,24,0.35);
+      border-left: 1px solid rgba(42,33,24,0.35);
     }
     .ab__annotation--right {
       text-align: right;
@@ -1170,14 +1347,13 @@
 
   <section class="ab">
     <div class="ab__header">
-      <span class="ab__label">UI DESIGN</span>
       <h2 class="ab__title">· ABOUT ·</h2>
       <p class="ab__desc">일상 속 작은 순간과 감정에서 영감을 받은<br>이미지와 메시지를 통해 브랜드 아이덴티티를<br>자연스럽게 경험할 수 있도록 설계했습니다.</p>
     </div>
 
     <!-- 좌측 주석 -->
     <div class="ab__annotations-left">
-      <div class="ab__annotation" style="top: 1150px; left: 200px;">
+      <div class="ab__annotation" style="top: 1300px; left: 400px;">
         <div class="ab__annotation-head">
           <p class="ab__annotation-title">컬렉션 무드 경험</p>
           <div class="ab__annotation-callout"></div>
@@ -1197,10 +1373,64 @@
 
     <!-- 우측 주석 -->
     <div class="ab__annotations-right">
-      <div class="ab__annotation ab__annotation--right" style="top: 1100px; right: 200px;">
+      <div class="ab__annotation ab__annotation--right" style="top: 1100px; right: 200px; text-align: left;">
         <div class="ab__annotation-callout--vertical"></div>
         <p class="ab__annotation-title">Parallex Scrolling</p>
         <p class="ab__annotation-desc">부드러운 속도의 Y축 패럴랙스 스크롤링을<br>사용하여 <strong>감각적인 브랜드의 분위기</strong>를 전달합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- UI DESIGN — SHOP PAGE (styles defined above, after the MAIN PAGE block) -->
+  <section class="sh">
+    <div class="sh__bag-link"></div>
+    <div class="sh__bag-link-foot"></div>
+    <div class="sh__header">
+      <h2 class="sh__title">· SHOP ·</h2>
+      <p class="sh__desc">카테고리 탐색부터 제품 확인, 장바구니까지<br>자연스럽고 직관적인 구매 흐름을 제공합니다.</p>
+    </div>
+
+    <!-- 메인 샵 스크린샷 -->
+    <div class="sh__hero">
+      <img src="../images/ode/ode-shop.jpg" alt="Shop Page UI">
+    </div>
+
+    <!-- 제품 카드 2개 + 주석 -->
+    <div class="sh__cards">
+      <div class="sh__link"></div>
+      <div class="sh__cards-row">
+        <a class="sh__card" href="#"><img src="../images/ode/ode-shop-1-1.jpg" alt="Pocket Blush Fig Mousse"></a>
+        <a class="sh__card" href="#"><img src="../images/ode/ode-shop-1-2.jpg" alt="Pocket Blush Cherry Kiss"></a>
+      </div>
+
+      <div class="sh__annotation sh__annotation--right sh__annotation--cart-ease">
+        <div class="sh__annotation-head">
+          <p class="sh__annotation-title">간편한 구매 경험</p>
+          <div class="sh__annotation-callout"></div>
+        </div>
+        <p class="sh__annotation-desc">제품 탐색 중에도 즉시 <strong>장바구니에 담을 수 있도록</strong><br>기능을 적용하여 구매 편의성을 높였습니다.</p>
+      </div>
+
+      <div class="sh__annotation sh__annotation--explore">
+        <div class="sh__annotation-head sh__annotation-head--elbow">
+          <p class="sh__annotation-title">제품 경험 중심의 탐색</p>
+          <div class="sh__annotation-elbow"></div>
+        </div>
+        <p class="sh__annotation-desc">마우스 호버 시 <strong>모델 착용 이미지를 자동으로</strong><br><strong>노출</strong>하여 제품의 색상과 사용 모습을<br>직관적으로 확인할 수 있도록 설계했습니다.</p>
+      </div>
+    </div>
+
+    <!-- 장바구니 사이드패널 + 주석 -->
+    <div class="sh__cart">
+      <div class="sh__cart-shot">
+        <img src="../images/ode/ode-cart.jpg" alt="Cart Side Panel UI">
+      </div>
+
+      <div class="sh__annotation sh__annotation--right sh__annotation--optimize">
+        <div class="sh__annotation-head">
+          <p class="sh__annotation-title">구매 경험 최적화</p>
+        </div>
+        <p class="sh__annotation-desc">사이드 패널 형태의 장바구니를 적용하여<br><strong>페이지 이동 없이</strong> 상품을 관리할 수 있도록<br>설계했습니다.<br><br>전체 선택, 수량 변경, 무료 배송 안내,<br>연관 상품 추천 기능을 통합하여<br>구매 편의성을 높였습니다.</p>
       </div>
     </div>
   </section>

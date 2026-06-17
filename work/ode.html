@@ -30,11 +30,12 @@
       min-height: 100dvh;
     }
 
-    /* Bidaya gradient overlay */
+    /* Bidaya gradient — 상단 고정, 스크롤 시 올라감 */
     body::before {
       content: '';
-      position: fixed;
-      inset: 0;
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 100vh;
       background: linear-gradient(180deg, #fafafa 0%, rgba(250,250,250,0.19) 18.78%, #2b3133 30.85%, #2b3133 100%);
       pointer-events: none;
       z-index: 0;
@@ -525,6 +526,26 @@
             duration: 1, stagger: 0.12
           }, 0.4);
         });
+
+        // ── BACK 버튼: 흰 오버레이 페이드인 후 이동 ──
+        var backBtn = document.querySelector('.back-btn');
+        if (backBtn) {
+          var backOverlay = document.createElement('div');
+          backOverlay.style.cssText = 'position:fixed;inset:0;background:#000;z-index:9999;opacity:0;pointer-events:none;';
+          document.body.appendChild(backOverlay);
+
+          backBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            var href = backBtn.getAttribute('href');
+            backOverlay.style.pointerEvents = 'all';
+            gsap.to(backOverlay, {
+              opacity: 1,
+              duration: 0.18,
+              ease: 'power2.in',
+              onComplete: function() { window.location.href = href; }
+            });
+          });
+        }
       });
     })();
   </script>

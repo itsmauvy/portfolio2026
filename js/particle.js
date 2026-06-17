@@ -279,11 +279,42 @@
     try { await document.fonts.load(`${FONT_WEIGHT} 150px ${FONT_FAMILY}`); }
     catch (e) { await new Promise(r => setTimeout(r, 600)); }
 
-    showSoobin('random');
-    setTimeout(() => {
-      const hint = document.getElementById('scrollHint');
-      if (hint) hint.classList.add('visible');
-    }, 2200);
+    // #work / #about / #contact 해시로 돌아온 경우: 패널 즉시 열고 해당 섹션으로 스크롤
+    const targetHash = window.location.hash;
+    const validHashes = ['#work', '#about', '#contact'];
+    if (validHashes.includes(targetHash)) {
+      const sectionId = targetHash.slice(1); // 'work' | 'about' | 'contact'
+      history.replaceState(null, '', window.location.pathname);
+      setProgress(1);
+      if (panel) { panel.style.visibility = 'visible'; panel.scrollTop = 0; }
+      canvas.style.opacity = '0';
+      panelOpen = true;
+      phase = 'idle';
+      particles = [];
+      // scroll to section first, then fade in page
+      const target = document.getElementById(sectionId);
+      if (target && panel) {
+        const panelTop = panel.getBoundingClientRect().top;
+        const targetTop = target.getBoundingClientRect().top;
+        panel.scrollTop = targetTop - panelTop - 80;
+      }
+      gsap.to(document.documentElement, {
+        opacity: 1,
+        duration: 0.35,
+        ease: 'power2.out',
+        delay: 0.05
+      });
+    } else {
+      // 일반 진입: 파티클 준비되면 fade in
+      showSoobin('random');
+      setTimeout(() => {
+        const hint = document.getElementById('scrollHint');
+        if (hint) hint.classList.add('visible');
+      }, 2200);
+      // 파티클 로드 후 자연스럽게 등장
+      document.documentElement.style.transition = 'opacity 0.4s ease';
+      document.documentElement.style.opacity = '';
+    }
 
     tick();
 
@@ -291,29 +322,6 @@
       resize();
       if (!panelOpen && (phase === 'ready' || phase === 'forming')) showSoobin('random');
     });
-
-    // If navigated back from a detail page with #work hash, skip the hero
-    // animation and jump straight to the Selected Works section.
-    if (window.location.hash === '#work') {
-      // Clear hash without triggering scroll
-      history.replaceState(null, '', window.location.pathname);
-      // Skip particle animation: show panel immediately
-      setProgress(1);
-      if (panel) { panel.style.visibility = 'visible'; panel.scrollTop = 0; }
-      canvas.style.opacity = '0';
-      panelOpen = true;
-      phase = 'idle';
-      particles = [];
-      // After layout settles, scroll panel to #work section
-      requestAnimationFrame(() => {
-        const workSection = document.getElementById('work');
-        if (workSection && panel) {
-          const panelTop = panel.getBoundingClientRect().top;
-          const workTop = workSection.getBoundingClientRect().top;
-          panel.scrollTop = workTop - panelTop - 80;
-        }
-      });
-    }
   }
 
   if (document.readyState === 'complete') init();

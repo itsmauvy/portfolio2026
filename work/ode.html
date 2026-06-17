@@ -252,7 +252,7 @@
     .cover__type {
       font-size: 13px;
       font-weight: 400;
-      color: rgba(42,33,24,0.6);
+      color: rgba(42,33,24,0.74);
       margin-bottom: 40px;
       letter-spacing: 0.03em;
     }
@@ -342,7 +342,7 @@
       <div class="cover__meta">
         <div class="cover__meta-row">
           <span class="cover__meta-key">PERIOD</span>
-          <span class="cover__meta-val">5 Days</span>
+          <span class="cover__meta-val">8 Days</span>
         </div>
         <div class="cover__meta-row">
           <span class="cover__meta-key">TOOLS</span>
@@ -387,6 +387,127 @@
     </div>
     <div class="po__right">
       <img src="../images/ode/ode-project-overview.jpg" alt="Project Overview">
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────────────────
+       02 PROBLEM DEFINITION
+  ────────────────────────────────────────────── -->
+  <style>
+    /* 명암 리듬용 다크 모카 섹션 (베이지 연속을 끊고 '문제'의 무게감 부여) */
+    .pd { background: #352a20; padding: 130px 80px 140px; color: #f5f1ed; }
+    .pd__label { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: rgba(245,241,237,0.5); margin-bottom: 28px; }
+    .pd__title { font-family: 'Gowun Batang', serif; font-size: clamp(32px, 3.4vw, 52px); font-weight: 700; line-height: 1.3; letter-spacing: -0.02em; color: #f5f1ed; margin-bottom: 28px; }
+    .pd__intro { font-family: 'Gowun Batang', serif; font-size: 18px; line-height: 1.95; color: rgba(245,241,237,0.72); max-width: 680px; margin-bottom: 28px; }
+    .pd__intro strong { font-weight: 700; color: #e7cda9; }
+    .pd__quote { font-family: 'Gowun Batang', serif; font-size: clamp(21px, 2.3vw, 30px); font-weight: 700; line-height: 1.6; color: #e7cda9; max-width: 800px; margin-bottom: 84px; }
+    .pd__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; margin-bottom: 76px; }
+    .pd__card { border-top: 1px solid rgba(245,241,237,0.22); padding-top: 26px; }
+    .pd__card-num { display: block; font-family: 'Cormorant Garamond', serif; font-size: 30px; letter-spacing: 0.04em; color: #c9a888; margin-bottom: 4px; }
+    .pd__card-title { font-family: 'Gowun Batang', serif; font-size: 19px; font-weight: 700; color: #f5f1ed; margin: 12px 0 12px; line-height: 1.4; }
+    .pd__card-desc { font-size: 16px; line-height: 1.9; color: rgba(245,241,237,0.72); font-family: 'Gowun Batang', serif; }
+    .pd__conclusion { font-family: 'Gowun Batang', serif; font-size: clamp(18px, 2vw, 25px); line-height: 1.7; color: #f5f1ed; padding-left: 26px; border-left: 2px solid #c9a888; }
+    .pd__conclusion strong { color: #e7cda9; font-weight: 700; }
+    @media (max-width: 768px) { .pd__grid { grid-template-columns: 1fr; gap: 28px; } }
+  </style>
+
+  <section class="pd">
+    <span class="pd__label">PROBLEM DEFINITION</span>
+    <h2 class="pd__title">실제 업무에서 발견한 문제를<br>브랜드 기획으로 풀어내다</h2>
+    <p class="pd__intro">3년간 뷰티 산업에서 업무를 경험하며,<br>제품이 판매되는 과정부터 소비자에게 전달되는 과정까지 가까이에서 관찰할 수 있었습니다.</p>
+    <p class="pd__quote">“구매는 이루어지지만, 일상 속에서 꾸준히 사용되는<br>제품은 생각보다 많지 않다는 것.”</p>
+    <div class="pd__grid">
+      <div class="pd__card">
+        <span class="pd__card-num">01</span>
+        <p class="pd__card-title">사고 나서<br>잊혀지는 제품</p>
+        <p class="pd__card-desc">구매 당시에는 만족도가 높지만, 시간이 지날수록 사용 빈도가 줄어들며 화장대 위에 머무르는 경우가 많았습니다.</p>
+      </div>
+      <div class="pd__card">
+        <span class="pd__card-num">02</span>
+        <p class="pd__card-title">일상에 스며들지<br>못하는 패키지</p>
+        <p class="pd__card-desc">휴대성을 고려하지 않은 크기와 형태는 제품을 매일 사용하는 경험으로 이어지기 어려웠습니다.</p>
+      </div>
+      <div class="pd__card">
+        <span class="pd__card-num">03</span>
+        <p class="pd__card-title">온라인 환경의<br>경험 부족</p>
+        <p class="pd__card-desc">사용자는 실제 색상과 질감을 충분히 경험하기 어려웠고, 구매 과정에서 반복적인 고민이 발생했습니다.</p>
+      </div>
+    </div>
+    <p class="pd__conclusion">그래서 ODE는 <strong>사용자가 찾고, 사용하고, 자연스럽게 다시 손이 가는</strong> 경험에 집중했습니다.</p>
+  </section>
+
+  <!-- ──────────────────────────────────────────────
+       03 MARKET RESEARCH
+  ────────────────────────────────────────────── -->
+  <style>
+    .mr { background: #ece3d9; padding: 130px 80px 140px; color: #2a2118; }
+    .mr__label { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: rgba(42,33,24,0.45); margin-bottom: 28px; }
+    .mr__title { font-family: 'Gowun Batang', serif; font-size: clamp(32px, 3.4vw, 52px); font-weight: 700; line-height: 1.3; letter-spacing: -0.02em; color: #1a1410; margin-bottom: 72px; }
+    .mr__brands { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-bottom: 96px; }
+    .mr__brand { border-top: 1px solid rgba(42,33,24,0.22); padding-top: 22px; }
+    .mr__brand-name { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #1a1410; letter-spacing: 0.02em; margin-bottom: 6px; }
+    .mr__brand-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; color: #8D775F; margin-bottom: 14px; }
+    .mr__brand-desc { font-size: 15px; line-height: 1.85; color: rgba(42,33,24,0.74); font-family: 'Gowun Batang', serif; }
+    .mr__map-wrap { display: block; }
+    .mr__map { position: relative; width: 100%; max-width: 460px; aspect-ratio: 1; border: 1px solid rgba(42,33,24,0.18); }
+    .mr__map::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(42,33,24,0.14); }
+    .mr__map::after { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(42,33,24,0.14); }
+    .mr__axis { position: absolute; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: rgba(42,33,24,0.66); white-space: nowrap; }
+    .mr__axis--top { top: 12px; left: 50%; transform: translateX(-50%); }
+    .mr__axis--bottom { bottom: 12px; left: 50%; transform: translateX(-50%); }
+    .mr__axis--left { top: 50%; left: 12px; transform: translateY(-50%); }
+    .mr__axis--right { top: 50%; right: 12px; transform: translateY(-50%); }
+    .mr__dot { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: rgba(42,33,24,0.74); white-space: nowrap; }
+    .mr__dot::before { content: ''; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid rgba(42,33,24,0.5); flex: none; }
+    .mr__dot--ode { color: #8D775F; font-size: 15px; z-index: 1; }
+    .mr__dot--ode::before { width: 12px; height: 12px; background: #8D775F; border-color: #8D775F; box-shadow: 0 0 0 4px rgba(141,119,95,0.18); }
+    .mr__map-text { max-width: 920px; }
+    .mr__opp-label { display: block; font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; letter-spacing: 0.3em; color: #8D775F; margin-bottom: 28px; }
+    .mr__map-text h3 { font-family: 'Gowun Batang', serif; font-size: clamp(30px, 3.2vw, 46px); font-weight: 700; color: #1a1410; line-height: 1.45; letter-spacing: -0.02em; margin-bottom: 42px; }
+    .mr__map-text p { font-family: 'Gowun Batang', serif; font-size: clamp(17px, 1.5vw, 20px); line-height: 2; color: rgba(42,33,24,0.74); }
+    .mr__map-text strong { color: #8D775F; font-weight: 700; }
+    .mr__opp-closing { font-family: 'Gowun Batang', serif; font-size: clamp(22px, 2vw, 28px); font-weight: 700; line-height: 1.6; color: #8D775F; margin-top: 36px; }
+    @media (max-width: 900px) {
+      .mr__brands { grid-template-columns: repeat(2, 1fr); gap: 28px 22px; }
+      .mr__map-wrap { grid-template-columns: 1fr; gap: 40px; }
+      .mr__map { margin: 0 auto; }
+    }
+  </style>
+
+  <section class="mr">
+    <span class="mr__label">MARKET RESEARCH</span>
+    <h2 class="mr__title">시장은 이 문제를<br>어떻게 풀고 있을까</h2>
+
+    <div class="mr__brands">
+      <div class="mr__brand">
+        <p class="mr__brand-name">rhode</p>
+        <p class="mr__brand-tag">GLOBAL · MINIMAL</p>
+        <p class="mr__brand-desc">미니멀한 디자인과 현대적인 뷰티 경험을 제안합니다.</p>
+      </div>
+      <div class="mr__brand">
+        <p class="mr__brand-name">fwee</p>
+        <p class="mr__brand-tag">KOREA · PLAYFUL</p>
+        <p class="mr__brand-desc">과일에서 영감을 받은 컬러와 독특한 사용감으로 감각적인 뷰티 경험을 제공합니다.</p>
+      </div>
+      <div class="mr__brand">
+        <p class="mr__brand-name">anillo</p>
+        <p class="mr__brand-tag">KOREA · DAILY</p>
+        <p class="mr__brand-desc">일상 속 자연스러운 사용 경험과 라이프스타일을 강조합니다.</p>
+      </div>
+      <div class="mr__brand">
+        <p class="mr__brand-name">무지개맨션</p>
+        <p class="mr__brand-tag">KOREA · OBJET</p>
+        <p class="mr__brand-desc">오브제적인 디자인을 통해 소장 욕구를 자극하는 브랜드 경험을 제공합니다.</p>
+      </div>
+    </div>
+
+    <div class="mr__map-wrap">
+      <div class="mr__map-text">
+        <span class="mr__opp-label">OPPORTUNITY</span>
+        <h3>사용 경험과 감성을<br>동시에 담은 포켓 뷰티의 부재</h3>
+        <p>rhode는 미니멀한 패키징,<br>fwee는 사용감과 컬러,<br>anillo는 라이프스타일,<br>무지개맨션은 오브제적인 아이덴티티 중심으로 경험을 제안하고 있었습니다.<br><br>그러나 사용자의 일상 속에 자연스럽게 스며들며,<br>감성과 휴대성을 동시에 담은 포켓 뷰티 브랜드는 상대적으로 부족했습니다.</p>
+        <p class="mr__opp-closing">ODE는 그 빈 지점에서 출발했습니다.</p>
+      </div>
     </div>
   </section>
 
@@ -479,7 +600,7 @@
     }
     .bn__tagline-ko {
       font-size: clamp(14px, 1.4vw, 18px);
-      color: rgba(255,255,255,0.65);
+      color: rgba(255,255,255,0.82);
       font-family: 'Gowun Batang', serif;
     }
   </style>
@@ -515,7 +636,7 @@
   <style>
     .ds {
       background: #3a2e28;
-      padding: 80px 72px 100px;
+      padding: 80px 80px 100px;
       display: flex;
       flex-direction: column;
       gap: 64px;
@@ -571,7 +692,7 @@
     .ds__font-desc {
       font-size: 16px;
       line-height: 1.85;
-      color: rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.72);
       font-family: 'Gowun Batang', serif;
     }
 
@@ -614,7 +735,7 @@
     .ds__color-info-desc {
       font-size: 15px;
       line-height: 1.7;
-      color: rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.72);
       font-family: 'Gowun Batang', serif;
     }
     @media (max-width: 900px) {
@@ -732,7 +853,7 @@
     .rd__desc {
       font-size: 17px;
       line-height: 1.9;
-      color: rgba(42,33,24,0.6);
+      color: rgba(42,33,24,0.74);
       font-family: 'Gowun Batang', serif;
       margin-bottom: 36px;
     }
@@ -839,6 +960,16 @@
       display: block;
       margin-bottom: 20px;
     }
+    /* UI 페이지 4종 시리즈 넘버 (MAIN 01 · ABOUT 02 · SHOP 03 · STORE 04) */
+    .ui-num {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      color: #8D775F;
+      margin-bottom: 14px;
+    }
     .mp__title {
       font-size: clamp(36px, 3.6vw, 56px);
       font-weight: 400;
@@ -850,7 +981,7 @@
     .mp__desc {
       font-size: 17px;
       line-height: 2;
-      color: rgba(42,33,24,0.55);
+      color: rgba(42,33,24,0.72);
       font-family: 'Gowun Batang', serif;
       max-width: 600px;
       margin: 0 auto;
@@ -972,7 +1103,7 @@
 
   <section class="mp">
     <div class="mp__header">
-      <span class="mp__label">UI DESIGN</span>
+      <span class="ui-num">01</span>
       <h2 class="mp__title">· MAIN PAGE ·</h2>
       <p class="mp__desc">사용자가 처음 마주하는 공간으로 브랜드의 첫 인상을 결정합니다.<br>
         감성적인 비주얼과 직관적인 탐색 구조를 동시에 담아<br>
@@ -982,7 +1113,7 @@
     <div class="mp__layout">
       <!-- 좌측 주석 -->
       <div class="mp__annotations-left">
-        <div class="mp__annotation" style="--at: 2%;">
+        <div class="mp__annotation" style="--at: 1%;">
           <div class="mp__annotation-head">
             <p class="mp__annotation-title">단순하지만 직관적인 GNB</p>
             <div class="mp__annotation-callout"></div>
@@ -1050,7 +1181,7 @@
     .sh__desc {
       font-size: 17px;
       line-height: 2;
-      color: rgba(42,33,24,0.6);
+      color: rgba(42,33,24,0.74);
       font-family: 'Gowun Batang', serif;
     }
 
@@ -1153,16 +1284,16 @@
     }
     .sh__cart-shot { width: 52%; margin-left: 14%; border-radius: 4px; overflow: hidden; box-shadow: 0 20px 60px rgba(42,33,24,0.12); }
     .sh__cart-shot img { width: 100%; height: auto; display: block; }
-    .sh__cart .sh__annotation--optimize { top: 22%; right: 0; width: 360px; }
+    .sh__cart .sh__annotation--optimize { top: 22%; left: calc(50% + 220px); width: 400px; }
     /* BAG(샵 스크린샷 우상단) → 오른쪽 → 아래 → 카트 연결 bracket.
        가로선은 스크린샷 오른쪽 가장자리(calc(50%+302px))부터 시작해 이미지를
        관통하지 않음. 세로선은 우측 여백, 하단 가로선은 별도 요소로 카트까지. */
     .sh__bag-link {
       position: absolute;
-      top: 362px;
-      left: calc(50% + 302px);
+      top: 400px;                  /* 히어로 GNB의 BAG 아이콘 높이 */
+      left: calc(50% + 301px);     /* 히어로(샵 스크린샷) 우측 가장자리 */
       right: 60px;
-      height: 1758px;
+      height: 1743px;              /* 아래 foot(카트 상단 y2143)까지 */
       border-top: 1px solid rgba(42,33,24,0.35);
       border-right: 1px solid rgba(42,33,24,0.35);
       pointer-events: none;
@@ -1170,8 +1301,8 @@
     .sh__bag-link::before { content:''; position:absolute; top:-2.5px; left:-2.5px; width:5px; height:5px; border-radius:50%; background:rgba(42,33,24,0.35); }
     .sh__bag-link-foot {
       position: absolute;
-      top: 2120px;
-      left: 63%;
+      top: 2143px;                 /* 카트 패널 상단 가장자리 */
+      left: calc(50% + 173px);     /* 카트 패널 우측 가장자리(우상단 코너) */
       right: 60px;
       border-top: 1px solid rgba(42,33,24,0.35);
       pointer-events: none;
@@ -1224,7 +1355,7 @@
     .ab__desc {
       font-size: 17px;
       line-height: 2;
-      color: rgba(42,33,24,0.6);
+      color: rgba(42,33,24,0.74);
       font-family: 'Gowun Batang', serif;
     }
     .ab__layout {
@@ -1249,7 +1380,23 @@
     }
     .ab__screen-wrap {
       width: 100%;
+      position: relative;
     }
+    /* 슬로건(푸터 위) 가리키는 주석 — 이미지 비율(%) 기준 앵커로 폭 변화에 안정적 */
+    .ab__slogan-note {
+      position: absolute;
+      top: 80.6%;            /* 점(head)이 슬로건 텍스트 세로 중심(≈81.6%)에 오도록 */
+      left: 73%;             /* 점=슬로건 밴드 우측 끝, 텍스트는 우측 베이지 여백 위 */
+      width: 400px;
+      text-align: right;     /* 텍스트 우측 정렬 */
+    }
+    .ab__slogan-note .ab__annotation-head { display: flex; flex-direction: row-reverse; align-items: center; }
+    .ab__slogan-note .ab__annotation-title { color: #1a1410; }
+    .ab__slogan-note .ab__annotation-callout { display: flex; flex: 1; align-items: center; margin-left: 0; margin-right: 12px; flex-direction: row-reverse; }
+    .ab__slogan-note .ab__annotation-callout::before { content: ''; display: block; flex: 1; height: 1px; background: rgba(42,33,24,0.35); }
+    .ab__slogan-note .ab__annotation-callout::after { content: ''; display: block; width: 5px; height: 5px; border-radius: 50%; background: rgba(42,33,24,0.35); margin-right: 2px; }
+    .ab__slogan-note .ab__annotation-desc { color: rgba(42,33,24,0.8); margin-top: 12px; }
+    .ab__slogan-note .ab__annotation-desc strong { color: #1a1410; font-weight: 700; }
     .ab__annotation-head {
       display: flex;
       align-items: center;
@@ -1347,6 +1494,7 @@
 
   <section class="ab">
     <div class="ab__header">
+      <span class="ui-num">02</span>
       <h2 class="ab__title">· ABOUT ·</h2>
       <p class="ab__desc">일상 속 작은 순간과 감정에서 영감을 받은<br>이미지와 메시지를 통해 브랜드 아이덴티티를<br>자연스럽게 경험할 수 있도록 설계했습니다.</p>
     </div>
@@ -1368,6 +1516,14 @@
         <div class="ab__screen">
           <img src="../images/ode/brand about.png" alt="About Page UI">
         </div>
+
+        <div class="ab__slogan-note">
+          <div class="ab__annotation-head">
+            <p class="ab__annotation-title">브랜드 경험 강화</p>
+            <div class="ab__annotation-callout"></div>
+          </div>
+          <p class="ab__annotation-desc">슬로건과 라이프스타일 이미지를 결합하여<br>사용자가 ODE를 단순한 뷰티 브랜드가 아닌<br><strong>일상에 머무는 브랜드로 인식</strong>할 수 있도록 설계했습니다.</p>
+        </div>
       </div>
     </div>
 
@@ -1378,6 +1534,7 @@
         <p class="ab__annotation-title">Parallex Scrolling</p>
         <p class="ab__annotation-desc">부드러운 속도의 Y축 패럴랙스 스크롤링을<br>사용하여 <strong>감각적인 브랜드의 분위기</strong>를 전달합니다.</p>
       </div>
+
     </div>
   </section>
 
@@ -1386,6 +1543,7 @@
     <div class="sh__bag-link"></div>
     <div class="sh__bag-link-foot"></div>
     <div class="sh__header">
+      <span class="ui-num">03</span>
       <h2 class="sh__title">· SHOP ·</h2>
       <p class="sh__desc">카테고리 탐색부터 제품 확인, 장바구니까지<br>자연스럽고 직관적인 구매 흐름을 제공합니다.</p>
     </div>
@@ -1416,7 +1574,7 @@
           <p class="sh__annotation-title">제품 경험 중심의 탐색</p>
           <div class="sh__annotation-elbow"></div>
         </div>
-        <p class="sh__annotation-desc">마우스 호버 시 <strong>모델 착용 이미지를 자동으로</strong><br><strong>노출</strong>하여 제품의 색상과 사용 모습을<br>직관적으로 확인할 수 있도록 설계했습니다.</p>
+        <p class="sh__annotation-desc">마우스 호버 시 <strong>모델 착용 이미지를</strong><br><strong>자동으로 노출</strong>하여 제품의 색상과 사용 모습을<br>직관적으로 확인할 수 있도록 설계했습니다.</p>
       </div>
     </div>
 
@@ -1426,11 +1584,11 @@
         <img src="../images/ode/ode-cart.jpg" alt="Cart Side Panel UI">
       </div>
 
-      <div class="sh__annotation sh__annotation--right sh__annotation--optimize">
+      <div class="sh__annotation sh__annotation--optimize">
         <div class="sh__annotation-head">
           <p class="sh__annotation-title">구매 경험 최적화</p>
         </div>
-        <p class="sh__annotation-desc">사이드 패널 형태의 장바구니를 적용하여<br><strong>페이지 이동 없이</strong> 상품을 관리할 수 있도록<br>설계했습니다.<br><br>전체 선택, 수량 변경, 무료 배송 안내,<br>연관 상품 추천 기능을 통합하여<br>구매 편의성을 높였습니다.</p>
+        <p class="sh__annotation-desc">사이드 패널 형태의 장바구니를 적용하여<br><strong>페이지 이동 없이</strong> 상품을 관리할 수 있도록 설계했습니다.<br><br>전체 선택, 수량 변경, 무료 배송 안내,<br>연관 상품 추천 기능을 통합하여<br>구매 편의성을 높였습니다.</p>
       </div>
     </div>
   </section>
@@ -1442,7 +1600,7 @@
     .st { background: #f2ebe5; padding: 120px 0 140px; position: relative; overflow: hidden; }
     .st__header { text-align: center; width: 72%; max-width: 640px; margin: 0 auto 80px; }
     .st__title { font-size: clamp(36px, 3.6vw, 56px); font-weight: 400; letter-spacing: 0.3em; color: #1a1410; font-family: 'Cormorant Garamond', serif; margin-bottom: 20px; }
-    .st__desc { font-size: 17px; line-height: 2; color: rgba(42,33,24,0.6); font-family: 'Gowun Batang', serif; }
+    .st__desc { font-size: 17px; line-height: 2; color: rgba(42,33,24,0.74); font-family: 'Gowun Batang', serif; }
 
     /* 데스크톱 스크린샷 + 폰 목업 */
     .st__stage { position: relative; width: 82%; max-width: 1100px; margin: 0 auto; padding-bottom: 170px; }
@@ -1481,6 +1639,7 @@
 
   <section class="st">
     <div class="st__header">
+      <span class="ui-num">04</span>
       <h2 class="st__title">· STORE ·</h2>
       <p class="st__desc">제품과 브랜드를 가장 가까이에서 경험할 수 있는<br>공간으로 설계했습니다.</p>
     </div>
@@ -1509,6 +1668,76 @@
         <div class="st__annotation-upline"></div>
         <p class="st__annotation-title">반응형 웹사이트</p>
         <p class="st__annotation-desc">노트북, 모바일, 데스크탑 등<br>다양한 기기에서 대응이 가능한<br><strong>적용형 웹사이트</strong>입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────────────────
+       CLOSING — brand bookend
+  ────────────────────────────────────────────── -->
+  <style>
+    .cl { position: relative; height: 78vh; min-height: 540px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .cl__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .cl::after { content: ''; position: absolute; inset: 0; background: rgba(20,16,12,0.58); }
+    .cl__inner { position: relative; z-index: 1; text-align: center; }
+    .cl__mark { font-family: 'Cormorant Garamond', serif; font-size: clamp(56px, 7vw, 104px); font-weight: 400; letter-spacing: 0.32em; color: #fff; margin-bottom: 28px; }
+    .cl__en { font-family: 'Cormorant Garamond', serif; font-size: clamp(20px, 2.4vw, 32px); letter-spacing: 0.05em; color: rgba(255,255,255,0.9); margin-bottom: 12px; }
+    .cl__ko { font-family: 'Gowun Batang', serif; font-size: clamp(15px, 1.5vw, 19px); color: rgba(255,255,255,0.78); letter-spacing: 0.02em; }
+  </style>
+
+  <section class="cl">
+    <img class="cl__bg" src="../images/ode/ode-hero.jpg" alt="ODE">
+    <div class="cl__inner">
+      <p class="cl__mark">ODE</p>
+      <p class="cl__en">An ode to everyday moments.</p>
+      <p class="cl__ko">평범한 일상에 보내는 작은 찬가</p>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────────────────
+       REFLECTION + CTA
+  ────────────────────────────────────────────── -->
+  <style>
+    .rf { background: #f2ebe5; padding: 130px 80px 110px; color: #2a2118; }
+    .rf__label { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: rgba(42,33,24,0.45); margin-bottom: 28px; }
+    .rf__title { font-family: 'Gowun Batang', serif; font-size: clamp(32px, 3.4vw, 52px); font-weight: 700; letter-spacing: -0.02em; color: #1a1410; margin-bottom: 76px; }
+    .rf__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-bottom: 110px; }
+    .rf__card { border-top: 1px solid rgba(42,33,24,0.22); padding-top: 26px; }
+    .rf__card-en { font-family: 'Cormorant Garamond', serif; font-size: 15px; letter-spacing: 0.1em; color: #8D775F; }
+    .rf__card-ko { font-family: 'Gowun Batang', serif; font-size: 21px; font-weight: 700; color: #1a1410; margin: 12px 0 16px; }
+    .rf__card-desc { font-size: 16px; line-height: 1.95; color: rgba(42,33,24,0.74); font-family: 'Gowun Batang', serif; }
+    .rf__cta { text-align: center; border-top: 1px solid rgba(42,33,24,0.15); padding-top: 80px; }
+    .rf__thanks { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 72px); letter-spacing: 0.04em; color: #1a1410; margin-bottom: 36px; }
+    .rf__links { display: inline-flex; gap: 14px; }
+    .rf__link { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: #2a2118; text-decoration: none; border: 1px solid rgba(42,33,24,0.3); border-radius: 24px; padding: 13px 28px; transition: background 0.25s, color 0.25s; }
+    .rf__link:hover { background: #2a2118; color: #f2ebe5; }
+    @media (max-width: 768px) { .rf__grid { grid-template-columns: 1fr; gap: 28px; } }
+  </style>
+
+  <section class="rf">
+    <span class="rf__label">REFLECTION</span>
+    <h2 class="rf__title">프로젝트를 마치며</h2>
+    <div class="rf__grid">
+      <div class="rf__card">
+        <span class="rf__card-en">What I Learned</span>
+        <p class="rf__card-ko">브랜드는 제품보다<br>경험으로 기억된다</p>
+        <p class="rf__card-desc">3년간 뷰티 산업에서 일하며 발견한 문제를<br>브랜드 기획으로 풀어내는 과정을 경험했습니다.<br><br>제품 자체보다 사용자의 일상 속에 자연스럽게 스며드는 경험이<br>브랜드의 지속적인 사용을 만든다는 점을 다시 한번 확인할 수 있었습니다.</p>
+      </div>
+      <div class="rf__card">
+        <span class="rf__card-en">Room to Grow</span>
+        <p class="rf__card-ko">실제 사용자<br>검증의 필요성</p>
+        <p class="rf__card-desc">브랜드 컨셉과 UX 흐름을 설계하는 데 집중했지만,<br>실제 사용자 테스트를 통한 검증까지는 진행하지 못했습니다.<br><br>향후에는 설문과 간단한 인터뷰를 통해<br>가설을 구체적으로 검증해보고 싶습니다.</p>
+      </div>
+      <div class="rf__card">
+        <span class="rf__card-en">Next Step</span>
+        <p class="rf__card-ko">브랜드<br>경험의 확장</p>
+        <p class="rf__card-desc">ODE는 단순한 화장품 브랜드가 아니라<br>'매일 손이 가는 경험'에서 시작한 프로젝트입니다.<br><br>향후 제품 라인업, 오프라인 경험까지 확장하며<br>하나의 브랜드 세계관으로 발전시켜 보고 싶습니다.</p>
+      </div>
+    </div>
+    <div class="rf__cta">
+      <div class="rf__links">
+        <a class="rf__link" href="../index.html#work">← WORK 목록으로</a>
+        <a class="rf__link" href="#top">↑ 맨 위로</a>
       </div>
     </div>
   </section>
@@ -1562,7 +1791,7 @@
       font-size: 16px;
       font-weight: 400;
       line-height: 2;
-      color: rgba(42,33,24,0.55);
+      color: rgba(42,33,24,0.72);
       margin-bottom: 56px;
       font-family: 'Gowun Batang', serif;
     }
@@ -1603,7 +1832,7 @@
       font-size: 14px;
       font-weight: 400;
       line-height: 1.8;
-      color: rgba(42,33,24,0.55);
+      color: rgba(42,33,24,0.72);
       font-family: 'Gowun Batang', serif;
     }
     .po__right {

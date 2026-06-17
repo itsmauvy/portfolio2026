@@ -305,14 +305,6 @@
         panel.scrollTop = targetTop - panelTop - 80;
       }
 
-      // 부드럽게 fade in (panel은 이미 CSS로 visible)
-      gsap.to(document.documentElement, {
-        opacity: 1,
-        duration: 0.5,
-        ease: 'power2.out',
-        delay: 0.08
-      });
-
       tick();
       return;
     }

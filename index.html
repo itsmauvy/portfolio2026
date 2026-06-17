@@ -13,9 +13,9 @@
       rs.id = 'return-style';
       rs.textContent = '#contentPanel{opacity:1!important;visibility:visible!important}#particle-canvas{opacity:0!important}';
       document.head.appendChild(rs);
-    } else {
-      document.documentElement.style.opacity = '0';
     }
+    // 항상 opacity:0 → particle.js에서 부드럽게 fade in
+    document.documentElement.style.opacity = '0';
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

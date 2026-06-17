@@ -208,11 +208,13 @@
 
   function scrollToSection(sectionId) {
     const t = document.getElementById(sectionId);
-    if (!t) return;
+    if (!t || !panel) return;
+    const pos = Math.max(0, t.offsetTop - 80);
+    // 직접 scrollTop 먼저
+    panel.scrollTop = pos;
+    // Lenis에도 알려서 내부 상태 동기화
     if (window.__lenis) {
-      window.__lenis.scrollTo(t, { offset: -80, immediate: true });
-    } else if (panel) {
-      panel.scrollTop = t.offsetTop - 80;
+      window.__lenis.scrollTo(pos, { immediate: true });
     }
   }
 
@@ -331,21 +333,23 @@
     if (header) header.classList.add('visible');
     setTimeout(() => typeLogo('SOOBIN PORTFOLIO'), 400);
 
-    // 패널 즉시 세팅 (inline style — CSS 충돌 없음)
+    // 패널 즉시 세팅
     if (panel) {
       panel.style.opacity = '1';
       panel.style.visibility = 'visible';
-      panel.scrollTop = 0;
     }
     if (overlay) overlay.style.opacity = '1';
 
-    // 페이지 fade in → 스크롤
-    // 스크롤 먼저, 그 다음 fade in (about me 안 보이도록)
-    setTimeout(() => {
+    // 스크롤 → fade in (html이 opacity:0이라 사용자에게 안 보이는 상태에서 스크롤)
+    // setTimeout 0: Lenis 포함 모든 동기 JS 완료 후
+    // setTimeout 100: Lenis raf 첫 tick 이후 한 번 더 보정
+    function doScrollAndReveal() {
       scrollToSection(_returnTo);
+      setTimeout(() => scrollToSection(_returnTo), 100);
       gsap.to(document.documentElement, { opacity: 1, duration: 0.6, ease: 'power2.out' });
       gsap.from(panel, { scale: 0.98, duration: 0.6, ease: 'power2.out' });
-    }, 0);
+    }
+    setTimeout(doScrollAndReveal, 0);
 
     setupNavLinks();
     tick();

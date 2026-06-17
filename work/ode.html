@@ -9,7 +9,7 @@
   <title>ODE — SOOBIN</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Gowun+Batang:wght@400;700&family=Jost:wght@300;400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
@@ -23,6 +23,10 @@
 
     .char { display: inline-block; will-change: transform; }
     .word { display: inline-block; will-change: transform; }
+
+    html {
+      overflow-x: hidden;
+    }
 
     html, body {
       background-color: #2b3133;
@@ -138,7 +142,7 @@
 
     .back-btn svg { flex-shrink: 0; }
 
-    /* ── 히어로: 영상 + 텍스트 오버레이 ── */
+    /* ── 히어로: 영상 풀블리드 ── */
     .hero {
       position: relative;
       width: 100vw;
@@ -147,7 +151,7 @@
     }
 
     .hero video,
-    .hero img {
+    .hero > img {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -156,21 +160,14 @@
       display: block;
     }
 
-    /* 텍스트 가독성 확보용 gradient overlay */
     .hero::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,0.25) 0%,
-        rgba(0,0,0,0) 40%,
-        rgba(0,0,0,0.55) 100%
-      );
+      background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%);
       pointer-events: none;
     }
 
-    /* 텍스트: 좌하단 고정 */
     .hero-text {
       position: absolute;
       bottom: 52px;
@@ -193,7 +190,6 @@
       line-height: 1;
       letter-spacing: -0.02em;
       margin-bottom: 20px;
-      overflow: visible;
       color: #fff;
     }
 
@@ -204,119 +200,103 @@
       color: #fff;
     }
 
-    /* 히어로 아래 메타 + 제작과정 */
-    .detail-wrap {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 48px;
-    }
-
-    .detail-body {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 48px;
-      padding: 80px 0 120px;
-    }
-
-    .detail-meta h3 {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      opacity: 0.4;
-      margin-bottom: 12px;
-    }
-
-    .detail-meta p {
-      font-size: 14px;
-      line-height: 1.7;
-      margin-bottom: 32px;
-    }
-
-    .detail-desc p {
-      font-size: 17px;
-      line-height: 1.8;
-      opacity: 0.75;
-    }
-
-    /* ── 제작과정 ── */
-    .process {
+    /* ── 표지 섹션: 이미지 풀블리드 + 텍스트 오버레이 ── */
+    .cover {
+      position: relative;
       width: 100%;
-    }
-
-    /* 섹션 공통 */
-    .process-section {
-      padding: 120px 0;
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
-
-    /* 좌우 여백 있는 텍스트 컨테이너 */
-    .process-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 48px;
-    }
-
-    .process-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      opacity: 0.4;
-      margin-bottom: 24px;
-    }
-
-    .process-title {
-      font-size: clamp(28px, 4vw, 52px);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 24px;
-    }
-
-    .process-desc {
-      font-size: 16px;
-      line-height: 1.8;
-      opacity: 0.6;
-      max-width: 560px;
-      margin-bottom: 64px;
-    }
-
-    /* 이미지 그리드 */
-    .process-grid {
-      display: grid;
-      gap: 16px;
-    }
-
-    .process-grid.col-2 { grid-template-columns: 1fr 1fr; }
-    .process-grid.col-3 { grid-template-columns: 1fr 1fr 1fr; }
-
-    .process-grid img {
-      width: 100%;
-      display: block;
-      border-radius: 8px;
-      object-fit: cover;
-    }
-
-    /* full-bleed 이미지 */
-    .process-fullbleed {
-      width: 100vw;
-      margin-left: calc(-50vw + 50%);
+      height: 100vh;
+      z-index: 1;
       overflow: hidden;
     }
 
-    .process-fullbleed img {
+    .cover__bg {
+      position: absolute;
+      inset: 0;
       width: 100%;
-      display: block;
+      height: 100%;
       object-fit: cover;
+      object-position: center top;
+      display: block;
     }
 
+    .cover__text {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100vh;
+      padding: 80px 56px 64px 64px;
+      max-width: 52%;
+    }
+
+    .cover__top { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+    .cover__logo {
+      width: clamp(80px, 10vw, 140px);
+      height: auto;
+      display: block;
+      margin-bottom: 28px;
+      filter: brightness(0) saturate(100%);
+    }
+
+    .cover__sub {
+      font-size: clamp(24px, 2.8vw, 38px);
+      font-weight: 400;
+      line-height: 1.35;
+      color: #2a2118;
+      margin-bottom: 18px;
+      font-family: 'Gowun Batang', serif;
+    }
+
+    .cover__type {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(42,33,24,0.6);
+      margin-bottom: 40px;
+      letter-spacing: 0.03em;
+    }
+
+    .cover__desc {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 2;
+      color: rgba(42,33,24,0.78);
+      font-family: 'Gowun Batang', serif;
+    }
+
+    .cover__meta {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(42,33,24,0.15);
+    }
+
+    .cover__meta-row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      align-items: baseline;
+    }
+
+    .cover__meta-key {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: rgba(42,33,24,0.45);
+    }
+
+    .cover__meta-val {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(42,33,24,0.72);
+    }
+
+
     @media (max-width: 768px) {
+      .detail-header { padding: 20px 24px; }
       .hero-text { left: 24px; bottom: 36px; }
-      .detail-wrap { padding: 0 24px; }
-      .detail-header { padding: 24px; }
-      .detail-body { grid-template-columns: 1fr; }
-      .process-inner { padding: 0 24px; }
-      .process-grid.col-2,
-      .process-grid.col-3 { grid-template-columns: 1fr; }
+      .cover__text { max-width: 100%; padding: 80px 24px 48px; }
     }
   </style>
 </head>
@@ -336,11 +316,11 @@
     </nav>
   </header>
 
-  <!-- 히어로: 영상 + 텍스트 오버레이 -->
+  <!-- 히어로: 영상 풀블리드 -->
   <div class="hero">
-    <video autoplay muted loop playsinline poster="ode-thumb.png">
-      <source src="ode-video.mp4" type="video/mp4">
-      <img src="ode-thumb.png" alt="ODE 커버">
+    <video autoplay muted loop playsinline poster="../images/ode/ode-hero.jpg">
+      <source src="../images/ode/ode-video.mp4" type="video/mp4">
+      <img src="../images/ode/ode-hero.jpg" alt="ODE">
     </video>
     <div class="hero-text">
       <p class="detail-category">UX/UI DESIGN · CONCEPT DESIGN</p>
@@ -349,78 +329,605 @@
     </div>
   </div>
 
-  <!-- 프로젝트 메타 -->
-  <main class="detail-wrap">
-    <div class="detail-body">
-      <div class="detail-meta">
-        <h3>YEAR</h3>
-        <p>2026</p>
-        <h3>ROLE</h3>
-        <p>UX/UI 디자인<br>브랜딩<br>웹퍼블리싱</p>
-        <h3>TYPE</h3>
-        <p>Concept Design</p>
+  <!-- 표지: 이미지 풀블리드 + 텍스트 오버레이 -->
+  <div class="cover">
+    <img class="cover__bg" src="../images/ode/ode-hero.jpg" alt="ODE">
+    <div class="cover__text">
+      <div class="cover__top">
+        <img class="cover__logo" src="ode-images/ode-logo.png" alt="ODE">
+        <p class="cover__sub">매일을 위한<br>포켓 뷰티</p>
+        <p class="cover__type">개인 프로젝트 &nbsp;|&nbsp; 기획, 디자인 100%</p>
+        <p class="cover__desc">언제나 가방 속에 함께하던 소중한 물건처럼,<br>매일 사용하는 뷰티 아이템도<br>자연스럽게 곁에 머물 수 있도록<br>포켓 뷰티 브랜드 ODE를 기획했습니다.</p>
       </div>
-      <div class="detail-desc">
-        <p>ODE는 직접 기획한 뷰티 브랜드입니다. 브랜드 아이덴티티 설계부터 UX/UI 디자인, 웹 퍼블리싱까지 전 과정을 진행했습니다.</p>
-      </div>
-    </div>
-  </main>
-
-  <!-- 제작과정 -->
-  <section class="process">
-
-    <!-- 01 개요 -->
-    <div class="process-section">
-      <div class="process-inner">
-        <p class="process-label">01 — OVERVIEW</p>
-        <h2 class="process-title">브랜드 개요</h2>
-        <p class="process-desc">이미지와 텍스트 내용을 여기에 넣어주세요.</p>
-        <div class="process-grid col-2">
-          <img src="https://picsum.photos/seed/ode01/800/600" alt="">
-          <img src="https://picsum.photos/seed/ode02/800/600" alt="">
+      <div class="cover__meta">
+        <div class="cover__meta-row">
+          <span class="cover__meta-key">PERIOD</span>
+          <span class="cover__meta-val">5 Days</span>
+        </div>
+        <div class="cover__meta-row">
+          <span class="cover__meta-key">TOOLS</span>
+          <span class="cover__meta-val">Figma · Photoshop · AI</span>
+        </div>
+        <div class="cover__meta-row">
+          <span class="cover__meta-key">SCOPE OF WORK</span>
+          <span class="cover__meta-val">Brand Strategy · UX/UI Design · Publishing</span>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- 02 리서치 -->
-    <div class="process-section">
-      <div class="process-inner">
-        <p class="process-label">02 — RESEARCH</p>
-        <h2 class="process-title">리서치 & 컨셉</h2>
-        <p class="process-desc">리서치 과정과 컨셉 방향을 설명해주세요.</p>
-      </div>
-      <div class="process-fullbleed">
-        <img src="https://picsum.photos/seed/ode03/1920/900" alt="">
-      </div>
-    </div>
+  <!-- ── PROCESS ── -->
 
-    <!-- 03 디자인 -->
-    <div class="process-section">
-      <div class="process-inner">
-        <p class="process-label">03 — DESIGN</p>
-        <h2 class="process-title">UI 디자인</h2>
-        <p class="process-desc">주요 화면 디자인과 컴포넌트를 보여주세요.</p>
-        <div class="process-grid col-3">
-          <img src="https://picsum.photos/seed/ode04/600/800" alt="">
-          <img src="https://picsum.photos/seed/ode05/600/800" alt="">
-          <img src="https://picsum.photos/seed/ode06/600/800" alt="">
+  <!-- 01 PROJECT OVERVIEW -->
+  <section class="po">
+    <div class="po__left">
+      <span class="po__label">PROJECT OVERVIEW</span>
+      <h2 class="po__title">왜 어떤 제품은<br>자꾸 손이 갈까?</h2>
+      <div class="po__rule"></div>
+      <p class="po__lead">작고 귀여운 패키지.<br>손이 자주 가는 사용감.<br>가방에 넣고 다니고 싶은 크기.</p>
+      <p class="po__body">사용자가 자연스럽게 손이 가고,<br>매일 들고 다니고 싶은 뷰티 브랜드를 만들고자 했습니다.</p>
+      <span class="po__values-label">BRAND CORE VALUES</span>
+      <div class="po__cards">
+        <div class="po__card">
+          <span class="po__card-num">01</span>
+          <p class="po__card-en">Desirable</p>
+          <p class="po__card-ko">한 번쯤<br>써보고 싶은 것</p>
+        </div>
+        <div class="po__card">
+          <span class="po__card-num">02</span>
+          <p class="po__card-en">Portable</p>
+          <p class="po__card-ko">언제나<br>함께하는 것</p>
+        </div>
+        <div class="po__card">
+          <span class="po__card-num">03</span>
+          <p class="po__card-en">Everyday</p>
+          <p class="po__card-ko">매일<br>손이 가는 것</p>
         </div>
       </div>
     </div>
-
-    <!-- 04 결과물 -->
-    <div class="process-section">
-      <div class="process-inner">
-        <p class="process-label">04 — RESULT</p>
-        <h2 class="process-title">최종 결과물</h2>
-        <p class="process-desc">완성된 디자인 결과물입니다.</p>
-      </div>
-      <div class="process-fullbleed">
-        <img src="https://picsum.photos/seed/ode07/1920/1080" alt="">
-      </div>
+    <div class="po__right">
+      <img src="../images/ode/ode-project-overview.jpg" alt="Project Overview">
     </div>
-
   </section>
+
+  <!-- ──────────────────────────────────────────────
+       BRAND NAMING
+  ────────────────────────────────────────────── -->
+  <style>
+    .bn {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .bn__bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .bn__overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 48px 56px 64px 56px;
+    }
+    .bn__label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.7);
+    }
+    .bn__center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      gap: 48px;
+    }
+    .bn__circles {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .bn__circle {
+      width: clamp(160px, 18vw, 260px);
+      height: clamp(160px, 18vw, 260px);
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.55);
+      background: rgba(255,255,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bn__circle-text {
+      font-size: clamp(20px, 2.4vw, 36px);
+      font-weight: 400;
+      color: #fff;
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 0.02em;
+    }
+    .bn__plus {
+      font-size: clamp(24px, 2.8vw, 40px);
+      color: rgba(255,255,255,0.8);
+      font-weight: 300;
+    }
+    .bn__name {
+      font-size: clamp(48px, 6vw, 90px);
+      font-weight: 400;
+      letter-spacing: 0.4em;
+      color: #fff;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .bn__bottom {
+      width: 100%;
+      text-align: center;
+    }
+    .bn__tagline-en {
+      font-size: clamp(16px, 1.6vw, 22px);
+      font-weight: 400;
+      color: rgba(255,255,255,0.85);
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+    .bn__tagline-ko {
+      font-size: clamp(14px, 1.4vw, 18px);
+      color: rgba(255,255,255,0.65);
+      font-family: 'Gowun Batang', serif;
+    }
+  </style>
+
+  <section class="bn">
+    <img class="bn__bg" src="../images/ode/ode-brand-naming.jpg" alt="Brand Naming">
+    <div class="bn__overlay">
+      <span class="bn__label">BRAND NAMING</span>
+
+      <div class="bn__center">
+        <div class="bn__circles">
+          <div class="bn__circle">
+            <span class="bn__circle-text">Ordinary</span>
+          </div>
+          <span class="bn__plus">+</span>
+          <div class="bn__circle">
+            <span class="bn__circle-text">Everyday</span>
+          </div>
+        </div>
+        <p class="bn__name">O &nbsp; D &nbsp; E</p>
+      </div>
+
+      <div class="bn__bottom">
+        <p class="bn__tagline-en">An ode to everyday moments.</p>
+        <p class="bn__tagline-ko">평범한 일상에 보내는 작은 찬가</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────────────────
+       DESIGN SYSTEM
+  ────────────────────────────────────────────── -->
+  <style>
+    .ds {
+      background: #3a2e28;
+      padding: 80px 72px 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+    }
+    .ds__top-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.45);
+    }
+    .ds__body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+
+    /* ── TYPOGRAPHY ── */
+    .ds__type-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 48px;
+      display: block;
+    }
+    .ds__fonts {
+      display: flex;
+      flex-direction: column;
+      gap: 52px;
+    }
+    .ds__font-name {
+      display: block;
+      color: #fff;
+      margin-bottom: 14px;
+      line-height: 1;
+    }
+    .ds__font-name--gowun {
+      font-family: 'Gowun Batang', serif;
+      font-size: clamp(44px, 5vw, 72px);
+      font-weight: 400;
+    }
+    .ds__font-name--jost {
+      font-family: 'Jost', sans-serif;
+      font-size: clamp(40px, 4.5vw, 64px);
+      font-weight: 700;
+    }
+    .ds__font-name--cormorant {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 400;
+      font-style: italic;
+    }
+    .ds__font-desc {
+      font-size: 16px;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.5);
+      font-family: 'Gowun Batang', serif;
+    }
+
+    /* ── COLOR PALETTE ── */
+    .ds__color-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 48px;
+      display: block;
+    }
+    .ds__colors {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .ds__color-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      align-items: center;
+      gap: 28px;
+    }
+    .ds__swatch {
+      height: 80px;
+      border-radius: 8px;
+    }
+    .ds__color-info-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .ds__color-info-hex {
+      font-size: 14px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .ds__color-info-desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.5);
+      font-family: 'Gowun Batang', serif;
+    }
+    @media (max-width: 900px) {
+      .ds__body { grid-template-columns: 1fr; }
+      .ds { padding: 64px 28px 80px; }
+    }
+  </style>
+
+  <section class="ds">
+    <span class="ds__top-label">DESIGN SYSTEM</span>
+
+    <div class="ds__body">
+      <!-- TYPOGRAPHY -->
+      <div class="ds__left">
+        <span class="ds__type-label">TYPOGRAPHY</span>
+        <div class="ds__fonts">
+          <div class="ds__font-item">
+            <span class="ds__font-name ds__font-name--gowun">고운바탕</span>
+            <p class="ds__font-desc">브랜드 스토리와 국문 헤드라인에 사용하여<br>따뜻하고 감성적인 브랜드 경험을 전달합니다.</p>
+          </div>
+          <div class="ds__font-item">
+            <span class="ds__font-name ds__font-name--jost">Jost</span>
+            <p class="ds__font-desc">제품 정보와 UI 요소에 적용하여<br>높은 가독성과 직관적인 사용성을 제공합니다.</p>
+          </div>
+          <div class="ds__font-item">
+            <span class="ds__font-name ds__font-name--cormorant">Cormorant Garamond</span>
+            <p class="ds__font-desc">브랜드 로고와 영문 헤드라인에 사용하여<br>ODE만의 우아하고 정제된 무드를 표현합니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLOR PALETTE -->
+      <div class="ds__right">
+        <span class="ds__color-label">COLOR PALETTE</span>
+        <div class="ds__colors">
+          <div class="ds__color-row">
+            <div class="ds__swatch" style="background:#F5F1ED; border: 1px solid rgba(255,255,255,0.1);"></div>
+            <div class="ds__color-info">
+              <p class="ds__color-info-name">Soft Ivory</p>
+              <p class="ds__color-info-hex">#F5F1ED</p>
+              <p class="ds__color-info-desc">브랜드의 메인 배경 컬러로,<br>깨끗하고 편안한 인상을 전달합니다.</p>
+            </div>
+          </div>
+          <div class="ds__color-row">
+            <div class="ds__swatch" style="background:#E8E0D8; border: 1px solid rgba(255,255,255,0.1);"></div>
+            <div class="ds__color-info">
+              <p class="ds__color-info-name">Warm Beige</p>
+              <p class="ds__color-info-hex">#E8E0D8</p>
+              <p class="ds__color-info-desc">부드럽고 자연스러운 무드를 더하는<br>서브 베이지 컬러입니다.</p>
+            </div>
+          </div>
+          <div class="ds__color-row">
+            <div class="ds__swatch" style="background:#8D775F;"></div>
+            <div class="ds__color-info">
+              <p class="ds__color-info-name">Mocha Beige</p>
+              <p class="ds__color-info-hex">#8D775F</p>
+              <p class="ds__color-info-desc">ODE만의 따뜻하고 감성적인 분위기를 표현하는<br>시그니처 컬러입니다.</p>
+            </div>
+          </div>
+          <div class="ds__color-row">
+            <div class="ds__swatch" style="background:#5C4F45;"></div>
+            <div class="ds__color-info">
+              <p class="ds__color-info-name">Deep Taupe</p>
+              <p class="ds__color-info-hex">#5C4F45</p>
+              <p class="ds__color-info-desc">텍스트와 강조 요소에 사용되는 컬러로<br>브랜드의 안정감과 깊이를 더합니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────────────────
+       RESPONSIVE WEB DESIGN
+  ────────────────────────────────────────────── -->
+  <style>
+    .rd {
+      background: #f5f1eb;
+      display: grid;
+      grid-template-columns: 36% 64%;
+      min-height: 100vh;
+      align-items: center;
+      padding: 100px 0 100px 80px;
+      overflow: hidden;
+    }
+    .rd__left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0;
+      padding-right: 48px;
+    }
+    .rd__label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: rgba(42,33,24,0.45);
+      margin-bottom: 24px;
+      display: block;
+    }
+    .rd__title {
+      font-size: clamp(32px, 3.2vw, 48px);
+      font-weight: 700;
+      line-height: 1.25;
+      color: #1a1410;
+      font-family: 'Gowun Batang', serif;
+      margin-bottom: 24px;
+    }
+    .rd__rule {
+      width: 36px;
+      height: 2px;
+      background: rgba(42,33,24,0.3);
+      margin-bottom: 28px;
+    }
+    .rd__desc {
+      font-size: 17px;
+      line-height: 1.9;
+      color: rgba(42,33,24,0.6);
+      font-family: 'Gowun Batang', serif;
+      margin-bottom: 36px;
+    }
+    .rd__tags {
+      display: flex;
+      gap: 10px;
+    }
+    .rd__tag {
+      padding: 8px 20px;
+      border: 1.5px solid rgba(42,33,24,0.25);
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1410;
+      letter-spacing: 0.04em;
+    }
+    .rd__right {
+      position: relative;
+      height: 560px;
+    }
+    /* PC — 좌측, 가장 뒤 */
+    .rd__mockup-pc {
+      position: absolute;
+      top: 0;
+      left: -20px;
+      width: 68%;
+      z-index: 1;
+    }
+    /* Laptop — 우측, 중간 */
+    .rd__mockup-laptop {
+      position: absolute;
+      top: 230px;
+      left: 230px;
+      width: 55%;
+      z-index: 2;
+    }
+    /* Mobile — PC와 Laptop 사이 하단, 가장 앞 */
+    .rd__mockup-mobile {
+      position: absolute;
+      top: 280px;
+      left: 130px;
+      width: 18%;
+      z-index: 3;
+    }
+    .rd__mockup-pc img,
+    .rd__mockup-laptop img,
+    .rd__mockup-mobile img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    @media (max-width: 900px) {
+      .rd {
+        grid-template-columns: 1fr;
+        padding: 72px 28px;
+      }
+      .rd__right { height: 380px; }
+    }
+  </style>
+
+  <section class="rd">
+    <div class="rd__left">
+      <span class="rd__label">RESPONSIVE WEB DESIGN</span>
+      <h2 class="rd__title">모든 화면에서<br>같은 브랜드 경험을</h2>
+      <div class="rd__rule"></div>
+      <p class="rd__desc">PC와 모바일 환경 모두를 고려한<br>반응형 웹사이트로 설계했습니다.</p>
+      <div class="rd__tags">
+        <span class="rd__tag">PC</span>
+        <span class="rd__tag">Laptop</span>
+        <span class="rd__tag">Mobile</span>
+      </div>
+    </div>
+
+    <div class="rd__right">
+      <div class="rd__mockup-pc">
+        <img src="../images/ode/pc-mockup.png" alt="PC Mockup">
+      </div>
+      <div class="rd__mockup-laptop">
+        <img src="../images/ode/laptop-mockup.png" alt="Laptop Mockup">
+      </div>
+      <div class="rd__mockup-mobile">
+        <img src="../images/ode/mobile-mockup.png" alt="Mobile Mockup">
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .po {
+      display: grid;
+      grid-template-columns: 45% 55%;
+      min-height: 100vh;
+      background: #f5f1eb;
+    }
+    .po__left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px 60px 80px 80px;
+      color: #2a2118;
+    }
+    .po__label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: rgba(42,33,24,0.45);
+      margin-bottom: 32px;
+      display: block;
+    }
+    .po__title {
+      font-size: clamp(36px, 3.6vw, 56px);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: #1a1410;
+      margin-bottom: 24px;
+      font-family: 'Gowun Batang', serif;
+    }
+    .po__rule {
+      width: 40px;
+      height: 2px;
+      background: rgba(42,33,24,0.3);
+      margin-bottom: 28px;
+    }
+    .po__lead {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 2;
+      color: #2a2118;
+      margin-bottom: 20px;
+      font-family: 'Gowun Batang', serif;
+    }
+    .po__body {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 2;
+      color: rgba(42,33,24,0.55);
+      margin-bottom: 56px;
+      font-family: 'Gowun Batang', serif;
+    }
+    .po__values-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: rgba(42,33,24,0.45);
+      margin-bottom: 20px;
+      display: block;
+    }
+    .po__cards {
+      display: flex;
+      gap: 14px;
+    }
+    .po__card {
+      flex: 1;
+      border: 1px solid rgba(42,33,24,0.15);
+      border-radius: 14px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .po__card-num {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: rgba(42,33,24,0.3);
+      text-decoration: underline;
+    }
+    .po__card-en {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1410;
+    }
+    .po__card-ko {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.8;
+      color: rgba(42,33,24,0.55);
+      font-family: 'Gowun Batang', serif;
+    }
+    .po__right {
+      overflow: hidden;
+    }
+    .po__right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    @media (max-width: 768px) {
+      .po { grid-template-columns: 1fr; }
+      .po__left { padding: 64px 24px; }
+      .po__right { height: 70vw; }
+    }
+  </style>
 
   <script>
     (function () {
@@ -455,79 +962,21 @@
       }
 
       requestAnimationFrame(function () {
-        // 검정에서 부드럽게 fade in
-        gsap.to(document.documentElement, { opacity: 1, duration: 0.5, ease: 'power2.out' });
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.to(document.documentElement, { opacity: 1, duration: 0.6, ease: 'power2.out' });
 
+        // ── 히어로 입장 ──
         var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-        // 카테고리: 단어별 blur + rise
         var catWords = splitWords(document.querySelector('.detail-category'));
-        tl.from(catWords, {
-          opacity: 0,
-          filter: 'blur(6px)',
-          y: 8,
-          duration: 0.8,
-          stagger: 0.1
-        }, 0.2);
+        tl.from(catWords, { opacity: 0, filter: 'blur(6px)', y: 8, duration: 0.8, stagger: 0.1 }, 0.3);
 
-        // 타이틀: 글자별 blur + rise (Bidaya Lumin 효과)
         var chars = splitChars(document.querySelector('.detail-title'));
-        tl.from(chars, {
-          opacity: 0,
-          filter: 'blur(10px)',
-          y: 20,
-          duration: 1.4,
-          stagger: 0.1
-        }, 0.6);
+        tl.from(chars, { opacity: 0, filter: 'blur(10px)', y: 20, duration: 1.4, stagger: 0.08 }, 0.6);
 
-        // 태그라인: blur + 살짝 rise
-        tl.from('.detail-tagline', {
-          opacity: 0,
-          filter: 'blur(4px)',
-          y: 12,
-          duration: 1
-        }, '-=0.4');
+        tl.from('.detail-tagline', { opacity: 0, filter: 'blur(4px)', y: 12, duration: 1 }, '-=0.5');
+        tl.from('.hero video', { opacity: 0, scale: 1.04, duration: 1.6 }, 0);
 
-        // 히어로 영상: 텍스트 끝난 후 scale+fade
-        tl.from('.hero video', {
-          opacity: 0,
-          scale: 1.04,
-          duration: 1.4
-        }, '+=0.1');
-
-        // 본문: 오른쪽에서 슬며시
-        tl.from('.detail-body', {
-          opacity: 0,
-          x: 24,
-          duration: 1
-        }, '-=0.7');
-
-        // ── ScrollTrigger: 제작과정 섹션 ──
-        gsap.registerPlugin(ScrollTrigger);
-
-        // 섹션 라벨 + 제목 + 설명: 스크롤 진입 시 순차 등장
-        document.querySelectorAll('.process-section').forEach(function(section) {
-          var label = section.querySelector('.process-label');
-          var title = section.querySelector('.process-title');
-          var desc  = section.querySelector('.process-desc');
-          var imgs  = section.querySelectorAll('img');
-
-          var stl = gsap.timeline({
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 80%',
-              once: true
-            }
-          });
-
-          if (label) stl.from(label, { opacity: 0, y: 10, filter: 'blur(4px)', duration: 0.7 }, 0);
-          if (title) stl.from(title, { opacity: 0, y: 24, duration: 0.9 }, 0.15);
-          if (desc)  stl.from(desc,  { opacity: 0, y: 16, duration: 0.8 }, 0.3);
-          if (imgs.length) stl.from(imgs, {
-            opacity: 0, y: 32, scale: 0.98,
-            duration: 1, stagger: 0.12
-          }, 0.4);
-        });
 
         // ── 나가는 링크 전부: 오버레이 + sessionStorage ──
         var backOverlay = document.createElement('div');

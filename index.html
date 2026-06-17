@@ -4,7 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SOOBIN — UX/UI Designer</title>
-  <script>history.scrollRestoration = 'manual'; window.scrollTo(0, 0);</script>
+  <script>
+    history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    if (sessionStorage.getItem('returnTo')) {
+      // 상세페이지에서 돌아온 경우: panel·canvas를 HTML 파싱 전에 미리 세팅
+      var rs = document.createElement('style');
+      rs.id = 'return-style';
+      rs.textContent = '#contentPanel{opacity:1!important;visibility:visible!important}#particle-canvas{opacity:0!important}';
+      document.head.appendChild(rs);
+    } else {
+      document.documentElement.style.opacity = '0';
+    }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&display=swap" rel="stylesheet">

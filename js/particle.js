@@ -286,6 +286,10 @@
       sessionStorage.removeItem('returnTo');
       history.replaceState(null, '', window.location.pathname);
 
+      // HEAD에서 주입한 return-style 제거 (cleanup)
+      const rs = document.getElementById('return-style');
+      if (rs) rs.remove();
+
       setProgress(1);
       if (panel) { panel.style.visibility = 'visible'; panel.scrollTop = 0; }
       canvas.style.opacity = '0';
@@ -301,16 +305,9 @@
         panel.scrollTop = targetTop - panelTop - 80;
       }
 
-      // 부드럽게 페이지 fade in
-      gsap.to(document.documentElement, {
-        opacity: 1,
-        duration: 0.4,
-        ease: 'power2.out',
-        delay: 0.05
-      });
-
+      // 페이지가 이미 visible — opacity 처리 불필요
       tick();
-      return; // font await 스킵 — 파티클 불필요
+      return;
     }
 
     try { await document.fonts.load(`${FONT_WEIGHT} 150px ${FONT_FAMILY}`); }

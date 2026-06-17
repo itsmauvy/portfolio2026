@@ -352,26 +352,31 @@
     if (header) header.classList.add('visible');
     setTimeout(() => typeLogo('SOOBIN PORTFOLIO'), 400);
 
-    // 패널 숨긴 채 대기 (스크롤 확인 후 reveal)
-    if (panel) { panel.style.opacity = '0'; panel.style.visibility = 'visible'; }
+    // Lenis 초기화 전에 scrollTop 먼저 세팅 (Lenis가 올바른 위치로 시작하도록)
+    var _t = document.getElementById(_returnTo);
+    var _pos = _t ? Math.max(0, _t.offsetTop - 80) : 0;
+    if (panel) {
+      panel.style.opacity = '0';
+      panel.style.visibility = 'visible';
+      panel.scrollTop = _pos;
+    }
     if (overlay) overlay.style.opacity = '1';
 
     setTimeout(function() {
-      var t = document.getElementById(_returnTo);
-      var pos = t ? Math.max(0, t.offsetTop - 80) : 0;
+      // Lenis 내부 상태도 동기화
+      if (window.__lenis) {
+        window.__lenis.scroll = _pos;
+        window.__lenis.targetScroll = _pos;
+        window.__lenis.animatedScroll = _pos;
+      }
       function tryReveal() {
-        if (window.__lenis) {
-          window.__lenis.stop();
-          panel.scrollTop = pos;
-          window.__lenis.scroll = pos;
-          window.__lenis.targetScroll = pos;
-          window.__lenis.animatedScroll = pos;
-          window.__lenis.start();
-        } else if (panel) { panel.scrollTop = pos; }
-        if (!panel || Math.abs(panel.scrollTop - pos) < 5) {
+        if (!panel || Math.abs(panel.scrollTop - _pos) < 5) {
           gsap.to(document.documentElement, { opacity: 1, duration: 0.5, ease: 'power2.out' });
           gsap.to(panel, { opacity: 1, duration: 0.5, ease: 'power2.out' });
-        } else { requestAnimationFrame(tryReveal); }
+        } else {
+          panel.scrollTop = _pos;
+          requestAnimationFrame(tryReveal);
+        }
       }
       tryReveal();
     }, 0);

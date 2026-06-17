@@ -236,8 +236,12 @@
       onComplete: () => {
         animating = false;
         commitOpen();
-        // Lenis 초기화 후 스크롤
-        setTimeout(() => scrollToSection(sectionId), 0);
+        // 패널 잠깐 숨기고 → 스크롤 → fade in (about me 안 보이도록)
+        if (panel) panel.style.opacity = '0';
+        setTimeout(() => {
+          scrollToSection(sectionId);
+          gsap.to(panel, { opacity: 1, duration: 0.35, ease: 'power2.out' });
+        }, 0);
       }
     });
   }
@@ -336,12 +340,12 @@
     if (overlay) overlay.style.opacity = '1';
 
     // 페이지 fade in → 스크롤
-    // Lenis 초기화 완료 후 스크롤 (동기 JS 전부 끝난 뒤)
-    setTimeout(() => scrollToSection(_returnTo), 0);
-
-    // fade in (검정에서 panel 부드럽게 등장)
-    gsap.to(document.documentElement, { opacity: 1, duration: 0.6, ease: 'power2.out' });
-    gsap.from(panel, { scale: 0.98, duration: 0.6, ease: 'power2.out' });
+    // 스크롤 먼저, 그 다음 fade in (about me 안 보이도록)
+    setTimeout(() => {
+      scrollToSection(_returnTo);
+      gsap.to(document.documentElement, { opacity: 1, duration: 0.6, ease: 'power2.out' });
+      gsap.from(panel, { scale: 0.98, duration: 0.6, ease: 'power2.out' });
+    }, 0);
 
     setupNavLinks();
     tick();

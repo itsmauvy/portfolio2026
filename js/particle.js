@@ -326,15 +326,24 @@
     if (overlay) overlay.style.opacity = '1';
 
     // 페이지 fade in → 스크롤
-    // 스크롤 먼저 (페이지 보이기 전에)
+    // Lenis 초기화 전 임시 scrollTop (같은 스크립트 블록에서 바뀔 수 있음)
     const _target = document.getElementById(_returnTo);
-    if (_target && panel) {
-      panel.scrollTop = _target.offsetTop - 80;
-    }
+    if (_target && panel) panel.scrollTop = _target.offsetTop - 80;
 
-    // 그 다음 fade in
-    gsap.to(document.documentElement, { opacity: 1, duration: 0.5, ease: 'power2.out' });
-    gsap.from(panel, { scale: 0.97, duration: 0.55, ease: 'power2.out' });
+    // Lenis가 panel에 초기화되면 scrollTop 리셋 — 모든 동기 JS 완료 후 재스크롤
+    setTimeout(function() {
+      const t = document.getElementById(_returnTo);
+      if (!t) return;
+      if (window.__lenis) {
+        window.__lenis.scrollTo(t, { offset: -80, immediate: true });
+      } else if (panel) {
+        panel.scrollTop = t.offsetTop - 80;
+      }
+    }, 0);
+
+    // fade in (검정에서 panel 부드럽게 등장)
+    gsap.to(document.documentElement, { opacity: 1, duration: 0.6, ease: 'power2.out' });
+    gsap.from(panel, { scale: 0.98, duration: 0.6, ease: 'power2.out' });
 
     setupNavLinks();
     tick();

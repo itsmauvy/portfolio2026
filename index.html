@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ko" class="bg-black">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOOBIN — UX/UI Designer</title>
+  <script>history.scrollRestoration = 'manual'; window.scrollTo(0, 0);</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,500,1,0&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=20260617b">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+</head>
+<body class="antialiased bg-black">
+
+  <!-- Fixed header: z-100 -->
+  <header class="header" id="header">
+    <a class="header__logo" href="#" id="headerLogo"><span id="typedLogo"></span><span class="header__cursor">_</span></a>
+    <nav class="header__nav">
+      <a href="#work"><span class="nav-link-inner"><span>WORK</span><span aria-hidden="true">WORK</span></span></a>
+      <a href="#about"><span class="nav-link-inner"><span>ABOUT</span><span aria-hidden="true">ABOUT</span></span></a>
+      <a href="#contact"><span class="nav-link-inner"><span>CONTACT</span><span aria-hidden="true">CONTACT</span></span></a>
+    </nav>
+  </header>
+
+  <!-- Fixed particle canvas: z-10 -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Fixed hero section: z-20 (scroll cue, etc.) -->
+  <section class="hero-overlay" id="heroOverlay">
+    <div class="scroll-hint" id="scrollHint">
+      <svg width="12" height="24" viewBox="0 0 12 24" fill="none">
+        <line x1="6" y1="0" x2="6" y2="20" stroke="white" stroke-width="1" opacity="0.5"/>
+        <polyline points="2,16 6,22 10,16" stroke="white" stroke-width="1" fill="none" opacity="0.5"/>
+      </svg>
+      <span>SCROLL</span>
+    </div>
+  </section>
+
+  <!-- Background transition overlay: z-22, fades from transparent to cream -->
+  <div id="bgOverlay"></div>
+
+  <!-- Fixed content panel: z-25 — starts at translateY(100%), slides up -->
+  <div id="contentPanel">
+    <div class="white-bg-content">
+
+      <!-- Section 1: ABOUT ME (first thing user sees when sliding up) -->
+      <section class="section-designer" id="about">
+        <div class="about-me">
+
+          <div class="about-me-left">
+            <p class="designer-label">UX / UI DESIGNER &amp; PUBLISHER</p>
+            <h2 class="designer-name">ABOUT ME</h2>
+            <p class="about-me-intro"><span class="cube-wrap"><strong class="cube-text" id="aboutCubeText">문제를 해결하는</strong></span> 사람입니다.</p>
+
+            <div class="about-me-columns">
+              <div class="info-col">
+                <div class="info-group">
+                  <h3><span class="material-symbols-outlined">school</span>EDUCATION</h3>
+                  <p>단국대학교(죽전) 졸업</p>
+                </div>
+                <div class="info-group">
+                  <h3><span class="material-symbols-outlined">work</span>WORK EXPERIENCE</h3>
+                  <p><span class="info-date">2022.08 – 2026.02</span> (주) 쌤시크코스메틱<br><span class="info-sub">해외영업 / 이커머스 MD</span></p>
+                </div>
+                <div class="info-group">
+                  <h3><span class="material-symbols-outlined">language</span>LANGUAGES</h3>
+                  <p>영어 · 중국어 · 한국어 · 말레이시아어</p>
+                </div>
+                <div class="info-group">
+                  <h3><span class="material-symbols-outlined">build</span>SKILLS</h3>
+                  <div class="skills-grid">
+                    <span class="skill-chip"><span class="skill-chip-inner"><span>AI 활용 기술</span><span aria-hidden="true">AI 활용 기술</span></span></span>
+                    <span class="skill-chip"><span class="skill-chip-inner"><span>컨텐츠 기획</span><span aria-hidden="true">컨텐츠 기획</span></span></span>
+                    <span class="skill-chip"><span class="skill-chip-inner"><span>UX/UI 디자인</span><span aria-hidden="true">UX/UI 디자인</span></span></span>
+                    <span class="skill-chip"><span class="skill-chip-inner"><span>웹퍼블리싱</span><span aria-hidden="true">웹퍼블리싱</span></span></span>
+                    <span class="skill-chip"><span class="skill-chip-inner"><span>SNS 운영</span><span aria-hidden="true">SNS 운영</span></span></span>
+                    <span class="skill-chip"><span class="skill-chip-inner"><span>인플루언서 마케팅</span><span aria-hidden="true">인플루언서 마케팅</span></span></span>
+                    <span class="skill-chip"><span class="skill-chip-inner"><span>이커머스 MD</span><span aria-hidden="true">이커머스 MD</span></span></span>
+                    <span class="skill-chip"><span class="skill-chip-inner"><span>해외 영업</span><span aria-hidden="true">해외 영업</span></span></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-col">
+                <div class="info-group">
+                  <h3><span class="material-symbols-outlined">workspace_premium</span>CERTIFICATE</h3>
+                  <div class="cert-sub">
+                    <h4>WEB &amp; DEVELOPMENT</h4>
+                    <p>웹개발기능사 (취득 예정)<br>프로그래밍 기능사 (취득 예정)</p>
+                  </div>
+                  <div class="cert-sub">
+                    <h4>DESIGN</h4>
+                    <p>2026 GTQ 1급<br>2026 GTQi 1급</p>
+                  </div>
+                  <div class="cert-sub">
+                    <h4>LANGUAGE</h4>
+                    <p>2025 TOPIK 6급<br>2024 무역영어 1급<br>2022 ITT 비즈니스 영어 번역 2급<br>2021 TOEIC 910</p>
+                  </div>
+                  <div class="cert-sub">
+                    <h4>OTHERS</h4>
+                    <p>2025 네트워크관리사 2급<br>2025 운전면허 2종</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-me-right">
+            <div class="profile-photo-wrap">
+              <div class="profile-photo"><img src="images/profile.jpg" alt="장수빈"></div>
+              <!-- Small pixel-art stickers floating around the photo instead of
+                   a separate "What I Like" block — a quieter, more personal touch. -->
+              <img class="profile-sticker profile-sticker--game" style="--r:-10deg" src="images/sticker-gamev2.png" alt="게임">
+              <img class="profile-sticker profile-sticker--music" style="--r:8deg" src="images/sticker-musicv2.png" alt="음악">
+              <img class="profile-sticker profile-sticker--coffee" style="--r:-6deg" src="images/sticker-coffeev2.png" alt="커피">
+            </div>
+            <p class="profile-name">장수빈</p>
+            <dl class="profile-table">
+              <div><dt>D.O.B</dt><dd>1997.03.01</dd></div>
+              <div><dt>EMAIL</dt><dd>itsmauvely@gmail.com</dd></div>
+              <div><dt>TEL</dt><dd>010-4580-2999</dd></div>
+              <div><dt>NATIONALITY</dt><dd>말레이시아 (F-2)</dd></div>
+            </dl>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Scene transition: white → black wipe, scrubbed by scroll -->
+      <div class="scene-transition" data-fill="#0a0a0a">
+        <div class="scene-transition-fill"></div>
+      </div>
+
+      <!-- Section 2: Selected Works (gallery clip-path reveal) -->
+      <section class="section-work" id="work">
+        <div class="section-header">
+          <h2>SELECTED WORKS</h2>
+        </div>
+        <!-- Works grid: each card is text-over-media. On hover the card's
+             video autoplays (muted/loop) and every other card desaturates
+             + dims, spotlighting the hovered project. Poster <div> and the
+             empty <video> are placeholders — swap in real <img src> /
+             <video src> per project. -->
+        <div class="works-grid">
+          <a class="work-item" href="work/ode.html">
+            <div class="work-head">
+              <div class="work-meta">
+                <h3 class="work-title">ODE</h3>
+                <div class="work-tagline"><span>UX/UI Design</span><i class="work-divider"></i><span>Concept Design</span></div>
+              </div>
+            </div>
+            <div class="work-media">
+              <img class="work-poster" src="images/ode-thumb.png" alt="" loading="lazy">
+              <video class="work-video" muted loop playsinline preload="none" src="images/ode-video.mp4"></video>
+            </div>
+          </a>
+          <a class="work-item" href="#">
+            <div class="work-head">
+              <div class="work-meta">
+                <h3 class="work-title">Project Title</h3>
+                <div class="work-tagline"><span>UX/UI Design</span><i class="work-divider"></i><span>Redesign</span></div>
+              </div>
+            </div>
+            <div class="work-media">
+              <img class="work-poster" src="https://picsum.photos/seed/soobin2/800/450" alt="" loading="lazy">
+              <video class="work-video" muted loop playsinline preload="none"></video>
+            </div>
+          </a>
+          <a class="work-item" href="#">
+            <div class="work-head">
+              <div class="work-meta">
+                <h3 class="work-title">Project Title</h3>
+                <div class="work-tagline"><span>UX/UI Design</span><i class="work-divider"></i><span>Concept Design</span></div>
+              </div>
+            </div>
+            <div class="work-media">
+              <img class="work-poster" src="https://picsum.photos/seed/soobin3/800/450" alt="" loading="lazy">
+              <video class="work-video" muted loop playsinline preload="none"></video>
+            </div>
+          </a>
+          <a class="work-item" href="#">
+            <div class="work-head">
+              <div class="work-meta">
+                <h3 class="work-title">Project Title</h3>
+                <div class="work-tagline"><span>UX/UI Design</span><i class="work-divider"></i><span>Redesign</span></div>
+              </div>
+            </div>
+            <div class="work-media">
+              <img class="work-poster" src="https://picsum.photos/seed/soobin4/800/450" alt="" loading="lazy">
+              <video class="work-video" muted loop playsinline preload="none"></video>
+            </div>
+          </a>
+          <a class="work-item" href="#">
+            <div class="work-head">
+              <div class="work-meta">
+                <h3 class="work-title">Project Title</h3>
+                <div class="work-tagline"><span>UX/UI Design</span><i class="work-divider"></i><span>Concept Design</span></div>
+              </div>
+            </div>
+            <div class="work-media">
+              <img class="work-poster" src="https://picsum.photos/seed/soobin5/800/450" alt="" loading="lazy">
+              <video class="work-video" muted loop playsinline preload="none"></video>
+            </div>
+          </a>
+          <a class="work-item" href="#">
+            <div class="work-head">
+              <div class="work-meta">
+                <h3 class="work-title">Project Title</h3>
+                <div class="work-tagline"><span>UX/UI Design</span><i class="work-divider"></i><span>Redesign</span></div>
+              </div>
+            </div>
+            <div class="work-media">
+              <img class="work-poster" src="https://picsum.photos/seed/soobin6/800/450" alt="" loading="lazy">
+              <video class="work-video" muted loop playsinline preload="none"></video>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- Scene transition: black → white wipe, scrubbed by scroll -->
+      <div class="scene-transition" data-fill="#ffffff">
+        <div class="scene-transition-fill"></div>
+      </div>
+
+      <!-- Section 3: Skills -->
+      <section class="section-about" id="skills">
+        <div class="about-inner">
+          <div class="about-text">
+            <h2>UX/UI DESIGNER<br>& PUBLISHER</h2>
+            <p>사용자 중심의 디자인으로 문제를 해결하고,<br>직접 코드로 구현해 완성도 높은 제품을 만듭니다.</p>
+            <div class="tools">
+              <span>Figma</span><span>Photoshop</span><span>Illustrator</span><span>After Effects</span><span>HTML/CSS</span><span>JavaScript</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer / Contact -->
+      <footer class="footer" id="contact">
+        <div class="footer-inner">
+          <a class="footer-email" href="mailto:itsmauvely@gmail.com">
+            <span class="footer-email-text">
+              itsmauvely@gmail.com
+            </span>
+          </a>
+          <p class="footer-copy">© 2026 SOOBIN. All rights reserved.</p>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <script src="js/particle.js"></script>
+  <script>
+    (function () {
+      const el = document.getElementById('aboutCubeText');
+      if (!el) return;
+      const words = ['문제를 해결하는', '경험을 설계하는', '새로운 도전을 좋아하는', '디테일에 집착하는'];
+      let idx = 0;
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      gsap.set(el, { transformPerspective: 500, transformOrigin: '50% 100%' });
+
+      function rotate() {
+        if (prefersReducedMotion) {
+          idx = (idx + 1) % words.length;
+          el.textContent = words[idx];
+          return;
+        }
+
+        gsap.to(el, {
+          rotationX: 90,
+          opacity: 0,
+          duration: 0.32,
+          ease: 'power3.in',
+          onComplete: () => {
+            idx = (idx + 1) % words.length;
+            el.textContent = words[idx];
+            gsap.fromTo(el,
+              { rotationX: -90, opacity: 0 },
+              { rotationX: 0, opacity: 1, duration: 0.38, ease: 'power3.out' }
+            );
+          }
+        });
+      }
+
+      setInterval(rotate, 2600);
+    })();
+  </script>
+  <script>
+    (function () {
+      if (typeof ScrollTrigger === 'undefined') return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      const scroller = document.getElementById('contentPanel');
+      ScrollTrigger.defaults({ scroller });
+
+      // ── Lenis smooth scroll on the panel (not window — the panel is the
+      //    real scroller here). Driven by GSAP's ticker and wired to
+      //    ScrollTrigger.update so the two never fight over the scroll loop. ──
+      let lenis = null;
+      if (typeof Lenis !== 'undefined') {
+        lenis = new Lenis({
+          wrapper: scroller,
+          content: scroller.firstElementChild, // .white-bg-content
+          duration: 1.05,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          smoothWheel: true,
+          syncTouch: false, // leave touch native so the swipe-to-close gesture keeps working
+        });
+
+        lenis.on('scroll', ScrollTrigger.update);
+
+        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+        gsap.ticker.lagSmoothing(0);
+
+        // Expose so particle.js can reset scroll position on open/close.
+        window.__lenis = lenis;
+      }
+
+      // Scene transitions: each .scene-transition's fill scales up to cover
+      // it as you scroll through, so the white↔black section change reads
+      // as one continuous wipe instead of a hard cut at a section edge.
+      document.querySelectorAll('.scene-transition').forEach((el) => {
+        const fill = el.querySelector('.scene-transition-fill');
+        if (!fill) return;
+        fill.style.background = el.dataset.fill || '#000';
+
+        gsap.fromTo(fill, { scaleY: 0 }, {
+          scaleY: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+          }
+        });
+      });
+
+      // Generic scroll reveal — every section's content fades + rises in,
+      // staggered, instead of just being statically there. Used everywhere
+      // so scrolling itself carries the motion, per-section.
+      function reveal(selector) {
+        document.querySelectorAll(selector).forEach((group) => {
+          const items = group.children.length ? Array.from(group.children) : [group];
+          gsap.from(items, {
+            y: 28,
+            opacity: 0,
+            duration: 0.7,
+            ease: 'power3.out',
+            stagger: 0.08,
+            scrollTrigger: {
+              trigger: group,
+              start: 'top 85%',
+              toggleActions: 'play none none none'
+            }
+          });
+        });
+      }
+
+      reveal('.info-col');
+      reveal('.section-header');
+      reveal('.about-text');
+      reveal('.footer-inner');
+
+      // Works cards: a CSS-only fade-in on scroll (no GSAP opacity hold) so
+      // they can never get stuck invisible if a ScrollTrigger misfires.
+      const workItems = document.querySelectorAll('.work-item');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+          });
+        }, { root: scroller, threshold: 0.12 });
+        workItems.forEach((it) => io.observe(it));
+      } else {
+        workItems.forEach((it) => it.classList.add('is-in'));
+      }
+      // Safety net: never let a card stay hidden if the observer misfires.
+      setTimeout(() => workItems.forEach((it) => it.classList.add('is-in')), 2500);
+
+      // Selected Works: play a card's video on hover, reset when leaving.
+      // No-ops gracefully until each <video> is given a real src.
+      document.querySelectorAll('.work-item').forEach((item) => {
+        const video = item.querySelector('.work-video');
+        if (!video) return;
+        item.addEventListener('mouseenter', () => {
+          if (!video.getAttribute('src') && !video.currentSrc) return;
+          const p = video.play();
+          if (p) p.catch(() => {});
+        });
+        item.addEventListener('mouseleave', () => {
+          video.pause();
+          video.currentTime = 0;
+        });
+      });
+
+      window.addEventListener('load', () => ScrollTrigger.refresh());
+
+      // Page transition: 뷰포트 전체를 dark overlay로 덮고 이동 (파티클 노출 방지)
+      const transOverlay = document.createElement('div');
+      transOverlay.style.cssText = 'position:fixed;inset:0;background:#2b3133;z-index:9999;opacity:0;pointer-events:none;transition:opacity 0.18s ease';
+      document.body.appendChild(transOverlay);
+
+      document.querySelectorAll('.work-item[href]:not([href="#"])').forEach((link) => {
+        link.addEventListener('click', (e) => {
+          const href = link.getAttribute('href');
+          if (!href || href === '#') return;
+          e.preventDefault();
+          transOverlay.style.pointerEvents = 'all';
+          transOverlay.style.opacity = '1';
+          setTimeout(() => { window.location.href = href; }, 180);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

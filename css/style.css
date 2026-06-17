@@ -1,0 +1,840 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a0a;
+  --text: #ffffff;
+  --font: 'Syne', sans-serif;
+  --panel-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  background: var(--bg);
+  overflow: hidden; /* no window scroll — panel handles it */
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  overflow: hidden;
+  height: 100dvh;
+}
+
+/* ── Header ── */
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 48px;
+  opacity: 0;
+  transform: translateY(-16px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+.header.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.header__logo {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #fff;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.header__cursor {
+  display: inline-block;
+  margin-left: 2px;
+  animation: header-cursor-blink 1s steps(1) infinite;
+}
+
+@keyframes header-cursor-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.header__nav {
+  display: flex;
+  gap: 40px;
+}
+
+.header__nav a {
+  display: inline-block;
+  overflow: hidden;
+  height: 1.4em;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #fff;
+  text-decoration: none;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+.header__nav a:hover { opacity: 1; }
+
+/* Plain rising-text swap — no blur, just slide. */
+.nav-link-inner {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-link-inner span {
+  display: block;
+  line-height: 1.4em;
+  transition: transform 0.3s var(--panel-ease);
+}
+
+/* First span stays in normal flow — it's what gives the link its size. */
+.nav-link-inner span:first-child {
+  position: relative;
+  transform: translateY(0%);
+}
+
+/* Duplicate is just an overlay riding on top, starting one line below. */
+.nav-link-inner span:last-child {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  transform: translateY(100%);
+}
+
+.header__nav a:hover .nav-link-inner span:first-child {
+  transform: translateY(-100%);
+}
+
+.header__nav a:hover .nav-link-inner span:last-child {
+  transform: translateY(0%);
+}
+
+/* ── Fixed particle canvas ── */
+#particle-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  z-index: 1;
+  transform-origin: 50% 50%;
+  will-change: filter, transform, opacity;
+}
+
+/* ── Hero overlay (holds scroll hint) ── */
+.hero-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+/* ── Scroll hint ── */
+.scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+
+.scroll-hint.visible { opacity: 1; }
+
+.scroll-hint span {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.35);
+}
+
+/* ── Page transition: View Transitions API (JS-driven, Chrome 111+) ── */
+@keyframes vt-slide-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes vt-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+::view-transition-new(root) {
+  animation: vt-slide-in 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+::view-transition-old(root) {
+  animation: vt-fade-out 0.25s ease forwards;
+}
+
+/* ── Background transition overlay ── */
+#bgOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 22;
+  background: #ffffff;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Content panel: slides up from below ── */
+#contentPanel {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  background: #ffffff;
+  color: #1a1a1a;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  opacity: 0;
+  visibility: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#contentPanel::-webkit-scrollbar { display: none; }
+
+/* ── ABOUT ME section (first thing in panel) ── */
+.section-designer {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  /* Center the resume block in the viewport when it's shorter than one
+     screen (no more big empty band before Selected Works), but fall back
+     to top-alignment when it's taller so the heading never gets clipped
+     out of the scroll. */
+  justify-content: safe center;
+  padding: 80px 10vw 32px;
+}
+
+.designer-label {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: rgba(0,0,0,0.35);
+}
+
+.designer-name {
+  font-size: clamp(52px, 6.4vw, 76px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 0.9;
+  color: #1a1a1a;
+  margin-top: 10px;
+}
+
+/* ── ABOUT ME: resume-style two-column layout ── */
+.about-me {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  align-items: start;
+  gap: 80px;
+  width: 100%;
+}
+
+.about-me-intro {
+  font-size: clamp(22px, 2.6vw, 28px);
+  color: rgba(0,0,0,0.7);
+  margin-top: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+
+.about-me-intro strong {
+  font-weight: 800;
+}
+
+/* ── Cube-rotate text in intro line ── */
+.cube-wrap {
+  display: inline-block;
+  perspective: 500px;
+  vertical-align: bottom;
+}
+
+.cube-text {
+  display: inline-block;
+  transform-origin: 50% 100%;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.about-me-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  margin-top: 56px;
+}
+
+.info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+}
+
+/* A small line icon per category instead of a flat list of equally
+   weighted headers — gives the eye a rhythm to follow without adding color. */
+.info-group h3 {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+}
+
+.info-group h3 .material-symbols-outlined {
+  font-size: 25px;
+  flex-shrink: 0;
+  color: #1a1a1a;
+}
+
+.info-group p {
+  font-size: 17px;
+  line-height: 1.7;
+  color: rgba(0,0,0,0.55);
+}
+
+.info-date {
+  color: rgba(0,0,0,0.35);
+  margin-right: 4px;
+}
+
+.info-sub {
+  color: rgba(0,0,0,0.4);
+  font-size: 15px;
+}
+
+/* Chips instead of a 2-col text list — wraps naturally so it doesn't
+   stretch into four long, sparse rows. */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, max-content);
+  gap: 8px 10px;
+}
+
+/* Chip is just the clipping frame + border; the rising text lives in
+   the inner two-row stack so hover swaps "label" for a bolder duplicate
+   of itself instead of inverting the background. */
+.skill-chip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 8px 17px;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 22px;
+  text-align: center;
+  transition: border-color 0.25s ease;
+}
+
+/* Hover-only effects are scoped to mouse-capable devices. On touch
+   screens there's no "mouse leave" event, so tapping a chip would
+   trigger :hover and leave it permanently stuck in the bold/blurred
+   state — exactly what was showing up in chips that had been tapped. */
+@media (hover: hover) and (pointer: fine) {
+  .skill-chip:hover {
+    border-color: rgba(0,0,0,0.3);
+  }
+}
+
+/* Plain rising-text swap — no blur, just slide. Explicit height +
+   overflow:hidden here too, as a hard clip independent of the chip's own
+   sizing, so the duplicate line can never visibly poke out. Fixed px
+   (not em) because em here was resolving against the wrong inherited
+   font-size, leaving the box taller than one real line of text. */
+.skill-chip-inner {
+  position: relative;
+  display: inline-block;
+  height: 22px;
+  overflow: hidden;
+  /* clip-path + isolation force a hard clip boundary that filter:blur()
+     can't bleed past — overflow:hidden alone can let a blurred child's
+     glow render slightly outside the box in some browsers. */
+  clip-path: inset(0);
+  isolation: isolate;
+}
+
+.skill-chip-inner span {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  /* px, not unitless 1.4 — was rounding inconsistently against the box
+     height across browsers/zoom levels and letting a sliver of the
+     hidden duplicate line peek out even at rest. Matching the box
+     height exactly removes that subpixel gap. */
+  line-height: 22px;
+  white-space: nowrap;
+  /* Fast revert by default — so if the mouse just glides past without
+     properly hovering, it snaps back to sharp/rest almost immediately
+     instead of lingering mid-blur. The slow, deliberate blur-while-rising
+     only happens on the hover transition below. */
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .skill-chip:hover .skill-chip-inner span {
+    transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1), filter 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+}
+
+/* First span stays in normal flow — it's what gives the chip its size.
+   No opacity transition: it stays fully visible while it slides + blurs
+   out, so the blur is actually seen mid-transition instead of fading
+   away with it. The hard clip on .skill-chip-inner hides it once it's
+   off-frame. */
+.skill-chip-inner span:first-child {
+  position: relative;
+  color: rgba(0,0,0,0.6);
+  transform: translateY(0%);
+  filter: blur(0px);
+}
+
+/* Duplicate is an overlay riding on top, parked further than one full
+   line below at rest — bold (700) Hangul glyphs can overshoot their own
+   line-box by a few px, so sitting at exactly translateY(100%) let that
+   overshoot creep back into the visible window even while "hidden".
+   The extra +8px margin guarantees it's fully clear of the clip edge. */
+.skill-chip-inner span:last-child {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  color: #1a1a1a;
+  font-weight: 700;
+  transform: translateY(calc(100% + 8px));
+  filter: blur(6px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .skill-chip:hover .skill-chip-inner span:first-child {
+    transform: translateY(calc(-100% - 8px));
+    filter: blur(6px);
+  }
+
+  .skill-chip:hover .skill-chip-inner span:last-child {
+    transform: translateY(0%);
+    filter: blur(0px);
+  }
+}
+
+.cert-sub {
+  margin-bottom: 32px;
+}
+
+.cert-sub:last-child {
+  margin-bottom: 0;
+}
+
+.cert-sub h4 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(0,0,0,0.4);
+  margin-bottom: 12px;
+}
+
+.cert-sub p {
+  font-size: 17px;
+  line-height: 1.7;
+  color: rgba(0,0,0,0.55);
+}
+
+/* ── ABOUT ME: right profile card ── */
+.about-me-right {
+  display: flex;
+  flex-direction: column;
+  margin-top: 110px;
+}
+
+.profile-photo-wrap {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.profile-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: rgba(0,0,0,0.07);
+  border: 1px solid rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.profile-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Small pixel-art stickers floating at the photo's corners — the "What I
+   Like" idea shrunk down to a quiet detail instead of its own scrapbook
+   block. Each is a standalone image (no pill/background of its own), with
+   a drop-shadow to lift it off the photo and a slow idle wiggle to sell
+   the stuck-on-by-hand feel. */
+.profile-sticker {
+  position: absolute;
+  width: 56px;
+  filter: drop-shadow(0 8px 14px rgba(0,0,0,0.18));
+  transform: rotate(var(--r, 0deg));
+  animation: stickerWiggle 4.5s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  transition: transform 0.25s var(--panel-ease), filter 0.25s var(--panel-ease);
+}
+
+.profile-sticker:hover {
+  transform: rotate(0deg) scale(1.12);
+  filter: drop-shadow(0 12px 20px rgba(0,0,0,0.24));
+  animation-play-state: paused;
+}
+
+.profile-sticker--game {
+  width: 100px;
+  top: -16px;
+  left: -20px;
+  --delay: 0s;
+}
+
+.profile-sticker--music {
+  width: 104px;
+  bottom: 20px;
+  right: -24px;
+  --delay: 1.2s;
+}
+
+.profile-sticker--coffee {
+  width: 88px;
+  bottom: -18px;
+  left: 30px;
+  --delay: 2.4s;
+}
+
+@keyframes stickerWiggle {
+  0%, 100% { transform: rotate(var(--r, 0deg)); }
+  50% { transform: rotate(calc(var(--r, 0deg) * -0.6)); }
+}
+
+.profile-name {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 32px;
+}
+
+.profile-table {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile-table > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 16px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  padding-bottom: 12px;
+}
+
+.profile-table dt {
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: rgba(0,0,0,0.4);
+  white-space: nowrap;
+}
+
+.profile-table dd {
+  color: rgba(0,0,0,0.7);
+  text-align: right;
+}
+
+@media (max-width: 860px) {
+  .about-me {
+    grid-template-columns: 1fr;
+  }
+  .about-me-columns {
+    grid-template-columns: 1fr;
+  }
+  .about-me-right {
+    max-width: 280px;
+    margin-top: 120px;
+  }
+  .profile-sticker--game {
+    left: 0;
+  }
+  .profile-sticker--music {
+    right: 0;
+  }
+  .profile-sticker--coffee {
+    left: 12px;
+  }
+}
+
+/* ── Scene transition: a short pinned-feeling strip whose fill scales up
+   as you scroll through it, so the background color change reads as one
+   continuous motion instead of a hard cut at a section boundary. ── */
+.scene-transition {
+  position: relative;
+  height: 14vh;
+  overflow: hidden;
+}
+
+.scene-transition-fill {
+  position: absolute;
+  inset: 0;
+  transform: scaleY(0);
+  transform-origin: bottom;
+}
+
+/* ── Selected Works: flips to the dark palette — the hero's color,
+   reappearing once you're deep enough into the scroll to feel like a
+   deliberate "next chapter" rather than the same white page forever. ── */
+.section-work {
+  padding: 72px 10vw 120px;
+  background: #0a0a0a;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 72px;
+}
+
+.section-header h2 {
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.section-header p {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.4);
+}
+
+/* ── Selected Works grid ──
+   Text-over-media cards in a 3-up grid. Hover plays the card's video and
+   desaturates every sibling, spotlighting the hovered project. ── */
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(1px, 1fr));
+  gap: 56px 24px;
+}
+
+.work-item {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  text-decoration: none;
+  color: inherit;
+  /* Scroll fade-in (driven by IntersectionObserver adding .is-in). */
+  opacity: 0;
+  transform: translateY(24px);
+  /* Sibling dimming: when the grid is hovered every card fades + drains
+     of colour; the one actually under the cursor is restored below. */
+  transition: opacity 0.55s var(--panel-ease, ease),
+              transform 0.55s var(--panel-ease, ease),
+              filter 0.45s var(--panel-ease, ease);
+}
+
+.work-item.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .works-grid:hover .work-item {
+    opacity: 0.4;
+    filter: grayscale(1);
+  }
+  .works-grid:hover .work-item:hover {
+    opacity: 1;
+    filter: none;
+  }
+}
+
+.work-head {
+  display: flex;
+  align-items: flex-start;
+}
+
+.work-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.work-title {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: #f2f2f2;
+}
+
+.work-tagline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+}
+
+.work-divider {
+  flex: none;
+  width: 12px;
+  height: 1px;
+  background: rgba(255,255,255,0.25);
+}
+
+.work-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #111;
+}
+
+.work-poster,
+.work-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Placeholder poster — a duotone block (hue set per-card inline) so the
+   grayscale-on-hover effect is visible before real thumbnails exist.
+   Replace .work-poster with an <img> and give .work-video a src to wire
+   in the real hover-to-play footage. */
+.work-poster {
+  background: linear-gradient(135deg,
+    hsl(var(--hue, 210) 55% 42%),
+    hsl(calc(var(--hue, 210) + 40) 50% 20%));
+}
+
+.work-video {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.work-item:hover .work-video {
+  opacity: 1;
+}
+
+@media (max-width: 1100px) {
+  .works-grid { grid-template-columns: repeat(2, minmax(1px, 1fr)); }
+}
+
+@media (max-width: 680px) {
+  .works-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* ── About ── */
+.section-about {
+  padding: 140px 10vw;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.about-inner {
+  max-width: 700px;
+}
+
+.about-text h2 {
+  font-size: clamp(32px, 5vw, 68px);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  margin-bottom: 36px;
+  color: #1a1a1a;
+}
+
+.about-text p {
+  font-size: clamp(14px, 1.5vw, 17px);
+  font-weight: 400;
+  line-height: 1.8;
+  color: rgba(0,0,0,0.5);
+  margin-bottom: 48px;
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tools span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(0,0,0,0.4);
+  padding: 8px 16px;
+  border: 1px solid rgba(0,0,0,0.15);
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.tools span:hover {
+  border-color: rgba(0,0,0,0.5);
+  color: rgba(0,0,0,0.9);
+}
+
+/* ── Footer ── */
+.footer {
+  padding: 80px 10vw 60px;
+}
+
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.footer-email {
+  display: inline-block;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.footer-email-text {
+  display: block;
+  font-size: clamp(24px, 3.5vw, 52px);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #1a1a1a;
+  opacity: 0.25;
+  transition: opacity 0.4s ease;
+  white-space: nowrap;
+}
+
+.footer-email:hover .footer-email-text {
+  opacity: 1;
+}
+
+.footer-copy {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(0,0,0,0.25);
+}

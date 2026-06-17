@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <!-- 페인트 전 즉시 실행 — 흰 화면 플래시 방지 -->
+  <script>document.documentElement.style.opacity='0'</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ODE — SOOBIN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #2b3133;
+      --text: #ffffff;
+      --font: 'Syne', sans-serif;
+    }
+
+    .char { display: inline-block; will-change: transform; }
+    .word { display: inline-block; will-change: transform; }
+
+    html, body {
+      background-color: #2b3133;
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100dvh;
+    }
+
+    /* Bidaya gradient overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(180deg, #fafafa 0%, rgba(250,250,250,0.19) 18.78%, #2b3133 30.85%, #2b3133 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Bidaya 노이즈 텍스처 */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.13;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    .detail-header,
+    .detail-wrap {
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Header */
+    .detail-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 48px;
+    }
+
+    .detail-header a {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .detail-nav {
+      display: flex;
+      gap: 40px;
+    }
+
+    .detail-nav a {
+      display: inline-block;
+      overflow: hidden;
+      height: 1.4em;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--text);
+      text-decoration: none;
+      opacity: 0.5;
+      transition: opacity 0.3s;
+    }
+
+    .detail-nav a:hover { opacity: 1; }
+
+    .nav-link-inner {
+      position: relative;
+      display: inline-block;
+    }
+
+    .nav-link-inner span {
+      display: block;
+      line-height: 1.4em;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav-link-inner span:first-child {
+      position: relative;
+      transform: translateY(0%);
+    }
+
+    .nav-link-inner span:last-child {
+      position: absolute;
+      left: 0; top: 0;
+      width: 100%;
+      transform: translateY(100%);
+    }
+
+    .detail-nav a:hover .nav-link-inner span:first-child { transform: translateY(-100%); }
+    .detail-nav a:hover .nav-link-inner span:last-child  { transform: translateY(0%); }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .back-btn svg { flex-shrink: 0; }
+
+    /* ── 히어로: 영상 + 텍스트 오버레이 ── */
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .hero video,
+    .hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* 텍스트 가독성 확보용 gradient overlay */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.25) 0%,
+        rgba(0,0,0,0) 40%,
+        rgba(0,0,0,0.55) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* 텍스트: 좌하단 고정 */
+    .hero-text {
+      position: absolute;
+      bottom: 52px;
+      left: 52px;
+      z-index: 2;
+    }
+
+    .detail-category {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      opacity: 0.7;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+
+    .detail-title {
+      font-size: clamp(52px, 8vw, 96px);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      overflow: visible;
+      color: #fff;
+    }
+
+    .detail-tagline {
+      font-size: 15px;
+      font-weight: 400;
+      opacity: 0.65;
+      color: #fff;
+    }
+
+    /* 히어로 아래 메타 + 제작과정 */
+    .detail-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .detail-body {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 48px;
+      padding: 80px 0 120px;
+    }
+
+    .detail-meta h3 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      opacity: 0.4;
+      margin-bottom: 12px;
+    }
+
+    .detail-meta p {
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .detail-desc p {
+      font-size: 17px;
+      line-height: 1.8;
+      opacity: 0.75;
+    }
+
+    /* ── 제작과정 ── */
+    .process {
+      width: 100%;
+    }
+
+    /* 섹션 공통 */
+    .process-section {
+      padding: 120px 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* 좌우 여백 있는 텍스트 컨테이너 */
+    .process-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .process-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      opacity: 0.4;
+      margin-bottom: 24px;
+    }
+
+    .process-title {
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .process-desc {
+      font-size: 16px;
+      line-height: 1.8;
+      opacity: 0.6;
+      max-width: 560px;
+      margin-bottom: 64px;
+    }
+
+    /* 이미지 그리드 */
+    .process-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .process-grid.col-2 { grid-template-columns: 1fr 1fr; }
+    .process-grid.col-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+    .process-grid img {
+      width: 100%;
+      display: block;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    /* full-bleed 이미지 */
+    .process-fullbleed {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      overflow: hidden;
+    }
+
+    .process-fullbleed img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+      .hero-text { left: 24px; bottom: 36px; }
+      .detail-wrap { padding: 0 24px; }
+      .detail-header { padding: 24px; }
+      .detail-body { grid-template-columns: 1fr; }
+      .process-inner { padding: 0 24px; }
+      .process-grid.col-2,
+      .process-grid.col-3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="detail-header">
+    <a href="../index.html#work" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      BACK
+    </a>
+    <nav class="detail-nav">
+      <a href="../index.html#work"><span class="nav-link-inner"><span>WORK</span><span aria-hidden="true">WORK</span></span></a>
+      <a href="../index.html#about"><span class="nav-link-inner"><span>ABOUT</span><span aria-hidden="true">ABOUT</span></span></a>
+      <a href="../index.html#contact"><span class="nav-link-inner"><span>CONTACT</span><span aria-hidden="true">CONTACT</span></span></a>
+    </nav>
+  </header>
+
+  <!-- 히어로: 영상 + 텍스트 오버레이 -->
+  <div class="hero">
+    <video autoplay muted loop playsinline poster="ode-thumb.png">
+      <source src="ode-video.mp4" type="video/mp4">
+      <img src="ode-thumb.png" alt="ODE 커버">
+    </video>
+    <div class="hero-text">
+      <p class="detail-category">UX/UI DESIGN · CONCEPT DESIGN</p>
+      <h1 class="detail-title">ODE</h1>
+      <p class="detail-tagline">뷰티 브랜드 — UX/UI 디자인 · 브랜딩 · 웹퍼블리싱</p>
+    </div>
+  </div>
+
+  <!-- 프로젝트 메타 -->
+  <main class="detail-wrap">
+    <div class="detail-body">
+      <div class="detail-meta">
+        <h3>YEAR</h3>
+        <p>2026</p>
+        <h3>ROLE</h3>
+        <p>UX/UI 디자인<br>브랜딩<br>웹퍼블리싱</p>
+        <h3>TYPE</h3>
+        <p>Concept Design</p>
+      </div>
+      <div class="detail-desc">
+        <p>ODE는 직접 기획한 뷰티 브랜드입니다. 브랜드 아이덴티티 설계부터 UX/UI 디자인, 웹 퍼블리싱까지 전 과정을 진행했습니다.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- 제작과정 -->
+  <section class="process">
+
+    <!-- 01 개요 -->
+    <div class="process-section">
+      <div class="process-inner">
+        <p class="process-label">01 — OVERVIEW</p>
+        <h2 class="process-title">브랜드 개요</h2>
+        <p class="process-desc">이미지와 텍스트 내용을 여기에 넣어주세요.</p>
+        <div class="process-grid col-2">
+          <img src="https://picsum.photos/seed/ode01/800/600" alt="">
+          <img src="https://picsum.photos/seed/ode02/800/600" alt="">
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 리서치 -->
+    <div class="process-section">
+      <div class="process-inner">
+        <p class="process-label">02 — RESEARCH</p>
+        <h2 class="process-title">리서치 & 컨셉</h2>
+        <p class="process-desc">리서치 과정과 컨셉 방향을 설명해주세요.</p>
+      </div>
+      <div class="process-fullbleed">
+        <img src="https://picsum.photos/seed/ode03/1920/900" alt="">
+      </div>
+    </div>
+
+    <!-- 03 디자인 -->
+    <div class="process-section">
+      <div class="process-inner">
+        <p class="process-label">03 — DESIGN</p>
+        <h2 class="process-title">UI 디자인</h2>
+        <p class="process-desc">주요 화면 디자인과 컴포넌트를 보여주세요.</p>
+        <div class="process-grid col-3">
+          <img src="https://picsum.photos/seed/ode04/600/800" alt="">
+          <img src="https://picsum.photos/seed/ode05/600/800" alt="">
+          <img src="https://picsum.photos/seed/ode06/600/800" alt="">
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 결과물 -->
+    <div class="process-section">
+      <div class="process-inner">
+        <p class="process-label">04 — RESULT</p>
+        <h2 class="process-title">최종 결과물</h2>
+        <p class="process-desc">완성된 디자인 결과물입니다.</p>
+      </div>
+      <div class="process-fullbleed">
+        <img src="https://picsum.photos/seed/ode07/1920/1080" alt="">
+      </div>
+    </div>
+
+  </section>
+
+  <script>
+    (function () {
+      function splitChars(el) {
+        const text = el.textContent;
+        el.textContent = '';
+        return text.split('').map(function(ch) {
+          var s = document.createElement('span');
+          s.className = 'char';
+          s.textContent = ch;
+          el.appendChild(s);
+          return s;
+        });
+      }
+
+      function splitWords(el) {
+        var parts = el.textContent.trim().split(/(\s+)/);
+        el.textContent = '';
+        var spans = [];
+        parts.forEach(function(p) {
+          if (/^\s+$/.test(p)) {
+            el.appendChild(document.createTextNode(' '));
+          } else {
+            var s = document.createElement('span');
+            s.className = 'word';
+            s.textContent = p;
+            el.appendChild(s);
+            spans.push(s);
+          }
+        });
+        return spans;
+      }
+
+      requestAnimationFrame(function () {
+        document.documentElement.style.opacity = '';
+
+        var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+        // 카테고리: 단어별 blur + rise
+        var catWords = splitWords(document.querySelector('.detail-category'));
+        tl.from(catWords, {
+          opacity: 0,
+          filter: 'blur(6px)',
+          y: 8,
+          duration: 0.8,
+          stagger: 0.1
+        }, 0.2);
+
+        // 타이틀: 글자별 blur + rise (Bidaya Lumin 효과)
+        var chars = splitChars(document.querySelector('.detail-title'));
+        tl.from(chars, {
+          opacity: 0,
+          filter: 'blur(10px)',
+          y: 20,
+          duration: 1.4,
+          stagger: 0.1
+        }, 0.6);
+
+        // 태그라인: blur + 살짝 rise
+        tl.from('.detail-tagline', {
+          opacity: 0,
+          filter: 'blur(4px)',
+          y: 12,
+          duration: 1
+        }, '-=0.4');
+
+        // 히어로 영상: 텍스트 끝난 후 scale+fade
+        tl.from('.hero video', {
+          opacity: 0,
+          scale: 1.04,
+          duration: 1.4
+        }, '+=0.1');
+
+        // 본문: 오른쪽에서 슬며시
+        tl.from('.detail-body', {
+          opacity: 0,
+          x: 24,
+          duration: 1
+        }, '-=0.7');
+
+        // ── ScrollTrigger: 제작과정 섹션 ──
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 섹션 라벨 + 제목 + 설명: 스크롤 진입 시 순차 등장
+        document.querySelectorAll('.process-section').forEach(function(section) {
+          var label = section.querySelector('.process-label');
+          var title = section.querySelector('.process-title');
+          var desc  = section.querySelector('.process-desc');
+          var imgs  = section.querySelectorAll('img');
+
+          var stl = gsap.timeline({
+            scrollTrigger: {
+              trigger: section,
+              start: 'top 80%',
+              once: true
+            }
+          });
+
+          if (label) stl.from(label, { opacity: 0, y: 10, filter: 'blur(4px)', duration: 0.7 }, 0);
+          if (title) stl.from(title, { opacity: 0, y: 24, duration: 0.9 }, 0.15);
+          if (desc)  stl.from(desc,  { opacity: 0, y: 16, duration: 0.8 }, 0.3);
+          if (imgs.length) stl.from(imgs, {
+            opacity: 0, y: 32, scale: 0.98,
+            duration: 1, stagger: 0.12
+          }, 0.4);
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

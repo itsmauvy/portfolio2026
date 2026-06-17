@@ -210,11 +210,17 @@
     const t = document.getElementById(sectionId);
     if (!t || !panel) return;
     const pos = Math.max(0, t.offsetTop - 80);
-    // 직접 scrollTop 먼저
-    panel.scrollTop = pos;
-    // Lenis에도 알려서 내부 상태 동기화
+
     if (window.__lenis) {
-      window.__lenis.scrollTo(pos, { immediate: true });
+      // Lenis 내부 상태 직접 덮어쓰기 → RAF에서 덮어씌우지 못하게 막음
+      window.__lenis.stop();
+      panel.scrollTop = pos;
+      window.__lenis.scroll = pos;
+      window.__lenis.targetScroll = pos;
+      window.__lenis.animatedScroll = pos;
+      window.__lenis.start();
+    } else {
+      panel.scrollTop = pos;
     }
   }
 

@@ -276,22 +276,24 @@
     panelOpen = true;
     phase = 'idle';
 
+    // 헤더 표시
+    const header = document.querySelector('.header');
+    if (header) header.classList.add('visible');
+
     if (panel) {
       gsap.set(panel, { opacity: 1 });
       panel.style.visibility = 'visible';
       panel.scrollTop = 0;
     }
 
-    // 섹션 스크롤
-    const _target = document.getElementById(_returnTo);
-    if (_target && panel) {
-      const panelTop = panel.getBoundingClientRect().top;
-      const targetTop = _target.getBoundingClientRect().top;
-      panel.scrollTop = targetTop - panelTop - 80;
-    }
-
-    // fade + scale in
+    // 스크롤: 레이아웃 확정 후 다음 프레임에 계산
     requestAnimationFrame(function() {
+      const _target = document.getElementById(_returnTo);
+      if (_target && panel) {
+        panel.scrollTop = _target.offsetTop - 80;
+      }
+
+      // fade + scale in
       document.documentElement.style.opacity = '1';
       gsap.from(panel, { opacity: 0, scale: 0.97, duration: 0.55, ease: 'power2.out' });
     });

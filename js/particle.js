@@ -206,10 +206,19 @@
     });
   }
 
+  function scrollToSection(sectionId) {
+    const t = document.getElementById(sectionId);
+    if (!t) return;
+    if (window.__lenis) {
+      window.__lenis.scrollTo(t, { offset: -80, immediate: true });
+    } else if (panel) {
+      panel.scrollTop = t.offsetTop - 80;
+    }
+  }
+
   function navOpenAndScroll(sectionId) {
-    const target = document.getElementById(sectionId);
     if (panelOpen) {
-      if (target && panel) panel.scrollTop = target.offsetTop - 80;
+      scrollToSection(sectionId);
       return;
     }
     if (animating || phase !== 'ready') return;
@@ -227,7 +236,8 @@
       onComplete: () => {
         animating = false;
         commitOpen();
-        if (target && panel) panel.scrollTop = target.offsetTop - 80;
+        // Lenis 초기화 후 스크롤
+        setTimeout(() => scrollToSection(sectionId), 0);
       }
     });
   }
@@ -326,20 +336,8 @@
     if (overlay) overlay.style.opacity = '1';
 
     // 페이지 fade in → 스크롤
-    // Lenis 초기화 전 임시 scrollTop (같은 스크립트 블록에서 바뀔 수 있음)
-    const _target = document.getElementById(_returnTo);
-    if (_target && panel) panel.scrollTop = _target.offsetTop - 80;
-
-    // Lenis가 panel에 초기화되면 scrollTop 리셋 — 모든 동기 JS 완료 후 재스크롤
-    setTimeout(function() {
-      const t = document.getElementById(_returnTo);
-      if (!t) return;
-      if (window.__lenis) {
-        window.__lenis.scrollTo(t, { offset: -80, immediate: true });
-      } else if (panel) {
-        panel.scrollTop = t.offsetTop - 80;
-      }
-    }, 0);
+    // Lenis 초기화 완료 후 스크롤 (동기 JS 전부 끝난 뒤)
+    setTimeout(() => scrollToSection(_returnTo), 0);
 
     // fade in (검정에서 panel 부드럽게 등장)
     gsap.to(document.documentElement, { opacity: 1, duration: 0.6, ease: 'power2.out' });

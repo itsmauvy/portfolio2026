@@ -276,27 +276,33 @@
     panelOpen = true;
     phase = 'idle';
 
-    // 헤더 표시
+    // 헤더 표시 + 로고 타이핑
     const header = document.querySelector('.header');
     if (header) header.classList.add('visible');
+    setTimeout(() => typeLogo('SOOBIN PORTFOLIO'), 400);
 
+    // 패널 즉시 세팅 (inline style — CSS 충돌 없음)
     if (panel) {
-      gsap.set(panel, { opacity: 1 });
+      panel.style.opacity = '1';
       panel.style.visibility = 'visible';
       panel.scrollTop = 0;
     }
+    if (overlay) overlay.style.opacity = '1';
 
-    // fade in 즉시
-    document.documentElement.style.opacity = '1';
-    gsap.from(panel, { opacity: 0, scale: 0.97, duration: 0.55, ease: 'power2.out' });
-
-    // 스크롤: 레이아웃 완전히 잡힌 후 실행
-    setTimeout(function() {
-      const _target = document.getElementById(_returnTo);
-      if (_target && panel) {
-        panel.scrollTop = _target.offsetTop - 80;
+    // 페이지 fade in → 스크롤
+    gsap.to(document.documentElement, {
+      opacity: 1,
+      duration: 0.45,
+      ease: 'power2.out',
+      onComplete: function() {
+        const _target = document.getElementById(_returnTo);
+        if (_target && panel) {
+          panel.scrollTop = _target.offsetTop - 80;
+        }
+        // panel scale-in
+        gsap.from(panel, { scale: 0.98, duration: 0.4, ease: 'power2.out' });
       }
-    }, 50);
+    });
 
     tick();
 

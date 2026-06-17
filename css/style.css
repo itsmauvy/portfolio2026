@@ -512,14 +512,14 @@ body {
 }
 
 .profile-sticker--music {
-  width: 104px;
+  width: 100px;
   bottom: 20px;
   right: -24px;
   --delay: 1.2s;
 }
 
 .profile-sticker--coffee {
-  width: 88px;
+  width: 100px;
   bottom: -18px;
   left: 30px;
   --delay: 2.4s;

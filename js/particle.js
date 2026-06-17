@@ -339,23 +339,29 @@
     if (header) header.classList.add('visible');
     setTimeout(() => typeLogo('SOOBIN PORTFOLIO'), 400);
 
-    // 패널 즉시 세팅
-    if (panel) {
-      panel.style.opacity = '1';
-      panel.style.visibility = 'visible';
-    }
+    // 패널 숨긴 채 대기 (스크롤 확인 후 reveal)
+    if (panel) { panel.style.opacity = '0'; panel.style.visibility = 'visible'; }
     if (overlay) overlay.style.opacity = '1';
 
-    // 스크롤 → fade in (html이 opacity:0이라 사용자에게 안 보이는 상태에서 스크롤)
-    // setTimeout 0: Lenis 포함 모든 동기 JS 완료 후
-    // setTimeout 100: Lenis raf 첫 tick 이후 한 번 더 보정
-    function doScrollAndReveal() {
-      scrollToSection(_returnTo);
-      setTimeout(() => scrollToSection(_returnTo), 100);
-      gsap.to(document.documentElement, { opacity: 1, duration: 0.6, ease: 'power2.out' });
-      gsap.from(panel, { scale: 0.98, duration: 0.6, ease: 'power2.out' });
-    }
-    setTimeout(doScrollAndReveal, 0);
+    setTimeout(function() {
+      var t = document.getElementById(_returnTo);
+      var pos = t ? Math.max(0, t.offsetTop - 80) : 0;
+      function tryReveal() {
+        if (window.__lenis) {
+          window.__lenis.stop();
+          panel.scrollTop = pos;
+          window.__lenis.scroll = pos;
+          window.__lenis.targetScroll = pos;
+          window.__lenis.animatedScroll = pos;
+          window.__lenis.start();
+        } else if (panel) { panel.scrollTop = pos; }
+        if (!panel || Math.abs(panel.scrollTop - pos) < 5) {
+          gsap.to(document.documentElement, { opacity: 1, duration: 0.5, ease: 'power2.out' });
+          gsap.to(panel, { opacity: 1, duration: 0.5, ease: 'power2.out' });
+        } else { requestAnimationFrame(tryReveal); }
+      }
+      tryReveal();
+    }, 0);
 
     setupNavLinks();
     tick();

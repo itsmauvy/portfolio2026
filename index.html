@@ -268,20 +268,6 @@
 
   <script src="js/particle.js"></script>
   <script>
-    // 상세페이지에서 돌아온 경우: GSAP fade + scale
-    if (sessionStorage.getItem('returnTo')) {
-      requestAnimationFrame(function() {
-        requestAnimationFrame(function() {
-          var panel = document.getElementById('contentPanel');
-          document.documentElement.style.opacity = '1';
-          if (panel && window.gsap) {
-            gsap.from(panel, { opacity: 0, scale: 0.97, duration: 0.55, ease: 'power2.out' });
-          }
-        });
-      });
-    }
-  </script>
-  <script>
     (function () {
       const el = document.getElementById('aboutCubeText');
       if (!el) return;

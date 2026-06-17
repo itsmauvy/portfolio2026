@@ -263,72 +263,78 @@
   window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
   window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
 
-  async function init() {
-    history.scrollRestoration = 'manual';
-    window.scrollTo(0, 0);
+  // ── 상세페이지 복귀 처리: load 이벤트 안 기다리고 즉시 실행 ──
+  const _returnTo = sessionStorage.getItem('returnTo')
+    || (window.location.hash ? window.location.hash.slice(1) : null);
+
+  if (['work', 'about', 'contact'].includes(_returnTo)) {
+    sessionStorage.removeItem('returnTo');
+    history.replaceState(null, '', window.location.pathname);
+
     resize();
+    canvas.style.opacity = '0';
+    panelOpen = true;
+    phase = 'idle';
 
-    if (panel) { gsap.set(panel, { opacity: 0 }); panel.style.visibility = 'hidden'; }
-
-    setTimeout(() => {
-      const header = document.querySelector('.header');
-      if (header) header.classList.add('visible');
-    }, 400);
-    setTimeout(() => typeLogo('SOOBIN PORTFOLIO'), 1300);
-
-    // 상세페이지에서 돌아온 경우: sessionStorage 또는 hash로 섹션 감지
-    // font await 전에 먼저 처리해서 지연 없이 패널 오픈
-    const returnTo = sessionStorage.getItem('returnTo')
-      || (window.location.hash ? window.location.hash.slice(1) : null);
-    const validSections = ['work', 'about', 'contact'];
-
-    if (validSections.includes(returnTo)) {
-      sessionStorage.removeItem('returnTo');
-      history.replaceState(null, '', window.location.pathname);
-
-      // HEAD에서 주입한 return-style 제거 (cleanup)
-      const rs = document.getElementById('return-style');
-      if (rs) rs.remove();
-
-      setProgress(1);
-      if (panel) { panel.style.visibility = 'visible'; panel.scrollTop = 0; }
-      canvas.style.opacity = '0';
-      panelOpen = true;
-      phase = 'idle';
-      particles = [];
-
-      // 섹션 스크롤
-      const target = document.getElementById(returnTo);
-      if (target && panel) {
-        const panelTop = panel.getBoundingClientRect().top;
-        const targetTop = target.getBoundingClientRect().top;
-        panel.scrollTop = targetTop - panelTop - 80;
-      }
-
-      tick();
-      return;
+    if (panel) {
+      gsap.set(panel, { opacity: 1 });
+      panel.style.visibility = 'visible';
+      panel.scrollTop = 0;
     }
 
-    try { await document.fonts.load(`${FONT_WEIGHT} 150px ${FONT_FAMILY}`); }
-    catch (e) { await new Promise(r => setTimeout(r, 600)); }
+    // 섹션 스크롤
+    const _target = document.getElementById(_returnTo);
+    if (_target && panel) {
+      const panelTop = panel.getBoundingClientRect().top;
+      const targetTop = _target.getBoundingClientRect().top;
+      panel.scrollTop = targetTop - panelTop - 80;
+    }
 
-    // 일반 진입: 파티클 준비되면 fade in
-    showSoobin('random');
-    setTimeout(() => {
-      const hint = document.getElementById('scrollHint');
-      if (hint) hint.classList.add('visible');
-    }, 2200);
-    document.documentElement.style.transition = 'opacity 0.4s ease';
-    document.documentElement.style.opacity = '';
+    // fade + scale in
+    requestAnimationFrame(function() {
+      document.documentElement.style.opacity = '1';
+      gsap.from(panel, { opacity: 0, scale: 0.97, duration: 0.55, ease: 'power2.out' });
+    });
 
     tick();
 
-    window.addEventListener('resize', () => {
-      resize();
-      if (!panelOpen && (phase === 'ready' || phase === 'forming')) showSoobin('random');
-    });
-  }
+    window.addEventListener('resize', () => { resize(); });
 
-  if (document.readyState === 'complete') init();
-  else window.addEventListener('load', init);
+  } else {
+    // ── 일반 진입 ──
+    async function init() {
+      history.scrollRestoration = 'manual';
+      window.scrollTo(0, 0);
+      resize();
+
+      if (panel) { gsap.set(panel, { opacity: 0 }); panel.style.visibility = 'hidden'; }
+
+      setTimeout(() => {
+        const header = document.querySelector('.header');
+        if (header) header.classList.add('visible');
+      }, 400);
+      setTimeout(() => typeLogo('SOOBIN PORTFOLIO'), 1300);
+
+      try { await document.fonts.load(`${FONT_WEIGHT} 150px ${FONT_FAMILY}`); }
+      catch (e) { await new Promise(r => setTimeout(r, 600)); }
+
+      showSoobin('random');
+      setTimeout(() => {
+        const hint = document.getElementById('scrollHint');
+        if (hint) hint.classList.add('visible');
+      }, 2200);
+      document.documentElement.style.transition = 'opacity 0.4s ease';
+      document.documentElement.style.opacity = '';
+
+      tick();
+
+      window.addEventListener('resize', () => {
+        resize();
+        if (!panelOpen && (phase === 'ready' || phase === 'forming')) showSoobin('random');
+      });
+    }
+
+    if (document.readyState === 'complete') init();
+    else window.addEventListener('load', init);
+  }
 })();

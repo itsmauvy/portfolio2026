@@ -286,17 +286,17 @@
       panel.scrollTop = 0;
     }
 
-    // 스크롤: 레이아웃 확정 후 다음 프레임에 계산
-    requestAnimationFrame(function() {
+    // fade in 즉시
+    document.documentElement.style.opacity = '1';
+    gsap.from(panel, { opacity: 0, scale: 0.97, duration: 0.55, ease: 'power2.out' });
+
+    // 스크롤: 레이아웃 완전히 잡힌 후 실행
+    setTimeout(function() {
       const _target = document.getElementById(_returnTo);
       if (_target && panel) {
         panel.scrollTop = _target.offsetTop - 80;
       }
-
-      // fade + scale in
-      document.documentElement.style.opacity = '1';
-      gsap.from(panel, { opacity: 0, scale: 0.97, duration: 0.55, ease: 'power2.out' });
-    });
+    }, 50);
 
     tick();
 

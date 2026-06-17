@@ -819,6 +819,392 @@
     </div>
   </section>
 
+  <!-- ──────────────────────────────────────────────
+       UI DESIGN — MAIN PAGE
+  ────────────────────────────────────────────── -->
+  <style>
+    .mp {
+      background: #f5f1eb;
+      padding: 120px 72px 140px;
+    }
+    .mp__header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+    .mp__label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: rgba(42,33,24,0.4);
+      display: block;
+      margin-bottom: 20px;
+    }
+    .mp__title {
+      font-size: clamp(36px, 3.6vw, 56px);
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      color: #1a1410;
+      font-family: 'Cormorant Garamond', serif;
+      margin-bottom: 20px;
+    }
+    .mp__desc {
+      font-size: 17px;
+      line-height: 2;
+      color: rgba(42,33,24,0.55);
+      font-family: 'Gowun Batang', serif;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* 스크린샷 + 주석 레이아웃 */
+    .mp__layout {
+      display: grid;
+      grid-template-columns: 1fr 52% 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .mp__annotations-left {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+      padding-top: 0;
+    }
+    .mp__annotations-right {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+      padding-top: 280px;
+    }
+    .mp__annotation {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .mp__annotation-head {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .mp__annotation-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #1a1410;
+      line-height: 1.3;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .mp__annotation-callout {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      margin-left: 12px;
+    }
+    .mp__annotation-callout::before {
+      content: '';
+      display: block;
+      flex: 1;
+      height: 1px;
+      background: rgba(42,33,24,0.35);
+    }
+    .mp__annotation-callout::after {
+      content: '';
+      display: block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(42,33,24,0.35);
+      margin-left: 2px;
+    }
+    .mp__annotation--right .mp__annotation-head {
+      flex-direction: row-reverse;
+    }
+    .mp__annotation--right .mp__annotation-callout {
+      margin-left: 0;
+      margin-right: 12px;
+      flex-direction: row-reverse;
+    }
+    .mp__annotation--right .mp__annotation-callout::after {
+      margin-left: 0;
+      margin-right: 2px;
+    }
+    .mp__annotation-desc {
+      font-size: 15px;
+      line-height: 1.85;
+      color: rgba(42,33,24,0.8);
+      font-family: 'Gowun Batang', serif;
+    }
+    .mp__annotation--right {
+      text-align: right;
+    }
+
+    .mp__screen {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(42,33,24,0.12);
+    }
+    .mp__screen img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    @media (max-width: 1024px) {
+      .mp__layout {
+        grid-template-columns: 1fr;
+      }
+      .mp__annotations-left,
+      .mp__annotations-right {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+        padding-top: 0;
+      }
+      .mp__annotation--right { text-align: left; }
+      .mp__annotation--right .mp__annotation-line { margin-left: 0; }
+    }
+  </style>
+
+  <section class="mp">
+    <div class="mp__header">
+      <span class="mp__label">UI DESIGN</span>
+      <h2 class="mp__title">· MAIN PAGE ·</h2>
+      <p class="mp__desc">사용자가 처음 마주하는 공간으로 브랜드의 첫 인상을 결정합니다.<br>
+        감성적인 비주얼과 직관적인 탐색 구조를 동시에 담아<br>
+        브랜드 경험 전체의 시작점이 되도록 설계했습니다.</p>
+    </div>
+
+    <div class="mp__layout">
+      <!-- 좌측 주석 -->
+      <div class="mp__annotations-left">
+        <div class="mp__annotation" style="top: 0px;">
+          <div class="mp__annotation-head">
+            <p class="mp__annotation-title">단순하지만 직관적인 GNB</p>
+            <div class="mp__annotation-callout"></div>
+          </div>
+          <p class="mp__annotation-desc">단순하고 <strong>명료한 타이포로 구성</strong>된 GNB로<br>사용자가 직관적인 확인이<br>가능하도록 구성하였습니다.</p>
+        </div>
+        <div class="mp__annotation" style="margin-top: 1300px;">
+          <div class="mp__annotation-head">
+            <p class="mp__annotation-title">라이프스타일 속 제품 발견</p>
+            <div class="mp__annotation-callout"></div>
+          </div>
+          <p class="mp__annotation-desc">실제 사용자의 라이프스타일 이미지를 활용하고<br><strong>이미지에 사용된 제품 정보를 함께 제공하여</strong><br>브랜드 경험과 제품 탐색이 자연스럽게<br>이어질 수 있도록 설계했습니다.</p>
+        </div>
+      </div>
+
+      <!-- 중앙 스크린샷 -->
+      <div class="mp__screen">
+        <img src="../images/ode/ode-main-page.jpg" alt="Main Page UI">
+      </div>
+
+      <!-- 우측 주석 -->
+      <div class="mp__annotations-right">
+        <div class="mp__annotation mp__annotation--right" style="top: 100px;">
+          <div class="mp__annotation-head">
+            <p class="mp__annotation-title">브랜드 첫인상 전달</p>
+            <div class="mp__annotation-callout"></div>
+          </div>
+          <p class="mp__annotation-desc">사이트에 진입하는 순간 브랜드만의<br><strong>감성과 분위기를 경험할 수 있도록</strong><br><strong>비주얼 중심의</strong> 히어로 섹션을 구성했습니다.</p>
+        </div>
+        <div class="mp__annotation mp__annotation--right" style="margin-top: 160px;">
+          <div class="mp__annotation-head">
+            <p class="mp__annotation-title">제품 탐색 경험</p>
+            <div class="mp__annotation-callout"></div>
+          </div>
+          <p class="mp__annotation-desc">마우스 호버 시 제품을 사용하는 모델 컷과<br><strong>빠른 장바구니 추가 버튼을 제공하여</strong> 구매 행동으로<br>자연스럽게 이어질 수 있도록 설계했습니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────────────────
+       UI DESIGN — ABOUT PAGE
+  ────────────────────────────────────────────── -->
+  <style>
+    .ab {
+      background: #f2ebe5;
+      padding: 120px 0 140px;
+      position: relative;
+    }
+    .ab__header {
+      text-align: center;
+      width: 72%;
+      margin: 0 auto 80px;
+    }
+    .ab__label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: rgba(42,33,24,0.4);
+      display: block;
+      margin-bottom: 20px;
+    }
+    .ab__title {
+      font-size: clamp(36px, 3.6vw, 56px);
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      color: #1a1410;
+      font-family: 'Cormorant Garamond', serif;
+      margin-bottom: 20px;
+    }
+    .ab__desc {
+      font-size: 17px;
+      line-height: 2;
+      color: rgba(42,33,24,0.6);
+      font-family: 'Gowun Batang', serif;
+    }
+    .ab__layout {
+      width: 82%;
+      margin: 0 auto;
+    }
+    .ab__annotations-left {
+      position: absolute;
+      left: 40px;
+      top: 0;
+      width: 280px;
+    }
+    .ab__annotations-right {
+      position: absolute;
+      right: 40px;
+      top: 0;
+      width: 420px;
+    }
+    .ab__annotation {
+      position: absolute;
+      width: 100%;
+    }
+    .ab__screen-wrap {
+      width: 100%;
+    }
+    .ab__annotation-head {
+      display: flex;
+      align-items: center;
+    }
+    .ab__annotation-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #1a1410;
+      line-height: 1.3;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .ab__annotation-callout {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      margin-left: 12px;
+    }
+    .ab__annotation-callout::before {
+      content: '';
+      display: block;
+      flex: 1;
+      height: 1px;
+      background: rgba(42,33,24,0.35);
+    }
+    .ab__annotation-callout::after {
+      content: '';
+      display: block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(42,33,24,0.35);
+      margin-left: 2px;
+    }
+    .ab__annotation--right .ab__annotation-head {
+      flex-direction: row-reverse;
+    }
+    .ab__annotation--right .ab__annotation-callout {
+      margin-left: 0;
+      margin-right: 12px;
+      flex-direction: row-reverse;
+    }
+    .ab__annotation--right .ab__annotation-callout::after {
+      margin-left: 0;
+      margin-right: 2px;
+    }
+    .ab__annotation-desc {
+      font-size: 15px;
+      line-height: 1.85;
+      color: rgba(42,33,24,0.8);
+      font-family: 'Gowun Batang', serif;
+      font-weight: 400;
+      margin-top: 12px;
+    }
+    .ab__annotation-desc strong {
+      font-weight: 700;
+    }
+    /* 세로 화살표 (Parallex Scrolling용) */
+    .ab__annotation-callout--vertical {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .ab__annotation-callout--vertical::before {
+      content: '';
+      display: block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(42,33,24,0.35);
+      margin-bottom: 4px;
+    }
+    .ab__annotation-callout--vertical::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 80px;
+      background: rgba(42,33,24,0.35);
+    }
+    .ab__annotation--right {
+      text-align: right;
+    }
+    .ab__screen {
+      overflow: hidden;
+    }
+    .ab__screen img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  </style>
+
+  <section class="ab">
+    <div class="ab__header">
+      <span class="ab__label">UI DESIGN</span>
+      <h2 class="ab__title">· ABOUT ·</h2>
+      <p class="ab__desc">일상 속 작은 순간과 감정에서 영감을 받은<br>이미지와 메시지를 통해 브랜드 아이덴티티를<br>자연스럽게 경험할 수 있도록 설계했습니다.</p>
+    </div>
+
+    <!-- 좌측 주석 -->
+    <div class="ab__annotations-left">
+      <div class="ab__annotation" style="top: 1150px; left: 200px;">
+        <div class="ab__annotation-head">
+          <p class="ab__annotation-title">컬렉션 무드 경험</p>
+          <div class="ab__annotation-callout"></div>
+        </div>
+        <p class="ab__annotation-desc">마우스 호버 시 컬러가 드러나도록 설계하여<br>각 <strong>컬렉션이 가진 계절의 분위기와 감성</strong>을<br>자연스럽게 경험할 수 있도록 구성했습니다.</p>
+      </div>
+    </div>
+
+    <!-- 중앙 스크린샷 -->
+    <div class="ab__layout">
+      <div class="ab__screen-wrap">
+        <div class="ab__screen">
+          <img src="../images/ode/brand about.png" alt="About Page UI">
+        </div>
+      </div>
+    </div>
+
+    <!-- 우측 주석 -->
+    <div class="ab__annotations-right">
+      <div class="ab__annotation ab__annotation--right" style="top: 1000px; right: 200px;">
+        <div class="ab__annotation-callout--vertical"></div>
+        <p class="ab__annotation-title">Parallex Scrolling</p>
+        <p class="ab__annotation-desc">부드러운 속도의 Y축 패럴랙스 스크롤링을<br>사용하여 <strong>감각적인 브랜드의 분위기</strong>를 전달합니다.</p>
+      </div>
+    </div>
+  </section>
+
   <style>
     .po {
       display: grid;

@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -92,9 +93,6 @@
       letter-spacing: 0.2em;
       color: #fff;
       margin-bottom: 16px;
-      opacity: 0;
-      transform: translateY(16px);
-      animation: hero-bounce 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.3s forwards;
     }
     .detail-title {
       font-size: clamp(38px, 5.5vw, 72px);
@@ -103,22 +101,11 @@
       letter-spacing: -0.02em;
       margin-bottom: 20px;
       color: #fff;
-      opacity: 0;
-      transform: translateY(24px);
-      animation: hero-bounce 0.7s cubic-bezier(0.34,1.7,0.64,1) 0.5s forwards;
     }
     .detail-tagline {
       font-size: 15px;
       font-weight: 400;
       color: #fff;
-      opacity: 0;
-      transform: translateY(16px);
-      animation: hero-bounce 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.75s forwards;
-    }
-    @keyframes hero-bounce {
-      0%   { opacity: 0; transform: translate(-40px, -60px) rotate(12deg) skewX(10deg) scale(.8); }
-      65%  { opacity: 1; }
-      100% { opacity: 1; transform: translate(0,0) rotate(0deg) skewX(0deg) scale(1); }
     }
 
     /* ── SNOW CANVAS ── */
@@ -281,23 +268,26 @@
       overlay.style.cssText = 'position:fixed;inset:0;background:#0d1117;z-index:99999;pointer-events:none;opacity:1;';
       document.body.appendChild(overlay);
 
-      function fadeOut() {
-        overlay.style.transition = 'opacity 0.45s ease';
-        overlay.style.opacity = '0';
+      function runHeroTimeline() {
+        const heroVideo = document.querySelector('.hero video');
+        heroVideo && heroVideo.classList.add('ready');
+
+        gsap.to(overlay, { opacity: 0, duration: 0.6, ease: 'power2.out' });
+
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        tl.from('.hero video', { opacity: 0, scale: 1.04, duration: 1.6 }, 0);
+        tl.from('.detail-category', { opacity: 0, filter: 'blur(6px)', y: 8, duration: 0.8 }, 0.3);
+        tl.from('.detail-title', { opacity: 0, filter: 'blur(10px)', y: 20, duration: 1.2 }, 0.5);
+        tl.from('.detail-tagline', { opacity: 0, filter: 'blur(4px)', y: 10, duration: 0.8 }, 0.9);
       }
 
-      // 히어로 영상 첫 프레임 렌더 후 video 표시 → 오버레이 fade-out
       window.addEventListener('DOMContentLoaded', () => {
         const heroVideo = document.querySelector('.hero video');
-        if (!heroVideo) { fadeOut(); return; }
-        const timeout = setTimeout(() => {
-          heroVideo.classList.add('ready');
-          fadeOut();
-        }, 1200);
+        if (!heroVideo) { runHeroTimeline(); return; }
+        const timeout = setTimeout(runHeroTimeline, 1200);
         function onFirstFrame() {
           clearTimeout(timeout);
-          heroVideo.classList.add('ready');
-          requestAnimationFrame(() => requestAnimationFrame(fadeOut));
+          requestAnimationFrame(() => requestAnimationFrame(runHeroTimeline));
         }
         if (heroVideo.requestVideoFrameCallback) {
           heroVideo.requestVideoFrameCallback(onFirstFrame);
@@ -307,15 +297,16 @@
           }, { once: true });
         }
       });
+
       document.addEventListener('click', (e) => {
         const link = e.target.closest('a[href]');
         if (!link) return;
         const href = link.getAttribute('href');
         if (!href || href.startsWith('#')) return;
         e.preventDefault();
-        overlay.style.transition = 'opacity 0.45s ease';
-        overlay.style.opacity = '1';
-        setTimeout(() => { window.location.href = href; }, 450);
+        gsap.to(overlay, { opacity: 1, duration: 0.4, ease: 'power2.in',
+          onComplete: () => { window.location.href = href; }
+        });
       });
     })();
   </script>

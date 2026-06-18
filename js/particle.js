@@ -233,7 +233,16 @@
     animating = true;
     const hint = document.getElementById('scrollHint');
     if (hint) hint.classList.remove('visible');
-    if (panel) { panel.style.visibility = 'visible'; panel.scrollTop = 0; }
+
+    // 패널이 보이기 전에 목표 위치로 미리 스크롤
+    var t = document.getElementById(sectionId);
+    var pos = t ? Math.max(0, t.offsetTop - 80) : 0;
+    if (panel) {
+      panel.scrollTop = pos;
+      panel.style.opacity = '0';
+      panel.style.visibility = 'visible';
+    }
+
     phase = 'scrubbing';
     proxy.p = progress;
     gsap.to(proxy, {
@@ -244,25 +253,15 @@
       onComplete: () => {
         animating = false;
         commitOpen();
-        if (panel) panel.style.opacity = '0';
-        setTimeout(function() {
-          var t = document.getElementById(sectionId);
-          var pos = t ? Math.max(0, t.offsetTop - 80) : 0;
-          function tryRevealNav() {
-            if (window.__lenis) {
-              window.__lenis.stop();
-              panel.scrollTop = pos;
-              window.__lenis.scroll = pos;
-              window.__lenis.targetScroll = pos;
-              window.__lenis.animatedScroll = pos;
-              window.__lenis.start();
-            } else if (panel) { panel.scrollTop = pos; }
-            if (!panel || Math.abs(panel.scrollTop - pos) < 5) {
-              gsap.to(panel, { opacity: 1, duration: 0.4, ease: 'power2.out' });
-            } else { requestAnimationFrame(tryRevealNav); }
-          }
-          tryRevealNav();
-        }, 0);
+        if (window.__lenis) {
+          window.__lenis.stop();
+          panel.scrollTop = pos;
+          window.__lenis.scroll = pos;
+          window.__lenis.targetScroll = pos;
+          window.__lenis.animatedScroll = pos;
+          window.__lenis.start();
+        }
+        gsap.to(panel, { opacity: 1, duration: 0.3, ease: 'power2.out' });
       }
     });
   }

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko" style="background:#0d1117">
 <head>
-  <script>document.documentElement.style.opacity='0'</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
   <title>Sledding Game — SOOBIN</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -74,13 +74,11 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      opacity: 0;
     }
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%);
-      pointer-events: none;
+    .hero video.ready {
+      opacity: 1;
+      transition: opacity 0.3s ease;
     }
     .hero-text {
       position: absolute;
@@ -132,25 +130,32 @@
       opacity: 0.6;
     }
 
+    /* ── WAVE DIVIDER ── */
+    .wave { display: block; width: 100%; line-height: 0; }
+    .wave svg { display: block; width: 100%; }
+
     /* ── PROJECT OVERVIEW ── */
     .po {
+      background: #d6eef8;
+      position: relative;
+    }
+    .po__inner {
       display: grid;
       grid-template-columns: 45% 55%;
-      min-height: 100vh;
-      background: #111827;
+      min-height: 80vh;
     }
     .po__left {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 100px 60px 80px 80px;
-      border-right: 1px solid rgba(255,255,255,0.06);
+      padding: 80px 60px 80px 80px;
+      border-right: none;
     }
     .po__label {
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.22em;
-      color: rgba(168,216,234,0.6);
+      color: #3a78b4;
       margin-bottom: 32px;
     }
     .po__question {
@@ -158,126 +163,58 @@
       font-size: clamp(26px, 2.8vw, 42px);
       font-weight: 700;
       line-height: 1.5;
-      color: #e8f0f8;
+      color: #0d2d4a;
       margin-bottom: 40px;
-      letter-spacing: -0.01em;
     }
     .po__desc {
       font-family: 'Gowun Batang', serif;
       font-size: 16px;
       line-height: 2;
-      color: rgba(232,240,248,0.6);
+      color: rgba(13,45,74,0.65);
     }
     .po__right {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 100px 80px 80px 60px;
-      gap: 48px;
+      padding: 80px 80px 80px 60px;
+      gap: 44px;
     }
-    .po__meta-group { display: flex; flex-direction: column; gap: 16px; }
-    .po__meta-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      color: rgba(168,216,234,0.5);
-    }
-    .po__meta-row { display: flex; flex-direction: column; gap: 6px; }
-    .po__meta-val {
-      font-size: 15px;
-      color: rgba(232,240,248,0.8);
-      font-family: 'Gowun Batang', serif;
-      line-height: 1.7;
-    }
-    .po__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+    .po__meta-group { display: flex; flex-direction: column; gap: 12px; }
+    .po__meta-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: #3a78b4; }
+    .po__meta-val { font-size: 15px; color: #1a3a5c; font-family: 'Gowun Batang', serif; line-height: 1.7; }
+    .po__tags { display: flex; flex-wrap: wrap; gap: 8px; }
     .po__tag {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      color: #a8d8ea;
-      border: 1px solid rgba(168,216,234,0.25);
-      border-radius: 20px;
-      padding: 5px 14px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      color: #1a6da8; border: 1.5px solid rgba(26,109,168,0.35);
+      border-radius: 20px; padding: 5px 14px;
+      background: rgba(255,255,255,0.5);
     }
 
-    /* ── CTA / REFLECTION ── */
-    .rf {
-      background: #111827;
-      padding: 130px 80px 110px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-    .rf__label {
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      color: rgba(168,216,234,0.4);
-      margin-bottom: 28px;
-    }
-    .rf__title {
-      font-family: 'Gowun Batang', serif;
-      font-size: clamp(32px, 3.4vw, 52px);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: #e8f0f8;
-      margin-bottom: 76px;
-    }
-    .rf__grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
-      margin-bottom: 110px;
-    }
-    .rf__card { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 26px; }
-    .rf__card-en {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 15px;
-      letter-spacing: 0.1em;
-      color: #a8d8ea;
-    }
-    .rf__card-ko {
-      font-family: 'Gowun Batang', serif;
-      font-size: 21px;
-      font-weight: 700;
-      color: #e8f0f8;
-      margin: 12px 0 16px;
-    }
-    .rf__card-desc {
-      font-size: 15px;
-      line-height: 1.95;
-      color: rgba(232,240,248,0.55);
-      font-family: 'Gowun Batang', serif;
-    }
-    .rf__cta {
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 72px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-    .rf__nav-link {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      text-decoration: none;
-      color: #e8f0f8;
-      transition: opacity 0.2s;
-    }
+    /* ── VIDEO SHOWCASE ── */
+    .vs { background: #bde0f5; padding: 80px 80px 40px; }
+    .vs__label { font-size: 11px; font-weight: 700; letter-spacing: 0.22em; color: #1a6da8; margin-bottom: 48px; display: block; }
+    .vs__main { width: 100%; border-radius: 16px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 8px 40px rgba(13,45,74,0.15); }
+    .vs__main video { width: 100%; display: block; }
+    .vs__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .vs__item { border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.4); cursor: pointer; box-shadow: 0 4px 16px rgba(13,45,74,0.1); }
+    .vs__item video { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
+    .vs__item-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: #1a6da8; padding: 10px 14px; }
+
+    /* ── REFLECTION ── */
+    .rf { background: #e8f5fc; padding: 100px 80px 110px; }
+    .rf__label { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: #3a78b4; margin-bottom: 28px; }
+    .rf__title { font-family: 'Gowun Batang', serif; font-size: clamp(32px, 3.4vw, 52px); font-weight: 700; color: #0d2d4a; margin-bottom: 76px; }
+    .rf__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-bottom: 110px; }
+    .rf__card { border-top: 2px solid rgba(26,109,168,0.2); padding-top: 26px; }
+    .rf__card-en { font-family: 'Cormorant Garamond', serif; font-size: 15px; letter-spacing: 0.1em; color: #3a78b4; }
+    .rf__card-ko { font-family: 'Gowun Batang', serif; font-size: 21px; font-weight: 700; color: #0d2d4a; margin: 12px 0 16px; }
+    .rf__card-desc { font-size: 15px; line-height: 1.95; color: rgba(13,45,74,0.6); font-family: 'Gowun Batang', serif; }
+    .rf__cta { border-top: 1px solid rgba(26,109,168,0.15); padding-top: 72px; display: flex; justify-content: space-between; align-items: flex-end; }
+    .rf__nav-link { display: flex; flex-direction: column; gap: 10px; text-decoration: none; color: #0d2d4a; transition: opacity 0.2s; }
     .rf__nav-link:hover { opacity: 0.5; }
     .rf__nav-link--next { align-items: flex-end; }
-    .rf__nav-dir {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      color: rgba(168,216,234,0.45);
-    }
-    .rf__nav-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(22px, 2.4vw, 34px);
-      font-style: italic;
-      color: #e8f0f8;
-      line-height: 1;
-    }
+    .rf__nav-dir { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: #3a78b4; }
+    .rf__nav-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 2.4vw, 34px); font-style: italic; color: #0d2d4a; line-height: 1; }
 
     /* ── PROJ NAV ── */
     .proj-nav {
@@ -320,10 +257,10 @@
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(13,17,23,0.6);
+      border: 1.5px solid rgba(26,109,168,0.3);
+      background: rgba(255,255,255,0.7);
       backdrop-filter: blur(10px);
-      color: rgba(255,255,255,0.6);
+      color: #1a6da8;
       cursor: pointer;
       z-index: 300;
       display: flex;
@@ -334,10 +271,54 @@
       transition: opacity 0.3s, transform 0.3s, background 0.2s;
     }
     #scroll-top.visible { opacity: 1; transform: translateY(0); }
-    #scroll-top:hover { background: rgba(168,216,234,0.15); color: #fff; }
+    #scroll-top:hover { background: #1a6da8; color: #fff; }
   </style>
 </head>
 <body id="top">
+  <script>
+    (function() {
+      const overlay = document.createElement('div');
+      overlay.style.cssText = 'position:fixed;inset:0;background:#0d1117;z-index:99999;pointer-events:none;opacity:1;';
+      document.body.appendChild(overlay);
+
+      function fadeOut() {
+        overlay.style.transition = 'opacity 0.45s ease';
+        overlay.style.opacity = '0';
+      }
+
+      // 히어로 영상 첫 프레임 렌더 후 video 표시 → 오버레이 fade-out
+      window.addEventListener('DOMContentLoaded', () => {
+        const heroVideo = document.querySelector('.hero video');
+        if (!heroVideo) { fadeOut(); return; }
+        const timeout = setTimeout(() => {
+          heroVideo.classList.add('ready');
+          fadeOut();
+        }, 1200);
+        function onFirstFrame() {
+          clearTimeout(timeout);
+          heroVideo.classList.add('ready');
+          requestAnimationFrame(() => requestAnimationFrame(fadeOut));
+        }
+        if (heroVideo.requestVideoFrameCallback) {
+          heroVideo.requestVideoFrameCallback(onFirstFrame);
+        } else {
+          heroVideo.addEventListener('canplay', () => {
+            requestAnimationFrame(() => requestAnimationFrame(onFirstFrame));
+          }, { once: true });
+        }
+      });
+      document.addEventListener('click', (e) => {
+        const link = e.target.closest('a[href]');
+        if (!link) return;
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('#')) return;
+        e.preventDefault();
+        overlay.style.transition = 'opacity 0.45s ease';
+        overlay.style.opacity = '1';
+        setTimeout(() => { window.location.href = href; }, 450);
+      });
+    })();
+  </script>
 
   <!-- HEADER -->
   <header class="detail-header">
@@ -360,7 +341,7 @@
   <!-- HERO -->
   <div class="hero">
     <video autoplay muted loop playsinline poster="../images/sledding/sledding-thumb.jpg">
-      <source src="../images/sledding/sledding-hero.mp4" type="video/mp4">
+      <source src="../images/sledding/sledding.html-video.mp4" type="video/mp4">
     </video>
     <div class="hero-text">
       <p class="detail-category">UX/UI DESIGN · CONCEPT DESIGN</p>
@@ -369,11 +350,17 @@
     </div>
   </div>
 
+  <!-- WAVE: hero → overview -->
+  <div style="position:relative; z-index:2; margin-top:-80px; pointer-events:none; line-height:0;">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;"><path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z" fill="#d6eef8"/></svg>
+  </div>
+
   <!-- PROJECT OVERVIEW -->
-  <section class="po">
+  <section class="po" style="margin-top:-2px;">
+    <div class="po__inner">
     <div class="po__left">
       <span class="po__label">PROJECT OVERVIEW</span>
-      <h2 class="po__question">게임의 세계관을<br>웹으로 옮기면<br>어떤 경험이 될까?</h2>
+      <h2 class="po__question">게임의 즐거움을<br>웹으로 확장하다</h2>
       <p class="po__desc">
         실제 Steam 출시 인디 게임 Sledding Game의<br>
         공식 웹사이트를 직접 기획하고 제작했습니다.<br><br>
@@ -404,7 +391,13 @@
         </div>
       </div>
     </div>
+    </div>
   </section>
+
+  <!-- WAVE: overview → video -->
+  <div class="wave" style="background:#d6eef8">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,20 C360,70 720,0 1080,50 C1260,70 1380,30 1440,20 L1440,80 L0,80 Z" fill="#bde0f5"/></svg>
+  </div>
 
   <!-- VIDEO SHOWCASE -->
   <style>
@@ -446,6 +439,11 @@
       </div>
     </div>
   </section>
+
+  <!-- WAVE: video → reflection -->
+  <div class="wave" style="background:#bde0f5">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,50 C200,10 500,70 800,30 C1100,0 1300,60 1440,40 L1440,80 L0,80 Z" fill="#e8f5fc"/></svg>
+  </div>
 
   <!-- REFLECTION -->
   <section class="rf">

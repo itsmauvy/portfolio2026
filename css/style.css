@@ -275,7 +275,7 @@ body {
 .about-me-columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 56px;
+  gap: 160px;
   margin-top: 56px;
 }
 

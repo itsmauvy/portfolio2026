@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" style="background:#1a2a3a">
+<html lang="ko" style="background:#0d1117">
 <head>
   <script>document.documentElement.style.opacity='0'</script>
   <meta charset="UTF-8">
@@ -8,53 +8,269 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { background: #1a2a3a; color: #fff; font-family: 'Syne', sans-serif; min-height: 100dvh; }
+    html { scroll-behavior: smooth; }
+    body { background: #0d1117; color: #e8f0f8; font-family: 'Syne', sans-serif; overflow-x: hidden; }
 
-    .coming-soon {
+    /* ── HEADER ── */
+    .detail-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      gap: 24px;
-      text-align: center;
-      padding: 40px;
+      justify-content: space-between;
+      padding: 28px 48px;
+      mix-blend-mode: normal;
     }
-    .coming-soon__label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.25em;
-      color: rgba(255,255,255,0.4);
-    }
-    .coming-soon__title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(48px, 8vw, 96px);
-      font-style: italic;
-      font-weight: 400;
-      line-height: 1;
-      color: #fff;
-    }
-    .coming-soon__sub {
-      font-size: 13px;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 0.1em;
-    }
-    .coming-soon__back {
-      margin-top: 20px;
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.18em;
-      color: rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.8);
       text-decoration: none;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      padding-bottom: 2px;
-      transition: color 0.2s;
+      transition: opacity 0.2s, gap 0.25s;
     }
-    .coming-soon__back:hover { color: #fff; }
+    .back-btn:hover { opacity: 0.5; gap: 14px; }
+    .back-btn svg { flex-shrink: 0; transition: transform 0.25s; }
+    .back-btn:hover svg { transform: translateX(-3px); }
+    .detail-nav { display: flex; gap: 32px; }
+    .detail-nav a {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      overflow: hidden;
+      display: inline-block;
+    }
+    .detail-nav a:hover { color: #fff; }
 
-    /* Project Navigation */
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .hero video, .hero > img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%);
+      pointer-events: none;
+    }
+    .hero-text {
+      position: absolute;
+      bottom: 52px;
+      left: 52px;
+      z-index: 2;
+    }
+    .detail-category {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: #fff;
+      margin-bottom: 16px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: hero-bounce 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.3s forwards;
+    }
+    .detail-title {
+      font-size: clamp(38px, 5.5vw, 72px);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      color: #fff;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: hero-bounce 0.7s cubic-bezier(0.34,1.7,0.64,1) 0.5s forwards;
+    }
+    .detail-tagline {
+      font-size: 15px;
+      font-weight: 400;
+      color: #fff;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: hero-bounce 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.75s forwards;
+    }
+    @keyframes hero-bounce {
+      0%   { opacity: 0; transform: translate(-40px, -60px) rotate(12deg) skewX(10deg) scale(.8); }
+      65%  { opacity: 1; }
+      100% { opacity: 1; transform: translate(0,0) rotate(0deg) skewX(0deg) scale(1); }
+    }
+
+    /* ── SNOW CANVAS ── */
+    #snow-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 500;
+      opacity: 0.6;
+    }
+
+    /* ── PROJECT OVERVIEW ── */
+    .po {
+      display: grid;
+      grid-template-columns: 45% 55%;
+      min-height: 100vh;
+      background: #111827;
+    }
+    .po__left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px 60px 80px 80px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    .po__label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: rgba(168,216,234,0.6);
+      margin-bottom: 32px;
+    }
+    .po__question {
+      font-family: 'Gowun Batang', serif;
+      font-size: clamp(26px, 2.8vw, 42px);
+      font-weight: 700;
+      line-height: 1.5;
+      color: #e8f0f8;
+      margin-bottom: 40px;
+      letter-spacing: -0.01em;
+    }
+    .po__desc {
+      font-family: 'Gowun Batang', serif;
+      font-size: 16px;
+      line-height: 2;
+      color: rgba(232,240,248,0.6);
+    }
+    .po__right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px 80px 80px 60px;
+      gap: 48px;
+    }
+    .po__meta-group { display: flex; flex-direction: column; gap: 16px; }
+    .po__meta-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: rgba(168,216,234,0.5);
+    }
+    .po__meta-row { display: flex; flex-direction: column; gap: 6px; }
+    .po__meta-val {
+      font-size: 15px;
+      color: rgba(232,240,248,0.8);
+      font-family: 'Gowun Batang', serif;
+      line-height: 1.7;
+    }
+    .po__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+    .po__tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #a8d8ea;
+      border: 1px solid rgba(168,216,234,0.25);
+      border-radius: 20px;
+      padding: 5px 14px;
+    }
+
+    /* ── CTA / REFLECTION ── */
+    .rf {
+      background: #111827;
+      padding: 130px 80px 110px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .rf__label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: rgba(168,216,234,0.4);
+      margin-bottom: 28px;
+    }
+    .rf__title {
+      font-family: 'Gowun Batang', serif;
+      font-size: clamp(32px, 3.4vw, 52px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #e8f0f8;
+      margin-bottom: 76px;
+    }
+    .rf__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-bottom: 110px;
+    }
+    .rf__card { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 26px; }
+    .rf__card-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      letter-spacing: 0.1em;
+      color: #a8d8ea;
+    }
+    .rf__card-ko {
+      font-family: 'Gowun Batang', serif;
+      font-size: 21px;
+      font-weight: 700;
+      color: #e8f0f8;
+      margin: 12px 0 16px;
+    }
+    .rf__card-desc {
+      font-size: 15px;
+      line-height: 1.95;
+      color: rgba(232,240,248,0.55);
+      font-family: 'Gowun Batang', serif;
+    }
+    .rf__cta {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .rf__nav-link {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-decoration: none;
+      color: #e8f0f8;
+      transition: opacity 0.2s;
+    }
+    .rf__nav-link:hover { opacity: 0.5; }
+    .rf__nav-link--next { align-items: flex-end; }
+    .rf__nav-dir {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: rgba(168,216,234,0.45);
+    }
+    .rf__nav-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 2.4vw, 34px);
+      font-style: italic;
+      color: #e8f0f8;
+      line-height: 1;
+    }
+
+    /* ── PROJ NAV ── */
     .proj-nav {
       position: fixed;
       top: 50%;
@@ -67,7 +283,8 @@
       text-decoration: none;
       color: rgba(255,255,255,0.5);
       padding: 20px 16px;
-      transition: color 0.3s, transform 0.3s;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s, color 0.4s;
     }
     .proj-nav--prev { left: 24px; }
     .proj-nav--next { right: 24px; }
@@ -75,18 +292,187 @@
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.15em;
+      font-family: 'Syne', sans-serif;
       writing-mode: vertical-rl;
-      text-orientation: mixed;
     }
     .proj-nav--prev span { transform: rotate(180deg); }
+    .proj-nav svg { opacity: 0.7; }
     .proj-nav:hover { color: #fff; }
-    .proj-nav--prev:hover { transform: translateY(-50%) translateX(-3px); }
-    .proj-nav--next:hover { transform: translateY(-50%) translateX(3px); }
-    .proj-nav--disabled { opacity: 0.2; pointer-events: none; }
+    .proj-nav:hover svg { opacity: 1; }
+    .proj-nav--disabled { opacity: 0 !important; pointer-events: none; }
+    .proj-nav.visible { opacity: 1; }
+    .proj-nav--prev.visible:hover { transform: translateY(-50%) translateX(-3px); }
+    .proj-nav--next.visible:hover { transform: translateY(-50%) translateX(3px); }
+
+    /* ── SCROLL TOP ── */
+    #scroll-top {
+      position: fixed;
+      right: 28px;
+      bottom: 28px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(13,17,23,0.6);
+      backdrop-filter: blur(10px);
+      color: rgba(255,255,255,0.6);
+      cursor: pointer;
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s, transform 0.3s, background 0.2s;
+    }
+    #scroll-top.visible { opacity: 1; transform: translateY(0); }
+    #scroll-top:hover { background: rgba(168,216,234,0.15); color: #fff; }
   </style>
 </head>
-<body>
+<body id="top">
 
+  <!-- HEADER -->
+  <header class="detail-header">
+    <a href="../index.html#work" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      BACK
+    </a>
+    <nav class="detail-nav">
+      <a href="../index.html#work">WORK</a>
+      <a href="../index.html#about">ABOUT</a>
+      <a href="../index.html#contact">CONTACT</a>
+    </nav>
+  </header>
+
+  <!-- SNOW -->
+  <canvas id="snow-canvas"></canvas>
+
+  <!-- HERO -->
+  <div class="hero">
+    <video autoplay muted loop playsinline poster="../images/sledding/sledding-thumb.jpg">
+      <source src="../images/sledding/sledding-hero.mp4" type="video/mp4">
+    </video>
+    <div class="hero-text">
+      <p class="detail-category">UX/UI DESIGN · CONCEPT DESIGN</p>
+      <h1 class="detail-title">Sledding<br>Game</h1>
+      <p class="detail-tagline">Steam 인디 게임 · 웹사이트 기획 및 제작</p>
+    </div>
+  </div>
+
+  <!-- PROJECT OVERVIEW -->
+  <section class="po">
+    <div class="po__left">
+      <span class="po__label">PROJECT OVERVIEW</span>
+      <h2 class="po__question">게임의 세계관을<br>웹으로 옮기면<br>어떤 경험이 될까?</h2>
+      <p class="po__desc">
+        실제 Steam 출시 인디 게임 Sledding Game의<br>
+        공식 웹사이트를 직접 기획하고 제작했습니다.<br><br>
+        게임 특유의 겨울 감성과 유머 코드를<br>
+        웹 인터랙션으로 번역하는 것이 핵심 과제였습니다.
+      </p>
+    </div>
+    <div class="po__right">
+      <div class="po__meta-group">
+        <span class="po__meta-label">PERIOD</span>
+        <div class="po__meta-row">
+          <span class="po__meta-val">2주</span>
+        </div>
+      </div>
+      <div class="po__meta-group">
+        <span class="po__meta-label">TOOLS</span>
+        <div class="po__meta-row">
+          <span class="po__meta-val">HTML · CSS · JavaScript · GSAP</span>
+        </div>
+      </div>
+      <div class="po__meta-group">
+        <span class="po__meta-label">SCOPE OF WORK</span>
+        <div class="po__tags">
+          <span class="po__tag">Web Publishing</span>
+          <span class="po__tag">Interaction Design</span>
+          <span class="po__tag">Visual Design</span>
+          <span class="po__tag">Responsive</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO SHOWCASE -->
+  <style>
+    .vs { background: #0d1117; padding: 120px 80px; }
+    .vs__label { font-size: 11px; font-weight: 700; letter-spacing: 0.22em; color: rgba(168,216,234,0.5); margin-bottom: 60px; display: block; }
+    .vs__main { width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
+    .vs__main video { width: 100%; display: block; }
+    .vs__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .vs__item { border-radius: 8px; overflow: hidden; background: #111827; cursor: pointer; }
+    .vs__item video { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
+    .vs__item-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: rgba(168,216,234,0.5); padding: 10px 14px; }
+  </style>
+
+  <section class="vs">
+    <span class="vs__label">IN-GAME FOOTAGE</span>
+    <div class="vs__main">
+      <video autoplay muted loop playsinline>
+        <source src="../images/sledding/minigame.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="vs__grid">
+      <div class="vs__item">
+        <video muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause()">
+          <source src="../images/sledding/character.mp4" type="video/mp4">
+        </video>
+        <p class="vs__item-label">캐릭터 꾸미기</p>
+      </div>
+      <div class="vs__item">
+        <video muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause()">
+          <source src="../images/sledding/design.mp4" type="video/mp4">
+        </video>
+        <p class="vs__item-label">UI 디자인</p>
+      </div>
+      <div class="vs__item">
+        <video muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause()">
+          <source src="../images/sledding/best sled (2).mp4" type="video/mp4">
+        </video>
+        <p class="vs__item-label">슬레딩 플레이</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFLECTION -->
+  <section class="rf">
+    <span class="rf__label">REFLECTION</span>
+    <h2 class="rf__title">프로젝트를 마치며</h2>
+    <div class="rf__grid">
+      <div class="rf__card">
+        <span class="rf__card-en">What I Learned</span>
+        <p class="rf__card-ko">게임 언어를 웹으로</p>
+        <p class="rf__card-desc">게임의 비주얼 언어와<br>웹의 인터랙션 언어를<br>연결하는 방법을 배웠습니다.</p>
+      </div>
+      <div class="rf__card">
+        <span class="rf__card-en">Room to Grow</span>
+        <p class="rf__card-ko">더 깊은 인터랙션</p>
+        <p class="rf__card-desc">게임 내 요소들을<br>더 적극적으로 웹에<br>녹여내고 싶습니다.</p>
+      </div>
+      <div class="rf__card">
+        <span class="rf__card-en">Next Step</span>
+        <p class="rf__card-ko">실제 게임 연동</p>
+        <p class="rf__card-desc">Steam API 연동으로<br>실시간 리뷰·플레이어 수를<br>보여주고 싶습니다.</p>
+      </div>
+    </div>
+    <div class="rf__cta">
+      <a class="rf__nav-link rf__nav-link--prev" href="ode.html">
+        <span class="rf__nav-dir">← PREV PROJECT</span>
+        <span class="rf__nav-title">ODE</span>
+      </a>
+      <a class="rf__nav-link rf__nav-link--next" href="../index.html#work">
+        <span class="rf__nav-dir">PROJECT LIST →</span>
+        <span class="rf__nav-title">Selected Work</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- PREV / NEXT NAV -->
   <a href="ode.html" class="proj-nav proj-nav--prev">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
     <span>PREV</span>
@@ -96,33 +482,173 @@
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M14 5l7 7-7 7"/></svg>
   </a>
 
-  <div class="coming-soon">
-    <p class="coming-soon__label">NEXT PROJECT</p>
-    <h1 class="coming-soon__title">Sledding Game</h1>
-    <p class="coming-soon__sub">CONCEPT DESIGN · WEB PUBLISHING · Coming Soon</p>
-    <a href="../index.html#work" class="coming-soon__back">← Selected Work</a>
+  <!-- SCROLL TOP -->
+  <button id="scroll-top" aria-label="맨 위로" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- Custom Cursor -->
+  <div id="custom-cursor" aria-hidden="true">
+    <img src="../images/sledding/frog3.png" class="cursor-frog" alt="">
+    <span class="cursor-text">VIEW SITE</span>
   </div>
 
-  <script>
-    function slideOut(direction, url) {
-      document.body.style.transition = 'transform 0.55s cubic-bezier(0.76,0,0.24,1), opacity 0.55s ease';
-      document.body.style.transform = direction === 'next' ? 'translateX(-6%)' : 'translateX(6%)';
-      document.body.style.opacity = '0';
-      sessionStorage.setItem('slideFrom', direction === 'next' ? 'right' : 'left');
-      setTimeout(function() { window.location.href = url; }, 560);
+  <style>
+    * { cursor: none !important; }
+    #custom-cursor {
+      position: fixed;
+      top: 0; left: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 0.3s;
     }
+    #custom-cursor.ready { opacity: 1; }
+    .cursor-frog {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      flex-shrink: 0;
+      transform: rotate(-45deg);
+      transition: transform 0.25s;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    }
+    #custom-cursor.is-hovering .cursor-frog { transform: rotate(-45deg) scale(1.2); }
+    .cursor-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.8);
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    #custom-cursor.is-hovering .cursor-text { color: #a8d8ea; }
+  </style>
 
-    document.querySelector('.proj-nav--prev').addEventListener('click', function(e) {
-      e.preventDefault();
-      slideOut('prev', 'ode.html');
-    });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'ArrowLeft') slideOut('prev', 'ode.html');
-    });
-
-    // Slide-in on page load
+  <script>
     (function() {
+      const cursor = document.getElementById('custom-cursor');
+      let mx = -100, my = -100, cx = -100, cy = -100;
+
+      document.addEventListener('mousemove', function(e) {
+        mx = e.clientX;
+        my = e.clientY;
+        cursor.classList.add('ready');
+      });
+
+      function animate() {
+        cx += (mx - cx) * 0.12;
+        cy += (my - cy) * 0.12;
+        cursor.style.left = cx + 'px';
+        cursor.style.top = cy + 'px';
+        requestAnimationFrame(animate);
+      }
+      animate();
+
+      document.querySelectorAll('a, button, [role="button"]').forEach(function(el) {
+        el.addEventListener('mouseenter', function() { cursor.classList.add('is-hovering'); });
+        el.addEventListener('mouseleave', function() { cursor.classList.remove('is-hovering'); });
+      });
+
+      document.addEventListener('click', function(e) {
+        const isInteractive = e.target.closest('a, button, input, select, textarea, [role="button"]');
+        if (!isInteractive) window.open('https://itsmauvy.github.io/sledding_game/', '_blank');
+      });
+    })();
+  </script>
+
+  <!-- SNOW EFFECT -->
+  <script>
+    (function() {
+      const canvas = document.getElementById('snow-canvas');
+      const ctx = canvas.getContext('2d');
+      let flakes = [];
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      function createFlake() {
+        return {
+          x: Math.random() * canvas.width,
+          y: -10,
+          r: Math.random() * 3 + 1,
+          speed: Math.random() * 1.2 + 0.4,
+          drift: Math.random() * 0.6 - 0.3,
+          opacity: Math.random() * 0.5 + 0.2
+        };
+      }
+
+      for (let i = 0; i < 120; i++) {
+        const f = createFlake();
+        f.y = Math.random() * canvas.height;
+        flakes.push(f);
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        flakes.forEach(function(f) {
+          ctx.beginPath();
+          ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(220,235,255,${f.opacity})`;
+          ctx.fill();
+          f.y += f.speed;
+          f.x += f.drift;
+          if (f.y > canvas.height + 10) {
+            Object.assign(f, createFlake());
+          }
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+  </script>
+
+  <!-- NAV + SCROLL LOGIC -->
+  <script>
+    (function() {
+      const prevNav = document.querySelector('.proj-nav--prev');
+      const nextNav = document.querySelector('.proj-nav--next');
+      const btn = document.getElementById('scroll-top');
+
+      function updateNav() {
+        const past = window.scrollY > 300;
+        prevNav.classList.toggle('visible', past);
+        nextNav.classList.toggle('visible', past);
+        btn.classList.toggle('visible', window.scrollY > 400);
+      }
+      window.addEventListener('scroll', updateNav, { passive: true });
+      setTimeout(function() {
+        prevNav.classList.add('visible');
+        nextNav.classList.add('visible');
+      }, 1000);
+
+      function slideOut(direction, url) {
+        document.body.style.transition = 'transform 0.55s cubic-bezier(0.76,0,0.24,1), opacity 0.55s ease';
+        document.body.style.transform = direction === 'next' ? 'translateX(-6%)' : 'translateX(6%)';
+        document.body.style.opacity = '0';
+        sessionStorage.setItem('slideFrom', direction === 'next' ? 'right' : 'left');
+        setTimeout(function() { window.location.href = url; }, 560);
+      }
+
+      prevNav.addEventListener('click', function(e) {
+        e.preventDefault();
+        slideOut('prev', 'ode.html');
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft') slideOut('prev', 'ode.html');
+      });
+
+      // Slide-in on load
       document.documentElement.style.opacity = '1';
       const from = sessionStorage.getItem('slideFrom');
       if (from) {
@@ -139,5 +665,6 @@
       }
     })();
   </script>
+
 </body>
 </html>

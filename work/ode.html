@@ -138,9 +138,11 @@
       letter-spacing: 0.18em;
       color: var(--text);
       text-decoration: none;
+      transition: opacity 0.2s, gap 0.25s;
     }
-
-    .back-btn svg { flex-shrink: 0; }
+    .back-btn:hover { opacity: 0.5; gap: 14px; }
+    .back-btn svg { flex-shrink: 0; transition: transform 0.25s; }
+    .back-btn:hover svg { transform: translateX(-3px); }
 
     /* ── 히어로: 영상 풀블리드 ── */
     .hero {
@@ -1987,15 +1989,16 @@
       const nextNav = document.querySelector('.proj-nav--next');
       const navEls = [prevNav, nextNav];
 
-      window.addEventListener('scroll', function() {
-        if (window.scrollY > 300) {
-          prevNav.classList.add('visible');
-          nextNav.classList.add('visible');
-        } else {
-          prevNav.classList.remove('visible');
-          nextNav.classList.remove('visible');
-        }
-      });
+      function updateScrollNav() {
+        const past = window.scrollY > 300;
+        prevNav.classList.toggle('visible', past);
+        nextNav.classList.toggle('visible', past);
+      }
+      window.addEventListener('scroll', updateScrollNav, { passive: true });
+      setTimeout(function() {
+        prevNav.classList.add('visible');
+        nextNav.classList.add('visible');
+      }, 1000);
 
       // Auto color: check which section occupies the viewport center
       const LIGHT_SECTIONS = ['.po', '.mr', '.rd', '.mp', '.sh', '.ab', '.st', '.rf'];

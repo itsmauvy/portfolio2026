@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko" style="background:#1a2a3a">
+<head>
+  <script>document.documentElement.style.opacity='0'</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sledding Game — SOOBIN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: #1a2a3a; color: #fff; font-family: 'Syne', sans-serif; min-height: 100dvh; }
+
+    .coming-soon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      gap: 24px;
+      text-align: center;
+      padding: 40px;
+    }
+    .coming-soon__label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      color: rgba(255,255,255,0.4);
+    }
+    .coming-soon__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 8vw, 96px);
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1;
+      color: #fff;
+    }
+    .coming-soon__sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.1em;
+    }
+    .coming-soon__back {
+      margin-top: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+    .coming-soon__back:hover { color: #fff; }
+
+    /* Project Navigation */
+    .proj-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: rgba(255,255,255,0.5);
+      padding: 20px 16px;
+      transition: color 0.3s, transform 0.3s;
+    }
+    .proj-nav--prev { left: 24px; }
+    .proj-nav--next { right: 24px; }
+    .proj-nav span {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+    .proj-nav--prev span { transform: rotate(180deg); }
+    .proj-nav:hover { color: #fff; }
+    .proj-nav--prev:hover { transform: translateY(-50%) translateX(-3px); }
+    .proj-nav--next:hover { transform: translateY(-50%) translateX(3px); }
+    .proj-nav--disabled { opacity: 0.2; pointer-events: none; }
+  </style>
+</head>
+<body>
+
+  <a href="ode.html" class="proj-nav proj-nav--prev">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    <span>PREV</span>
+  </a>
+  <a href="#" class="proj-nav proj-nav--next proj-nav--disabled">
+    <span>NEXT</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M14 5l7 7-7 7"/></svg>
+  </a>
+
+  <div class="coming-soon">
+    <p class="coming-soon__label">NEXT PROJECT</p>
+    <h1 class="coming-soon__title">Sledding Game</h1>
+    <p class="coming-soon__sub">CONCEPT DESIGN · WEB PUBLISHING · Coming Soon</p>
+    <a href="../index.html#work" class="coming-soon__back">← Selected Work</a>
+  </div>
+
+  <script>
+    function slideOut(direction, url) {
+      document.body.style.transition = 'transform 0.55s cubic-bezier(0.76,0,0.24,1), opacity 0.55s ease';
+      document.body.style.transform = direction === 'next' ? 'translateX(-6%)' : 'translateX(6%)';
+      document.body.style.opacity = '0';
+      sessionStorage.setItem('slideFrom', direction === 'next' ? 'right' : 'left');
+      setTimeout(function() { window.location.href = url; }, 560);
+    }
+
+    document.querySelector('.proj-nav--prev').addEventListener('click', function(e) {
+      e.preventDefault();
+      slideOut('prev', 'ode.html');
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft') slideOut('prev', 'ode.html');
+    });
+
+    // Slide-in on page load
+    (function() {
+      document.documentElement.style.opacity = '1';
+      const from = sessionStorage.getItem('slideFrom');
+      if (from) {
+        sessionStorage.removeItem('slideFrom');
+        document.body.style.transform = from === 'right' ? 'translateX(6%)' : 'translateX(-6%)';
+        document.body.style.opacity = '0';
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            document.body.style.transition = 'transform 0.55s cubic-bezier(0.76,0,0.24,1), opacity 0.55s ease';
+            document.body.style.transform = 'translateX(0)';
+            document.body.style.opacity = '1';
+          });
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

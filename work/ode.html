@@ -337,7 +337,7 @@
         <img class="cover__logo" src="ode-images/ode-logo.png" alt="ODE">
         <p class="cover__sub">매일을 위한<br>포켓 뷰티</p>
         <p class="cover__type">개인 프로젝트 &nbsp;|&nbsp; 기획, 디자인 100%</p>
-        <p class="cover__desc">언제나 가방 속에 함께하던 소중한 물건처럼,<br>매일 사용하는 뷰티 아이템도<br>자연스럽게 곁에 머물 수 있도록<br>포켓 뷰티 브랜드 ODE를 기획했습니다.</p>
+        <p class="cover__desc">매일 손이 가고, 가방에 넣고 다니고 싶은<br>포켓 뷰티 브랜드 ODE를 기획했습니다.</p>
       </div>
       <div class="cover__meta">
         <div class="cover__meta-row">
@@ -394,46 +394,52 @@
        02 PROBLEM DEFINITION
   ────────────────────────────────────────────── -->
   <style>
-    /* 명암 리듬용 다크 모카 섹션 (베이지 연속을 끊고 '문제'의 무게감 부여) */
-    .pd { background: #352a20; padding: 130px 80px 140px; color: #f5f1ed; }
-    .pd__label { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: rgba(245,241,237,0.5); margin-bottom: 28px; }
-    .pd__title { font-family: 'Gowun Batang', serif; font-size: clamp(32px, 3.4vw, 52px); font-weight: 700; line-height: 1.3; letter-spacing: -0.02em; color: #f5f1ed; margin-bottom: 28px; }
-    .pd__intro { font-family: 'Gowun Batang', serif; font-size: 18px; line-height: 1.95; color: rgba(245,241,237,0.72); max-width: 680px; margin-bottom: 28px; }
-    .pd__intro strong { font-weight: 700; color: #e7cda9; }
-    .pd__quote { font-family: 'Gowun Batang', serif; font-size: clamp(21px, 2.3vw, 30px); font-weight: 700; line-height: 1.6; color: #e7cda9; max-width: 800px; margin-bottom: 84px; }
-    .pd__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; margin-bottom: 76px; }
-    .pd__card { border-top: 1px solid rgba(245,241,237,0.22); padding-top: 26px; }
-    .pd__card-num { display: block; font-family: 'Cormorant Garamond', serif; font-size: 30px; letter-spacing: 0.04em; color: #c9a888; margin-bottom: 4px; }
-    .pd__card-title { font-family: 'Gowun Batang', serif; font-size: 19px; font-weight: 700; color: #f5f1ed; margin: 12px 0 12px; line-height: 1.4; }
-    .pd__card-desc { font-size: 16px; line-height: 1.9; color: rgba(245,241,237,0.72); font-family: 'Gowun Batang', serif; }
-    .pd__conclusion { font-family: 'Gowun Batang', serif; font-size: clamp(18px, 2vw, 25px); line-height: 1.7; color: #f5f1ed; padding-left: 26px; border-left: 2px solid #c9a888; }
-    .pd__conclusion strong { color: #e7cda9; font-weight: 700; }
-    @media (max-width: 768px) { .pd__grid { grid-template-columns: 1fr; gap: 28px; } }
+    .pd { background: #352a20; padding: 130px 80px 140px; color: #f5f1ed; text-align: center; }
+    .pd__label { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: rgba(245,241,237,0.5); margin-bottom: 36px; }
+    .pd__title { font-family: 'Gowun Batang', serif; font-size: clamp(28px, 3vw, 46px); font-weight: 700; line-height: 1.35; letter-spacing: -0.02em; color: #f5f1ed; margin-bottom: 48px; }
+    .pd__dots { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-bottom: 28px; }
+    .pd__dots span { display: block; width: 4px; height: 4px; border-radius: 50%; background: rgba(245,241,237,0.4); }
+    .pd__quote { font-family: 'Gowun Batang', serif; font-size: clamp(16px, 1.6vw, 22px); line-height: 1.8; color: #e7cda9; max-width: 760px; margin: 0 auto 80px; }
+    .pd__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-bottom: 64px; }
+    .pd__card { border-top: 1px solid rgba(245,241,237,0.22); padding: 32px 40px 0; }
+    .pd__card-num { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.15em; color: rgba(245,241,237,0.45); margin-bottom: 16px; }
+    .pd__card-title { font-family: 'Gowun Batang', serif; font-size: 20px; font-weight: 700; color: #f5f1ed; margin-bottom: 12px; line-height: 1.4; }
+    .pd__card-desc { font-size: 15px; line-height: 1.85; color: rgba(245,241,237,0.6); font-family: 'Gowun Batang', serif; }
+    .pd__insight { display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 20px; }
+    .pd__insight-icon { font-size: 28px; color: #e7cda9; line-height: 1; margin: 4px 0; }
+    .pd__insight-label { font-size: 22px; font-weight: 400; letter-spacing: 0.08em; color: rgba(245,241,237,0.55); font-family: 'Cormorant Garamond', serif; font-style: italic; }
+    .pd__insight-text { font-family: 'Gowun Batang', serif; font-size: clamp(18px, 1.8vw, 26px); font-weight: 700; line-height: 1.7; color: #f5f1ed; margin-top: 8px; }
+    .pd__em { color: #e7cda9; font-weight: 700; }
+    @media (max-width: 768px) { .pd__grid { grid-template-columns: 1fr; } .pd__card { padding: 28px 0 0; } }
   </style>
 
   <section class="pd">
     <span class="pd__label">PROBLEM DEFINITION</span>
-    <h2 class="pd__title">실제 업무에서 발견한 문제를<br>브랜드 기획으로 풀어내다</h2>
-    <p class="pd__intro">3년간 뷰티 산업에서 업무를 경험하며,<br>제품이 판매되는 과정부터 소비자에게 전달되는 과정까지 가까이에서 관찰할 수 있었습니다.</p>
-    <p class="pd__quote">“구매는 이루어지지만, 일상 속에서 꾸준히 사용되는<br>제품은 생각보다 많지 않다는 것.”</p>
+    <h2 class="pd__title">실무에서 발견한 문제를<br>브랜드 기획으로 풀어내다</h2>
+    <div class="pd__dots"><span></span><span></span><span></span></div>
+    <p class="pd__quote">" 구매는 이루어지지만, 일상 속에서 <span class="pd__em">꾸준히 사용되는 제품은 많지 않았다.</span> "</p>
     <div class="pd__grid">
       <div class="pd__card">
         <span class="pd__card-num">01</span>
-        <p class="pd__card-title">사고 나서<br>잊혀지는 제품</p>
-        <p class="pd__card-desc">구매 당시에는 만족도가 높지만, 시간이 지날수록 사용 빈도가 줄어들며 화장대 위에 머무르는 경우가 많았습니다.</p>
+        <p class="pd__card-title"><span class="pd__em">잊혀지는</span> 제품</p>
+        <p class="pd__card-desc">구매 후 사용 빈도 감소</p>
       </div>
       <div class="pd__card">
         <span class="pd__card-num">02</span>
-        <p class="pd__card-title">일상에 스며들지<br>못하는 패키지</p>
-        <p class="pd__card-desc">휴대성을 고려하지 않은 크기와 형태는 제품을 매일 사용하는 경험으로 이어지기 어려웠습니다.</p>
+        <p class="pd__card-title"><span class="pd__em">휴대되지 않는</span> 패키지</p>
+        <p class="pd__card-desc">일상 속 사용 경험 부족</p>
       </div>
       <div class="pd__card">
         <span class="pd__card-num">03</span>
-        <p class="pd__card-title">온라인 환경의<br>경험 부족</p>
-        <p class="pd__card-desc">사용자는 실제 색상과 질감을 충분히 경험하기 어려웠고, 구매 과정에서 반복적인 고민이 발생했습니다.</p>
+        <p class="pd__card-title"><span class="pd__em">경험되지 않는</span> 온라인</p>
+        <p class="pd__card-desc">실물 경험의 부재</p>
       </div>
     </div>
-    <p class="pd__conclusion">그래서 ODE는 <strong>사용자가 찾고, 사용하고, 자연스럽게 다시 손이 가는</strong> 경험에 집중했습니다.</p>
+    <div class="pd__insight">
+      <span class="pd__insight-icon">✦</span>
+      <span class="pd__insight-label">Insight</span>
+      <p class="pd__insight-text">사용자가 <span class="pd__em">찾고, 사용하고, 다시 손이 가는</span> 경험에 집중했습니다</p>
+    </div>
   </section>
 
   <!-- ──────────────────────────────────────────────
@@ -443,34 +449,23 @@
     .mr { background: #ece3d9; padding: 130px 80px 140px; color: #2a2118; }
     .mr__label { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: rgba(42,33,24,0.45); margin-bottom: 28px; }
     .mr__title { font-family: 'Gowun Batang', serif; font-size: clamp(32px, 3.4vw, 52px); font-weight: 700; line-height: 1.3; letter-spacing: -0.02em; color: #1a1410; margin-bottom: 72px; }
-    .mr__brands { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-bottom: 96px; }
-    .mr__brand { border-top: 1px solid rgba(42,33,24,0.22); padding-top: 22px; }
-    .mr__brand-name { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #1a1410; letter-spacing: 0.02em; margin-bottom: 6px; }
-    .mr__brand-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; color: #8D775F; margin-bottom: 14px; }
-    .mr__brand-desc { font-size: 15px; line-height: 1.85; color: rgba(42,33,24,0.74); font-family: 'Gowun Batang', serif; }
-    .mr__map-wrap { display: block; }
-    .mr__map { position: relative; width: 100%; max-width: 460px; aspect-ratio: 1; border: 1px solid rgba(42,33,24,0.18); }
-    .mr__map::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(42,33,24,0.14); }
-    .mr__map::after { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(42,33,24,0.14); }
-    .mr__axis { position: absolute; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: rgba(42,33,24,0.66); white-space: nowrap; }
-    .mr__axis--top { top: 12px; left: 50%; transform: translateX(-50%); }
-    .mr__axis--bottom { bottom: 12px; left: 50%; transform: translateX(-50%); }
-    .mr__axis--left { top: 50%; left: 12px; transform: translateY(-50%); }
-    .mr__axis--right { top: 50%; right: 12px; transform: translateY(-50%); }
-    .mr__dot { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: rgba(42,33,24,0.74); white-space: nowrap; }
-    .mr__dot::before { content: ''; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid rgba(42,33,24,0.5); flex: none; }
-    .mr__dot--ode { color: #8D775F; font-size: 15px; z-index: 1; }
-    .mr__dot--ode::before { width: 12px; height: 12px; background: #8D775F; border-color: #8D775F; box-shadow: 0 0 0 4px rgba(141,119,95,0.18); }
-    .mr__map-text { max-width: 920px; }
-    .mr__opp-label { display: block; font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; letter-spacing: 0.3em; color: #8D775F; margin-bottom: 28px; }
-    .mr__map-text h3 { font-family: 'Gowun Batang', serif; font-size: clamp(30px, 3.2vw, 46px); font-weight: 700; color: #1a1410; line-height: 1.45; letter-spacing: -0.02em; margin-bottom: 42px; }
-    .mr__map-text p { font-family: 'Gowun Batang', serif; font-size: clamp(17px, 1.5vw, 20px); line-height: 2; color: rgba(42,33,24,0.74); }
-    .mr__map-text strong { color: #8D775F; font-weight: 700; }
-    .mr__opp-closing { font-family: 'Gowun Batang', serif; font-size: clamp(22px, 2vw, 28px); font-weight: 700; line-height: 1.6; color: #8D775F; margin-top: 36px; }
+    .mr__brands { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 96px; }
+    .mr__brand { border: 1px solid rgba(42,33,24,0.18); padding: 32px 24px 32px; display: flex; flex-direction: column; }
+    .mr__brand-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: #8D775F; margin-bottom: 20px; }
+    .mr__brand-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 2.8vw, 40px); font-style: italic; color: #1a1410; letter-spacing: -0.01em; line-height: 1; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid rgba(42,33,24,0.12); }
+    .mr__brand-right { display: none; }
+    .mr__brand-feature-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; color: rgba(42,33,24,0.55); margin-bottom: 10px; }
+    .mr__brand-desc { font-size: 14px; line-height: 1.85; color: rgba(42,33,24,0.85); font-family: 'Gowun Batang', serif; }
+    .mr__opp-wrap { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .mr__opp-arrow { width: 1px; height: 60px; background: rgba(42,33,24,0.25); margin-bottom: 40px; }
+    .mr__opp-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: rgba(42,33,24,0.45); margin-bottom: 20px; }
+    .mr__opp-title { font-family: 'Gowun Batang', serif; font-size: clamp(26px, 2.8vw, 40px); font-weight: 700; color: #1a1410; line-height: 1.45; letter-spacing: -0.02em; margin-bottom: 28px; }
+    .mr__opp-desc { font-family: 'Gowun Batang', serif; font-size: 16px; line-height: 2; color: rgba(42,33,24,0.7); max-width: 640px; }
+    .mr__opp-desc strong { color: #8D775F; font-weight: 700; }
+    .mr__opp-closing { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3vw, 44px); font-style: italic; font-weight: 700; line-height: 1.4; color: #8D775F; margin-top: 40px; }
     @media (max-width: 900px) {
-      .mr__brands { grid-template-columns: repeat(2, 1fr); gap: 28px 22px; }
-      .mr__map-wrap { grid-template-columns: 1fr; gap: 40px; }
-      .mr__map { margin: 0 auto; }
+      .mr__brand { grid-template-columns: 1fr; gap: 12px; }
+      .mr__opp-wrap { grid-template-columns: 1fr; gap: 40px; }
     }
   </style>
 
@@ -480,34 +475,37 @@
 
     <div class="mr__brands">
       <div class="mr__brand">
-        <p class="mr__brand-name">rhode</p>
         <p class="mr__brand-tag">GLOBAL · MINIMAL</p>
-        <p class="mr__brand-desc">미니멀한 디자인과 현대적인 뷰티 경험을 제안합니다.</p>
+        <p class="mr__brand-name">rhode</p>
+        <p class="mr__brand-feature-label">FEATURE</p>
+        <p class="mr__brand-desc">미니멀 패키징 + 현대적 뷰티</p>
       </div>
       <div class="mr__brand">
-        <p class="mr__brand-name">fwee</p>
         <p class="mr__brand-tag">KOREA · PLAYFUL</p>
-        <p class="mr__brand-desc">과일에서 영감을 받은 컬러와 독특한 사용감으로 감각적인 뷰티 경험을 제공합니다.</p>
+        <p class="mr__brand-name">fwee</p>
+        <p class="mr__brand-feature-label">FEATURE</p>
+        <p class="mr__brand-desc">감각적 컬러 + 독특한 사용감</p>
       </div>
       <div class="mr__brand">
-        <p class="mr__brand-name">anillo</p>
         <p class="mr__brand-tag">KOREA · DAILY</p>
-        <p class="mr__brand-desc">일상 속 자연스러운 사용 경험과 라이프스타일을 강조합니다.</p>
+        <p class="mr__brand-name">anillo</p>
+        <p class="mr__brand-feature-label">FEATURE</p>
+        <p class="mr__brand-desc">라이프스타일 + 일상 사용 경험</p>
       </div>
       <div class="mr__brand">
-        <p class="mr__brand-name">무지개맨션</p>
         <p class="mr__brand-tag">KOREA · OBJET</p>
-        <p class="mr__brand-desc">오브제적인 디자인을 통해 소장 욕구를 자극하는 브랜드 경험을 제공합니다.</p>
+        <p class="mr__brand-name">무지개맨션</p>
+        <p class="mr__brand-feature-label">FEATURE</p>
+        <p class="mr__brand-desc">오브제 디자인 + 소장 욕구</p>
       </div>
     </div>
 
-    <div class="mr__map-wrap">
-      <div class="mr__map-text">
-        <span class="mr__opp-label">OPPORTUNITY</span>
-        <h3>사용 경험과 감성을<br>동시에 담은 포켓 뷰티의 부재</h3>
-        <p>rhode는 미니멀한 패키징,<br>fwee는 사용감과 컬러,<br>anillo는 라이프스타일,<br>무지개맨션은 오브제적인 아이덴티티 중심으로 경험을 제안하고 있었습니다.<br><br>그러나 사용자의 일상 속에 자연스럽게 스며들며,<br>감성과 휴대성을 동시에 담은 포켓 뷰티 브랜드는 상대적으로 부족했습니다.</p>
-        <p class="mr__opp-closing">ODE는 그 빈 지점에서 출발했습니다.</p>
-      </div>
+    <div class="mr__opp-wrap">
+      <div class="mr__opp-arrow"></div>
+      <span class="mr__opp-label">OPPORTUNITY</span>
+      <h3 class="mr__opp-title">감성과 휴대성을 동시에 담은<br>포켓 뷰티의 빈자리</h3>
+      <p class="mr__opp-desc">각 브랜드는 미니멀, 컬러, 라이프스타일, 오브제 중 하나에 집중했습니다.<br><strong>일상에 자연스럽게 스며들며 감성과 기능을 함께 담은 브랜드는 없었습니다.</strong></p>
+      <p class="mr__opp-closing">ODE는 그 빈 지점에서 출발했습니다.</p>
     </div>
   </section>
 
@@ -754,15 +752,15 @@
         <div class="ds__fonts">
           <div class="ds__font-item">
             <span class="ds__font-name ds__font-name--gowun">고운바탕</span>
-            <p class="ds__font-desc">브랜드 스토리와 국문 헤드라인에 사용하여<br>따뜻하고 감성적인 브랜드 경험을 전달합니다.</p>
+            <p class="ds__font-desc">브랜드 스토리 · 국문 헤드라인</p>
           </div>
           <div class="ds__font-item">
             <span class="ds__font-name ds__font-name--jost">Jost</span>
-            <p class="ds__font-desc">제품 정보와 UI 요소에 적용하여<br>높은 가독성과 직관적인 사용성을 제공합니다.</p>
+            <p class="ds__font-desc">제품 정보 · UI 요소</p>
           </div>
           <div class="ds__font-item">
             <span class="ds__font-name ds__font-name--cormorant">Cormorant Garamond</span>
-            <p class="ds__font-desc">브랜드 로고와 영문 헤드라인에 사용하여<br>ODE만의 우아하고 정제된 무드를 표현합니다.</p>
+            <p class="ds__font-desc">브랜드 로고 · 영문 헤드라인</p>
           </div>
         </div>
       </div>
@@ -776,7 +774,7 @@
             <div class="ds__color-info">
               <p class="ds__color-info-name">Soft Ivory</p>
               <p class="ds__color-info-hex">#F5F1ED</p>
-              <p class="ds__color-info-desc">브랜드의 메인 배경 컬러로,<br>깨끗하고 편안한 인상을 전달합니다.</p>
+              <p class="ds__color-info-desc">메인 배경</p>
             </div>
           </div>
           <div class="ds__color-row">
@@ -784,7 +782,7 @@
             <div class="ds__color-info">
               <p class="ds__color-info-name">Warm Beige</p>
               <p class="ds__color-info-hex">#E8E0D8</p>
-              <p class="ds__color-info-desc">부드럽고 자연스러운 무드를 더하는<br>서브 베이지 컬러입니다.</p>
+              <p class="ds__color-info-desc">서브 배경</p>
             </div>
           </div>
           <div class="ds__color-row">
@@ -792,7 +790,7 @@
             <div class="ds__color-info">
               <p class="ds__color-info-name">Mocha Beige</p>
               <p class="ds__color-info-hex">#8D775F</p>
-              <p class="ds__color-info-desc">ODE만의 따뜻하고 감성적인 분위기를 표현하는<br>시그니처 컬러입니다.</p>
+              <p class="ds__color-info-desc">시그니처 컬러</p>
             </div>
           </div>
           <div class="ds__color-row">
@@ -800,7 +798,7 @@
             <div class="ds__color-info">
               <p class="ds__color-info-name">Deep Taupe</p>
               <p class="ds__color-info-hex">#5C4F45</p>
-              <p class="ds__color-info-desc">텍스트와 강조 요소에 사용되는 컬러로<br>브랜드의 안정감과 깊이를 더합니다.</p>
+              <p class="ds__color-info-desc">텍스트 · 강조</p>
             </div>
           </div>
         </div>
@@ -1125,7 +1123,7 @@
             <p class="mp__annotation-title">라이프스타일 속 제품 발견</p>
             <div class="mp__annotation-callout"></div>
           </div>
-          <p class="mp__annotation-desc">실제 사용자의 라이프스타일 이미지를 활용하고<br><strong>이미지에 사용된 제품 정보를 함께 제공하여</strong><br>브랜드 경험과 제품 탐색이 자연스럽게<br>이어질 수 있도록 설계했습니다.</p>
+          <p class="mp__annotation-desc">라이프스타일 이미지에 <strong>제품 정보를 함께 제공하여</strong><br>브랜드 경험과 탐색이 자연스럽게 이어집니다.</p>
         </div>
       </div>
 
@@ -1501,12 +1499,12 @@
 
     <!-- 좌측 주석 -->
     <div class="ab__annotations-left">
-      <div class="ab__annotation" style="top: 1300px; left: 400px;">
+      <div class="ab__annotation" style="top: 1100px; left: 220px;">
         <div class="ab__annotation-head">
           <p class="ab__annotation-title">컬렉션 무드 경험</p>
           <div class="ab__annotation-callout"></div>
         </div>
-        <p class="ab__annotation-desc">마우스 호버 시 컬러가 드러나도록 설계하여<br>각 <strong>컬렉션이 가진 계절의 분위기와 감성</strong>을<br>자연스럽게 경험할 수 있도록 구성했습니다.</p>
+        <p class="ab__annotation-desc">호버 시 컬러가 드러나며<br><strong>컬렉션의 감성</strong>을 자연스럽게 전달합니다.</p>
       </div>
     </div>
 
@@ -1522,14 +1520,14 @@
             <p class="ab__annotation-title">브랜드 경험 강화</p>
             <div class="ab__annotation-callout"></div>
           </div>
-          <p class="ab__annotation-desc">슬로건과 라이프스타일 이미지를 결합하여<br>사용자가 ODE를 단순한 뷰티 브랜드가 아닌<br><strong>일상에 머무는 브랜드로 인식</strong>할 수 있도록 설계했습니다.</p>
+          <p class="ab__annotation-desc">슬로건과 이미지를 결합해<br><strong>일상에 머무는 브랜드</strong>로 인식되도록 설계했습니다.</p>
         </div>
       </div>
     </div>
 
     <!-- 우측 주석 -->
     <div class="ab__annotations-right">
-      <div class="ab__annotation ab__annotation--right" style="top: 1100px; right: 200px; text-align: left;">
+      <div class="ab__annotation ab__annotation--right" style="top: 980px; right: 80px; text-align: left;">
         <div class="ab__annotation-callout--vertical"></div>
         <p class="ab__annotation-title">Parallex Scrolling</p>
         <p class="ab__annotation-desc">부드러운 속도의 Y축 패럴랙스 스크롤링을<br>사용하여 <strong>감각적인 브랜드의 분위기</strong>를 전달합니다.</p>
@@ -1588,7 +1586,7 @@
         <div class="sh__annotation-head">
           <p class="sh__annotation-title">구매 경험 최적화</p>
         </div>
-        <p class="sh__annotation-desc">사이드 패널 형태의 장바구니를 적용하여<br><strong>페이지 이동 없이</strong> 상품을 관리할 수 있도록 설계했습니다.<br><br>전체 선택, 수량 변경, 무료 배송 안내,<br>연관 상품 추천 기능을 통합하여<br>구매 편의성을 높였습니다.</p>
+        <p class="sh__annotation-desc">사이드 패널 형태로 <strong>페이지 이동 없이</strong><br>상품 관리부터 결제까지 이어지도록 설계했습니다.</p>
       </div>
     </div>
   </section>
@@ -1706,11 +1704,13 @@
     .rf__card-en { font-family: 'Cormorant Garamond', serif; font-size: 15px; letter-spacing: 0.1em; color: #8D775F; }
     .rf__card-ko { font-family: 'Gowun Batang', serif; font-size: 21px; font-weight: 700; color: #1a1410; margin: 12px 0 16px; }
     .rf__card-desc { font-size: 16px; line-height: 1.95; color: rgba(42,33,24,0.74); font-family: 'Gowun Batang', serif; }
-    .rf__cta { text-align: center; border-top: 1px solid rgba(42,33,24,0.15); padding-top: 80px; }
-    .rf__thanks { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 72px); letter-spacing: 0.04em; color: #1a1410; margin-bottom: 36px; }
-    .rf__links { display: inline-flex; gap: 14px; }
-    .rf__link { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: #2a2118; text-decoration: none; border: 1px solid rgba(42,33,24,0.3); border-radius: 24px; padding: 13px 28px; transition: background 0.25s, color 0.25s; }
-    .rf__link:hover { background: #2a2118; color: #f2ebe5; }
+    .rf__cta { border-top: 1px solid rgba(42,33,24,0.12); padding-top: 72px; display: flex; justify-content: space-between; align-items: flex-end; }
+    .rf__nav-link { display: flex; flex-direction: column; gap: 10px; text-decoration: none; color: #2a2118; transition: opacity 0.2s; }
+    .rf__nav-link:hover { opacity: 0.55; }
+    .rf__nav-link--next { align-items: flex-end; }
+    .rf__nav-dir { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(42,33,24,0.4); }
+    .rf__nav-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 2.4vw, 34px); font-style: italic; color: #1a1410; line-height: 1; }
+    .rf__nav-arrow { font-size: 18px; color: rgba(42,33,24,0.35); margin-top: 4px; }
     @media (max-width: 768px) { .rf__grid { grid-template-columns: 1fr; gap: 28px; } }
   </style>
 
@@ -1720,25 +1720,29 @@
     <div class="rf__grid">
       <div class="rf__card">
         <span class="rf__card-en">What I Learned</span>
-        <p class="rf__card-ko">브랜드는 제품보다<br>경험으로 기억된다</p>
-        <p class="rf__card-desc">3년간 뷰티 산업에서 일하며 발견한 문제를<br>브랜드 기획으로 풀어내는 과정을 경험했습니다.<br><br>제품 자체보다 사용자의 일상 속에 자연스럽게 스며드는 경험이<br>브랜드의 지속적인 사용을 만든다는 점을 다시 한번 확인할 수 있었습니다.</p>
+        <p class="rf__card-ko">사용자의 시선으로 생각하기</p>
+        <p class="rf__card-desc">'내가 소비자라면 어떤 제품을 원할까?'<br>가장 중요한 출발점이라는 것을 다시 배웠습니다.</p>
       </div>
       <div class="rf__card">
         <span class="rf__card-en">Room to Grow</span>
-        <p class="rf__card-ko">실제 사용자<br>검증의 필요성</p>
-        <p class="rf__card-desc">브랜드 컨셉과 UX 흐름을 설계하는 데 집중했지만,<br>실제 사용자 테스트를 통한 검증까지는 진행하지 못했습니다.<br><br>향후에는 설문과 간단한 인터뷰를 통해<br>가설을 구체적으로 검증해보고 싶습니다.</p>
+        <p class="rf__card-ko">제품 디자인의 완성도</p>
+        <p class="rf__card-desc">손에 쥐는 경험과 패키지 아이덴티티는<br>앞으로 더 발전시키고 싶습니다.</p>
       </div>
       <div class="rf__card">
         <span class="rf__card-en">Next Step</span>
-        <p class="rf__card-ko">브랜드<br>경험의 확장</p>
-        <p class="rf__card-desc">ODE는 단순한 화장품 브랜드가 아니라<br>'매일 손이 가는 경험'에서 시작한 프로젝트입니다.<br><br>향후 제품 라인업, 오프라인 경험까지 확장하며<br>하나의 브랜드 세계관으로 발전시켜 보고 싶습니다.</p>
+        <p class="rf__card-ko">브랜드 경험의 확장</p>
+        <p class="rf__card-desc">ODE를 제품이 아닌,<br>일상 속 브랜드 경험으로 발전시키고 싶습니다.</p>
       </div>
     </div>
     <div class="rf__cta">
-      <div class="rf__links">
-        <a class="rf__link" href="../index.html#work">← WORK 목록으로</a>
-        <a class="rf__link" href="#top">↑ 맨 위로</a>
-      </div>
+      <a class="rf__nav-link rf__nav-link--prev" href="../index.html#work">
+        <span class="rf__nav-dir">← PROJECT LIST</span>
+        <span class="rf__nav-title">Selected Work</span>
+      </a>
+      <a class="rf__nav-link rf__nav-link--next" href="sledding.html">
+        <span class="rf__nav-dir">NEXT PROJECT →</span>
+        <span class="rf__nav-title">Sledding Game</span>
+      </a>
     </div>
   </section>
 
@@ -1925,6 +1929,374 @@
           });
         });
       });
+    })();
+  </script>
+
+  <!-- Project Navigation Arrows -->
+  <a href="../index.html#work" class="proj-nav proj-nav--prev" aria-label="Previous">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+    <span>PREV</span>
+  </a>
+  <a href="sledding.html" class="proj-nav proj-nav--next" aria-label="Next">
+    <span>NEXT</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M14 5l7 7-7 7"/></svg>
+  </a>
+
+  <style>
+    .proj-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: rgba(255,255,255,0.7);
+      padding: 20px 16px;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s, color 0.4s;
+    }
+    .proj-nav--prev { left: 24px; }
+    .proj-nav--next { right: 24px; }
+    .proj-nav span {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      font-family: 'Syne', sans-serif;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+    .proj-nav--prev span { transform: rotate(180deg); }
+    .proj-nav svg { opacity: 0.7; }
+    .proj-nav:hover { color: #fff; }
+    .proj-nav:hover svg { opacity: 1; }
+    .proj-nav--disabled { opacity: 0 !important; pointer-events: none; }
+    .proj-nav.visible { opacity: 1; }
+    .proj-nav--prev.visible:hover { transform: translateY(-50%) translateX(-3px); }
+    .proj-nav--next.visible:hover { transform: translateY(-50%) translateX(3px); }
+    /* light background sections */
+    .proj-nav.on-light { color: rgba(42,33,24,0.6); }
+    .proj-nav.on-light:hover { color: #2a2118; }
+  </style>
+
+  <script>
+    (function() {
+      const prevNav = document.querySelector('.proj-nav--prev');
+      const nextNav = document.querySelector('.proj-nav--next');
+      const navEls = [prevNav, nextNav];
+
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+          prevNav.classList.add('visible');
+          nextNav.classList.add('visible');
+        } else {
+          prevNav.classList.remove('visible');
+          nextNav.classList.remove('visible');
+        }
+      });
+
+      // Auto color: check which section occupies the viewport center
+      const LIGHT_SECTIONS = ['.po', '.mr', '.rd', '.mp', '.sh', '.ab', '.st', '.rf'];
+      const lightEls = Array.from(document.querySelectorAll(LIGHT_SECTIONS.join(',')));
+
+      function updateNavColor() {
+        const mid = window.innerHeight / 2;
+        const isLight = lightEls.some(function(el) {
+          const r = el.getBoundingClientRect();
+          return r.top <= mid && r.bottom >= mid;
+        });
+        navEls.forEach(function(el) {
+          if (el) el.classList.toggle('on-light', isLight);
+        });
+      }
+
+      window.addEventListener('scroll', updateNavColor, { passive: true });
+      window.addEventListener('resize', updateNavColor, { passive: true });
+      updateNavColor();
+
+
+      function slideOut(direction, url) {
+        document.body.style.transition = 'transform 0.55s cubic-bezier(0.76,0,0.24,1), opacity 0.55s ease';
+        document.body.style.transform = direction === 'next' ? 'translateX(-6%)' : 'translateX(6%)';
+        document.body.style.opacity = '0';
+        sessionStorage.setItem('slideFrom', direction === 'next' ? 'right' : 'left');
+        setTimeout(function() { window.location.href = url; }, 560);
+      }
+
+      prevNav.addEventListener('click', function(e) {
+        e.preventDefault();
+        slideOut('prev', '../index.html#work');
+      });
+      nextNav.addEventListener('click', function(e) {
+        e.preventDefault();
+        slideOut('next', 'sledding.html');
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft') slideOut('prev', '../index.html#work');
+        if (e.key === 'ArrowRight') slideOut('next', 'sledding.html');
+      });
+
+      // Slide-in on page load
+      (function() {
+        const from = sessionStorage.getItem('slideFrom');
+        if (from) {
+          sessionStorage.removeItem('slideFrom');
+          document.body.style.transform = from === 'right' ? 'translateX(6%)' : 'translateX(-6%)';
+          document.body.style.opacity = '0';
+          requestAnimationFrame(function() {
+            requestAnimationFrame(function() {
+              document.body.style.transition = 'transform 0.55s cubic-bezier(0.76,0,0.24,1), opacity 0.55s ease';
+              document.body.style.transform = 'translateX(0)';
+              document.body.style.opacity = '1';
+            });
+          });
+        }
+      })();
+    })();
+  </script>
+
+  <!-- Custom Cursor -->
+  <div id="custom-cursor" aria-hidden="true">
+    <svg class="cursor-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 17L17 7M17 7H7M17 7v10"/>
+    </svg>
+    <span class="cursor-text">VIEW SITE</span>
+  </div>
+
+  <style>
+    * { cursor: none !important; }
+    #custom-cursor {
+      position: fixed;
+      top: 0; left: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-arrow {
+      color: rgba(255,255,255,0.8);
+      flex-shrink: 0;
+      transition: color 0.3s, transform 0.25s;
+    }
+    .cursor-text {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.8);
+      font-family: 'Syne', sans-serif;
+      white-space: nowrap;
+      transition: color 0.3s;
+    }
+    #custom-cursor.is-hovering .cursor-arrow {
+      color: #8D775F;
+      transform: rotate(45deg);
+    }
+    #custom-cursor.is-hovering .cursor-text {
+      color: #8D775F;
+    }
+    #custom-cursor.on-light .cursor-arrow { color: rgba(42,33,24,0.7); }
+    #custom-cursor.on-light .cursor-text { color: rgba(42,33,24,0.7); }
+    #custom-cursor.on-light.is-hovering .cursor-arrow { color: #8D775F; }
+    #custom-cursor.on-light.is-hovering .cursor-text { color: #8D775F; }
+  </style>
+
+  <script>
+    (function() {
+      const cursor = document.getElementById('custom-cursor');
+      let mx = -100, my = -100;
+      let cx = -100, cy = -100;
+
+      const LIGHT_SEL = ['.po', '.mr', '.rd', '.mp', '.sh', '.ab', '.st', '.rf'];
+      const lightSections = Array.from(document.querySelectorAll(LIGHT_SEL.join(',')));
+
+      document.addEventListener('mousemove', function(e) {
+        mx = e.clientX;
+        my = e.clientY;
+        const isLight = lightSections.some(function(el) {
+          const r = el.getBoundingClientRect();
+          return e.clientY >= r.top && e.clientY <= r.bottom;
+        });
+        cursor.classList.toggle('on-light', isLight);
+      });
+
+      function animate() {
+        cx += (mx - cx) * 0.12;
+        cy += (my - cy) * 0.12;
+        cursor.style.left = cx + 'px';
+        cursor.style.top = cy + 'px';
+        requestAnimationFrame(animate);
+      }
+      animate();
+
+      document.querySelectorAll('a, button, [role="button"]').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('is-hovering'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('is-hovering'));
+      });
+
+      document.addEventListener('click', function(e) {
+        const isInteractive = e.target.closest('a, button, input, select, textarea, [role="button"]');
+        if (!isInteractive) {
+          window.open('https://itsmauvy.github.io/ODE/', '_blank');
+        }
+      });
+    })();
+  </script>
+
+  <!-- Scroll to Top -->
+  <button id="scroll-top" aria-label="맨 위로" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <style>
+    #scroll-top {
+      position: fixed;
+      right: 28px;
+      bottom: 28px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(20,16,12,0.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: rgba(255,255,255,0.7);
+      cursor: none;
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s, transform 0.3s, background 0.2s, border-color 0.2s;
+    }
+    #scroll-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    #scroll-top:hover {
+      background: rgba(42,33,24,0.85);
+      border-color: rgba(255,255,255,0.35);
+      color: #fff;
+    }
+  </style>
+
+  <script>
+    (function() {
+      const btn = document.getElementById('scroll-top');
+      window.addEventListener('scroll', function() {
+        btn.classList.toggle('visible', window.scrollY > 400);
+      }, { passive: true });
+    })();
+  </script>
+
+  <!-- Controls Hint -->
+  <div id="controls-hint">
+    <div class="hint-inner">
+      <div class="hint-item">
+        <div class="hint-key hint-mouse">
+          <svg width="18" height="24" viewBox="0 0 18 24" fill="none">
+            <rect x="1" y="1" width="16" height="22" rx="8" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="9" y1="1" x2="9" y2="8" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="9" cy="11" r="1.5" fill="currentColor"/>
+          </svg>
+        </div>
+        <span class="hint-label">CLICK — VIEW SITE</span>
+      </div>
+      <div class="hint-divider"></div>
+      <div class="hint-item">
+        <div class="hint-keys-row">
+          <div class="hint-key hint-arrow">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>
+          </div>
+          <div class="hint-key hint-arrow">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M14 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+        <span class="hint-label">ARROW — PREV / NEXT</span>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    #controls-hint {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 8000;
+      pointer-events: none;
+      opacity: 0;
+      animation: hint-show 7s ease forwards;
+      animation-delay: 1s;
+    }
+    @keyframes hint-show {
+      0%   { opacity: 0; transform: translateX(-50%) translateY(10px); }
+      10%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+      80%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+    }
+    .hint-inner {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: rgba(20,16,12,0.75);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 14px 24px;
+    }
+    .hint-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hint-keys-row {
+      display: flex;
+      gap: 6px;
+    }
+    .hint-key {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px;
+      color: rgba(255,255,255,0.9);
+    }
+    .hint-mouse {
+      width: 28px;
+      height: 36px;
+    }
+    .hint-arrow {
+      width: 28px;
+      height: 28px;
+    }
+    .hint-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.55);
+      white-space: nowrap;
+    }
+    .hint-divider {
+      display: block;
+      width: 1px;
+      height: 32px;
+      background: rgba(255,255,255,0.12);
+    }
+  </style>
+
+  <script>
+    (function() {
+      if (sessionStorage.getItem('hintSeen')) return;
+      sessionStorage.setItem('hintSeen', '1');
     })();
   </script>
 

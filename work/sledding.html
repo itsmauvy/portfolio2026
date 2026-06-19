@@ -7,14 +7,14 @@
   <title>Sledding Game — SOOBIN</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { background: #0d1117; color: #e8f0f8; font-family: 'Syne', 'Pretendard', sans-serif; overflow-x: hidden; }
+    body { background: #0d1117; color: #e8f0f8; font-family: 'Pretendard', sans-serif; overflow-x: hidden; }
 
     /* ── HEADER ── */
     .detail-header {
@@ -31,7 +31,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 11px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.18em;
       color: rgba(255,255,255,0.8);
@@ -46,7 +46,7 @@
       display: inline-block;
       overflow: hidden;
       height: 1.4em;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.15em;
       color: rgba(255,255,255,0.9);
@@ -77,37 +77,46 @@
       object-fit: cover;
       display: block;
       opacity: 0;
+      transform: scale(1.04);
+      transition: opacity 0.8s ease, transform 1.6s cubic-bezier(0.22,1,0.36,1);
     }
     .hero video.ready {
       opacity: 1;
-      transition: opacity 0.3s ease;
+      transform: scale(1);
     }
     .hero-text {
       position: absolute;
       bottom: 52px;
       left: 52px;
       z-index: 2;
+      font-family: 'Syne', sans-serif;   /* 영상 overlay 텍스트 전용 */
     }
     .detail-category {
-      font-size: 11px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.2em;
       color: #fff;
       margin-bottom: 16px;
+      overflow: hidden;
     }
     .detail-title {
       font-size: clamp(38px, 5.5vw, 72px);
       font-weight: 800;
       line-height: 1;
       letter-spacing: -0.02em;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       color: #fff;
+      overflow: hidden;
+      padding-bottom: 0.08em;
     }
     .detail-tagline {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 400;
       color: #fff;
+      overflow: hidden;
+      padding-bottom: 0.12em;
     }
+    .hero-text .hr-in { display: block; will-change: transform; }
 
     /* ── SNOW CANVAS ── */
     #snow-canvas {
@@ -149,15 +158,16 @@
       z-index: 1;
       display: flex;
       flex-direction: column;
-      min-height: 80vh;
-      padding: 160px 80px 80px 80px;
+      justify-content: center;          /* 이미지와 세로 가운데 정렬 (ode 커버와 통일) */
+      min-height: 88vh;
+      padding: 120px max(80px, (100% - 1440px) / 2) 120px;
     }
     .po__left {
       display: flex;
       flex-direction: column;
     }
     .po__label {
-      font-size: 11px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.22em;
       color: #3a78b4;
@@ -165,15 +175,15 @@
     }
     .po__question {
       font-family: 'Pretendard', sans-serif;
-      font-size: clamp(26px, 2.8vw, 42px);
+      font-size: clamp(34px, 4vw, 64px);
       font-weight: 700;
-      line-height: 1.5;
+      line-height: 1.55;
       color: #0d2d4a;
-      margin-bottom: 40px;
+      margin-bottom: 44px;
     }
     .po__desc {
       font-family: 'Pretendard', sans-serif;
-      font-size: 16px;
+      font-size: clamp(17px, 1.4vw, 21px);
       line-height: 2;
       color: rgba(13,45,74,0.65);
     }
@@ -185,45 +195,45 @@
     }
     .po__meta-row-group {
       display: flex;
-      flex-direction: row;
-      gap: 80px;
+      flex-direction: column;
+      gap: 28px;
     }
     .po__meta-group { display: flex; flex-direction: column; gap: 12px; }
-    .po__meta-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: #3a78b4; }
-    .po__meta-val { font-size: 15px; color: #1a3a5c; font-family: 'Pretendard', sans-serif; line-height: 1.7; }
+    .po__meta-label { font-size: 16px; font-weight: 700; letter-spacing: 0.2em; color: #3a78b4; }
+    .po__meta-val { font-size: 16px; color: #1a3a5c; font-family: 'Pretendard', sans-serif; line-height: 1.7; }
     .po__tags { display: flex; flex-wrap: wrap; gap: 8px; }
     .po__tag {
-      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      font-size: 16px; font-weight: 700; letter-spacing: 0.12em;
       color: #1a6da8; border: 1.5px solid rgba(26,109,168,0.35);
       border-radius: 20px; padding: 5px 14px;
       background: rgba(255,255,255,0.5);
     }
 
     /* ── VIDEO SHOWCASE ── */
-    .vs { background: #bde0f5; padding: 80px 80px 40px; }
-    .vs__label { font-size: 11px; font-weight: 700; letter-spacing: 0.22em; color: #1a6da8; margin-bottom: 48px; display: block; }
+    .vs { background: #bde0f5; padding: 80px max(80px, (100% - 1440px) / 2) 40px; }
+    .vs__label { font-size: 16px; font-weight: 700; letter-spacing: 0.22em; color: #1a6da8; margin-bottom: 48px; display: block; }
     .vs__main { width: 100%; border-radius: 16px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 8px 40px rgba(13,45,74,0.15); }
     .vs__main video { width: 100%; display: block; }
-    .vs__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .vs__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .vs__item { border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.4); cursor: pointer; box-shadow: 0 4px 16px rgba(13,45,74,0.1); }
     .vs__item video { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
-    .vs__item-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: #1a6da8; padding: 10px 14px; }
+    .vs__item-label { font-size: 16px; font-weight: 700; letter-spacing: 0.14em; color: #1a6da8; padding: 10px 14px; }
 
     /* ── REFLECTION ── */
-    .rf { background: #e8f5fc; padding: 100px 80px 110px; }
-    .rf__label { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: #3a78b4; margin-bottom: 28px; }
+    .rf { background: #e8f5fc; padding: 100px max(80px, (100% - 1440px) / 2) 110px; }
+    .rf__label { display: block; font-size: 16px; font-weight: 700; letter-spacing: 0.2em; color: #3a78b4; margin-bottom: 28px; }
     .rf__title { font-family: 'Pretendard', sans-serif; font-size: clamp(32px, 3.4vw, 52px); font-weight: 700; color: #0d2d4a; margin-bottom: 76px; }
-    .rf__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-bottom: 110px; }
+    .rf__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 110px; }
     .rf__card { border-top: 2px solid rgba(26,109,168,0.2); padding-top: 26px; }
-    .rf__card-en { font-family: 'Cormorant Garamond', serif; font-size: 15px; letter-spacing: 0.1em; color: #3a78b4; }
+    .rf__card-en { font-family: 'Pretendard', sans-serif; font-size: 16px; letter-spacing: 0.1em; color: #3a78b4; }
     .rf__card-ko { font-family: 'Pretendard', sans-serif; font-size: 21px; font-weight: 700; color: #0d2d4a; margin: 12px 0 16px; }
-    .rf__card-desc { font-size: 15px; line-height: 1.95; color: rgba(13,45,74,0.6); font-family: 'Pretendard', sans-serif; }
+    .rf__card-desc { font-size: 16px; line-height: 1.95; color: rgba(13,45,74,0.6); font-family: 'Pretendard', sans-serif; }
     .rf__cta { border-top: 1px solid rgba(26,109,168,0.15); padding-top: 72px; display: flex; justify-content: space-between; align-items: flex-end; }
     .rf__nav-link { display: flex; flex-direction: column; gap: 10px; text-decoration: none; color: #0d2d4a; transition: opacity 0.2s; }
     .rf__nav-link:hover { opacity: 0.5; }
     .rf__nav-link--next { align-items: flex-end; }
-    .rf__nav-dir { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: #3a78b4; }
-    .rf__nav-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 2.4vw, 34px); font-style: italic; color: #0d2d4a; line-height: 1; }
+    .rf__nav-dir { font-size: 16px; font-weight: 700; letter-spacing: 0.2em; color: #3a78b4; }
+    .rf__nav-title { font-family: 'Pretendard', sans-serif; font-size: clamp(24px, 2.6vw, 38px); color: #0d2d4a; line-height: 1; }
 
     /* ── PROJ NAV ── */
     .proj-nav {
@@ -244,10 +254,10 @@
     .proj-nav--prev { left: 24px; }
     .proj-nav--next { right: 24px; }
     .proj-nav span {
-      font-size: 10px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.15em;
-      font-family: 'Syne', sans-serif;
+      font-family: 'Pretendard', sans-serif;
       writing-mode: vertical-rl;
     }
     .proj-nav--prev span { transform: rotate(180deg); }
@@ -296,11 +306,10 @@
 
         gsap.to(overlay, { opacity: 0, duration: 0.6, ease: 'power2.out' });
 
-        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-        tl.from('.hero video', { opacity: 0, scale: 1.04, duration: 1.6 }, 0);
-        tl.from('.detail-category', { opacity: 0, filter: 'blur(6px)', y: 8, duration: 0.8 }, 0.3);
-        tl.from('.detail-title', { opacity: 0, filter: 'blur(10px)', y: 20, duration: 1.2 }, 0.5);
-        tl.from('.detail-tagline', { opacity: 0, filter: 'blur(4px)', y: 10, duration: 0.8 }, 0.9);
+        const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+        tl.from('.detail-category .hr-in', { yPercent: 120, duration: 0.7 }, 0.15);
+        tl.from('.detail-title .hr-in', { yPercent: 115, duration: 1.0 }, 0.3);
+        tl.from('.detail-tagline .hr-in', { yPercent: 120, duration: 0.7 }, 0.6);
       }
 
       window.addEventListener('DOMContentLoaded', () => {
@@ -357,9 +366,9 @@
       <source src="../images/sledding/sledding.html-video.mp4" type="video/mp4">
     </video>
     <div class="hero-text">
-      <p class="detail-category">UX/UI DESIGN · CONCEPT DESIGN</p>
-      <h1 class="detail-title">Sledding<br>Game</h1>
-      <p class="detail-tagline">Steam 인디 게임 · 웹사이트 기획 및 제작</p>
+      <p class="detail-category"><span class="hr-in">UX/UI DESIGN · CONCEPT DESIGN</span></p>
+      <h1 class="detail-title"><span class="hr-in">Sledding<br>Game</span></h1>
+      <p class="detail-tagline"><span class="hr-in">Steam 인디 게임 · 웹사이트 기획 및 제작</span></p>
     </div>
   </div>
 
@@ -416,7 +425,7 @@
   <style>
     .pg {
       background: linear-gradient(160deg, #dff1fb 0%, #c2e5f7 40%, #a8d8f0 100%);
-      padding: 100px 80px 110px;
+      padding: 100px max(80px, (100% - 1440px) / 2) 110px;
       position: relative;
       overflow: hidden;
     }
@@ -459,19 +468,17 @@
     /* 넘버링 헤더 */
     .pg__section-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 40px; }
     .pg__section-num { display: none; }
-    .pg__section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.22em; color: #1a6da8; }
+    .pg__section-label { font-size: 16px; font-weight: 700; letter-spacing: 0.22em; color: #1a6da8; }
 
-    /* BACKGROUND 2단 레이아웃 */
+    /* BACKGROUND 중앙정렬 */
     .pg__bg-wrap {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
+      text-align: center;
+      max-width: 860px;
+      margin: 0 auto;
     }
-    .pg__bg-left {}
-    .pg__bg-label { font-size: 11px; font-weight: 700; letter-spacing: 0.22em; color: #1a6da8; margin-bottom: 20px; display: block; }
+    .pg__bg-label { font-size: 16px; font-weight: 700; letter-spacing: 0.22em; color: #1a6da8; margin-bottom: 24px; display: block; }
     .pg__bg-title { font-family: 'Pretendard', sans-serif; font-size: clamp(28px, 2.8vw, 44px); font-weight: 800; color: #0d2d4a; margin-bottom: 28px; line-height: 1.3; letter-spacing: -0.02em; }
-    .pg__bg-desc { font-family: 'Pretendard', sans-serif; font-size: 15px; line-height: 2; color: rgba(13,45,74,0.6); }
+    .pg__bg-desc { font-family: 'Pretendard', sans-serif; font-size: 16px; line-height: 2; color: rgba(13,45,74,0.6); }
     .pg__bg-right { position: relative; }
     .pg__bg-img-wrap {
       border-radius: 20px;
@@ -495,16 +502,16 @@
       box-shadow: 0 4px 20px rgba(13,45,74,0.25);
     }
     .pg__bg-badge img { width: 32px; height: 32px; object-fit: contain; }
-    .pg__bg-badge span { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; line-height: 1.4; }
+    .pg__bg-badge span { font-size: 16px; font-weight: 700; letter-spacing: 0.06em; line-height: 1.4; }
 
     /* GOALS 카드 그리드 */
-    .pg__goals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .pg__goals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .pg__card {
       position: relative;
       border-radius: 20px;
-      background: #cce8f5;
-      border: 2.5px solid rgba(255,255,255,0.85);
-      box-shadow: 0 2px 0px rgba(255,255,255,0.9) inset, 0 6px 24px rgba(13,45,74,0.08);
+      background: #fff;
+      border: 1.5px solid #e4eef6;
+      box-shadow: 0 6px 24px rgba(13,45,74,0.06);
       padding: 28px 28px 0;
       overflow: hidden;
       min-height: 280px;
@@ -513,22 +520,30 @@
     }
     .pg__card-num {
       position: absolute;
-      bottom: -30px;
-      right: -10px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 220px;
-      font-style: italic;
+      bottom: -24px;
+      right: 8px;
+      font-family: 'Pretendard', sans-serif;
+      font-size: 180px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
       line-height: 1;
-      background: linear-gradient(180deg, rgba(26,109,168,0.18) 0%, transparent 100%);
+      background: linear-gradient(180deg, rgba(26,109,168,0.16) 0%, transparent 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       pointer-events: none;
       user-select: none;
     }
-    .pg__card-en { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: #3a78b4; margin-bottom: 6px; }
+    .pg__card-en { font-family: 'Pretendard', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; color: #3a78b4; margin-bottom: 6px; }
     .pg__card-ko { font-family: 'Pretendard', sans-serif; font-size: 22px; font-weight: 700; color: #0d2d4a; margin-bottom: 20px; }
-    .pg__card-desc { font-size: 13px; line-height: 1.9; color: rgba(13,45,74,0.55); font-family: 'Pretendard', sans-serif; text-align: left; padding-bottom: 140px; }
+    .pg__card-desc { font-size: 16px; line-height: 1.9; color: rgba(13,45,74,0.55); font-family: 'Pretendard', sans-serif; text-align: left; padding-bottom: 140px; }
+
+    /* PROJECT GOALS 아래 결론 — 연결선 + 문구 */
+    .pg__conclusion { display: flex; flex-direction: column; align-items: center; text-align: center; margin-top: 56px; }
+    .pg__conclu-arrow { width: 1.5px; height: 64px; background: linear-gradient(180deg, rgba(26,109,168,0) 0%, rgba(26,109,168,0.9) 100%); position: relative; margin-bottom: 44px; }
+    .pg__conclu-arrow::after { content: ''; position: absolute; left: 50%; bottom: -4px; transform: translateX(-50%); width: 9px; height: 9px; border-radius: 50%; background: #1a6da8; }
+    .pg__conclu-text { font-family: 'Pretendard', sans-serif; font-size: clamp(18px, 1.7vw, 23px); font-weight: 500; line-height: 1.7; color: #2a5a85; }
+    .pg__conclu-text strong { font-weight: 800; color: #0d2d4a; }
   </style>
 
   <section class="pg">
@@ -541,24 +556,13 @@
     <!-- 01 BACKGROUND -->
     <div class="pg__block">
       <div class="pg__bg-wrap">
-        <div class="pg__bg-left">
-          <span class="pg__bg-label">BACKGROUND</span>
-          <h2 class="pg__bg-title">Why Sledding Game?</h2>
-          <p class="pg__bg-desc">
-            출시 5일 만에 100,000장 판매를 달성한<br>
-            Steam 인디 게임의 매력을 웹에서도 자연스럽게 전달하는<br>
-            랜딩 페이지를 기획하고 제작했습니다.
-          </p>
-        </div>
-        <div class="pg__bg-right">
-          <div class="pg__bg-img-wrap">
-            <img src="../images/sledding/Screenshot_2026-05-20_212435.webp" alt="Sledding Game Screen">
-          </div>
-          <div class="pg__bg-badge">
-            <img src="../images/sledding/logo.png" alt="logo">
-            <span>Sledding Game<br>Available on Steam</span>
-          </div>
-        </div>
+        <span class="pg__bg-label">BACKGROUND</span>
+        <h2 class="pg__bg-title">Why Sledding Game?</h2>
+        <p class="pg__bg-desc">
+          출시 5일 만에 100,000장 판매를 달성한 Steam 인디 게임의 매력을<br>
+          웹에서도 자연스럽게 경험할 수 있도록 랜딩 페이지를<br>
+          기획하고 제작했습니다.
+        </p>
       </div>
     </div>
 
@@ -588,376 +592,165 @@
           <p class="pg__card-desc">GSAP 애니메이션과 반응형 인터랙션을 활용해<br>게임의 즐거움을 웹에서도 자연스럽게 전달합니다.</p>
         </div>
       </div>
+
+      <div class="pg__conclusion">
+        <div class="pg__conclu-arrow"></div>
+        <p class="pg__conclu-text"><strong>게임의 분위기를 웹으로 연결</strong>하는 것이<br>이번 프로젝트의 핵심 목표였습니다.</p>
+      </div>
     </div>
 
   </section>
 
-  <!-- TARGET USER -->
-  <style>
-    .tu {
-      background: #fff;
-      padding: 100px 80px;
-      position: relative;
-    }
-    .tu__header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 60px;
-    }
-    .tu__label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      color: #1a6da8;
-      margin-bottom: 14px;
-    }
-    .tu__title {
-      font-family: 'Pretendard', sans-serif;
-      font-size: clamp(28px, 2.5vw, 40px);
-      font-weight: 800;
-      color: #0d2d4a;
-      text-align: center;
-      letter-spacing: -0.02em;
-      line-height: 1.3;
-    }
-    .tu__grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .tu__card {
-      border-radius: 20px;
-      border: 1.5px solid #e4eef6;
-      padding: 36px 32px 40px;
-      position: relative;
-      overflow: hidden;
-      background: #fff;
-      transition: box-shadow 0.2s;
-    }
-    .tu__card:hover {
-      box-shadow: 0 12px 40px rgba(13,45,74,0.1);
-    }
-    .tu__card-accent {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 4px;
-      border-radius: 20px 20px 0 0;
-    }
-    .tu__card--01 .tu__card-accent { background: linear-gradient(90deg, #5bb8f5, #1a6da8); }
-    .tu__card--02 .tu__card-accent { background: linear-gradient(90deg, #7dd3fc, #38bdf8); }
-    .tu__card--03 .tu__card-accent { background: linear-gradient(90deg, #a5f3fc, #67e8f9); }
-    .tu__card-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      color: #b0cfe4;
-      margin-bottom: 28px;
-    }
-    .tu__card-type {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      color: #3a78b4;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-    }
-    .tu__card-name {
-      font-family: 'Pretendard', sans-serif;
-      font-size: 22px;
-      font-weight: 800;
-      color: #0d2d4a;
-      margin-bottom: 6px;
-      letter-spacing: -0.01em;
-    }
-    .tu__card-sub {
-      font-family: 'Pretendard', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      color: #3a78b4;
-      margin-bottom: 20px;
-    }
-    .tu__divider {
-      width: 32px;
-      height: 2px;
-      background: #d4e8f5;
-      margin-bottom: 20px;
-    }
-    .tu__card-desc {
-      font-family: 'Pretendard', sans-serif;
-      font-size: 14px;
-      line-height: 1.85;
-      color: rgba(13,45,74,0.55);
-    }
-    .tu__card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 24px;
-    }
-    .tu__tag {
-      font-family: 'Pretendard', sans-serif;
-      font-size: 11px;
-      font-weight: 600;
-      color: #3a78b4;
-      background: #dff1fb;
-      border-radius: 100px;
-      padding: 5px 12px;
-      letter-spacing: 0.04em;
-    }
-  </style>
-
-  <section class="tu">
-    <div class="tu__header">
-      <span class="tu__label">TARGET USER</span>
-      <h2 class="tu__title">누가 이 사이트를 찾을까?</h2>
-    </div>
-    <div class="tu__grid">
-      <div class="tu__card tu__card--01">
-        <div class="tu__card-accent"></div>
-        <p class="tu__card-num">01</p>
-        <span class="tu__card-type">Casual Gamer</span>
-        <h3 class="tu__card-name">가볍게 즐기는 게이머</h3>
-        <p class="tu__card-sub">20–30대 · 인디 게임 입문자</p>
-        <div class="tu__divider"></div>
-        <p class="tu__card-desc">썰매·눈싸움·충돌 등 단순하고 유쾌한<br>멀티플레이를 즐기는 유저.<br>귀여운 캐릭터(개굴이)와 겨울 비주얼에<br>끌려 페이지에 유입됩니다.</p>
-        <div class="tu__card-tags">
-          <span class="tu__tag">캐주얼 멀티</span>
-          <span class="tu__tag">비주얼 중심</span>
-          <span class="tu__tag">Steam 초보</span>
-        </div>
-      </div>
-      <div class="tu__card tu__card--02">
-        <div class="tu__card-accent"></div>
-        <p class="tu__card-num">02</p>
-        <span class="tu__card-type">Indie Game Fan</span>
-        <h3 class="tu__card-name">인디 게임 애호가</h3>
-        <p class="tu__card-sub">20–35대 · Steam 활성 유저</p>
-        <div class="tu__divider"></div>
-        <p class="tu__card-desc">Steam · Xbox를 통해 인디 게임을<br>발굴하는 것을 즐기는 유저.<br>출시 5일 100K 판매 같은 화제성과<br>Triple-i Showcase 소식에 반응합니다.</p>
-        <div class="tu__card-tags">
-          <span class="tu__tag">Steam · Xbox</span>
-          <span class="tu__tag">인디 탐색형</span>
-          <span class="tu__tag">화제성 반응</span>
-        </div>
-      </div>
-      <div class="tu__card tu__card--03">
-        <div class="tu__card-accent"></div>
-        <p class="tu__card-num">03</p>
-        <span class="tu__card-type">Winter Content Lover</span>
-        <h3 class="tu__card-name">파티 게이머</h3>
-        <p class="tu__card-sub">10–30대 · 멀티플레이 선호</p>
-        <div class="tu__divider"></div>
-        <p class="tu__card-desc">친구들과 함께 즐기는 파티 게임을<br>선호하는 유저. Squad Goals, Party Time<br>같은 갤러리 테마에 공감하며<br>SNS 공유·커뮤니티 활동이 활발합니다.</p>
-        <div class="tu__card-tags">
-          <span class="tu__tag">감성 중심</span>
-          <span class="tu__tag">시즌 테마</span>
-          <span class="tu__tag">비주얼 몰입</span>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- COLOR SYSTEM -->
   <style>
     .cs {
       background: #f6fbff;
-      padding: 100px 80px;
-    }
-    .cs__header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 60px;
+      padding: 100px max(80px, (100% - 1440px) / 2);
     }
     .cs__label {
-      font-size: 11px;
+      display: block;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.22em;
       color: #1a6da8;
-      margin-bottom: 14px;
-    }
-    .cs__title {
-      font-family: 'Pretendard', sans-serif;
-      font-size: clamp(28px, 2.5vw, 40px);
-      font-weight: 800;
-      color: #0d2d4a;
       text-align: center;
-      letter-spacing: -0.02em;
+      margin-bottom: 64px;
     }
-    .cs__body {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-    }
-    .cs__group-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 11px;
+    .cs__sub-label {
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.2em;
       color: #3a78b4;
-      margin-bottom: 16px;
-      text-transform: uppercase;
     }
+    /* COLOR — 상단 중앙 */
+    .cs__color-block { text-align: center; margin-bottom: 76px; }
+    .cs__color-block .cs__sub-label { display: block; margin-bottom: 44px; }
     .cs__swatches {
       display: flex;
-      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 32px;
     }
     .cs__swatch {
-      flex: 1;
+      width: 168px;            /* 팔레트 사이즈 통일 */
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
+      text-align: center;
     }
     .cs__swatch-color {
-      width: 100%;
-      aspect-ratio: 1/1;
-      border-radius: 14px;
+      width: 168px;
+      height: 168px;
+      border-radius: 20px;
       border: 1px solid rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      box-sizing: border-box;
     }
-    .cs__swatch-name {
-      font-family: 'Pretendard', sans-serif;
-      font-size: 12px;
-      font-weight: 700;
-      color: #0d2d4a;
+    .cs__swatch-code { font-family: 'Pretendard', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.02em; }
+    .cs__swatch-name { font-family: 'Pretendard', sans-serif; font-size: 16px; font-weight: 700; color: #113143; }
+    .cs__swatch-role { font-family: 'Pretendard', sans-serif; font-size: 14px; color: rgba(13,45,74,0.45); line-height: 1.5; }
+    .cs__divider { height: 1px; background: #d8e8f2; margin-bottom: 56px; }
+    /* 하단 — TYPOGRAPHY | COMPONENTS */
+    .cs__bottom { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 56px; align-items: start; }
+    .cs__v-divider { width: 1px; background: #d8e8f2; align-self: stretch; }
+    .cs__col .cs__sub-label { display: block; margin-bottom: 44px; }
+    .cs__typo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; text-align: center; }
+    .cs__typo-role { font-family: 'Pretendard', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.1em; color: #1a6da8; margin-bottom: 18px; }
+    .cs__typo-font { font-family: 'Pretendard', sans-serif; font-size: clamp(18px, 1.6vw, 22px); font-weight: 700; color: #0d2d4a; }
+    .cs__typo-note { font-family: 'Pretendard', sans-serif; font-size: 14px; color: rgba(13,45,74,0.45); margin-top: 10px; line-height: 1.5; }
+    /* COMPONENTS */
+    .cs__comp-grid { display: inline-grid; grid-template-columns: auto auto; column-gap: 32px; row-gap: 16px; align-items: center; justify-items: start; }
+    .cs__comp-spec { font-family: 'Pretendard', sans-serif; font-size: 13px; color: rgba(13,45,74,0.45); letter-spacing: 0.02em; }
+    .cs__comp-btn-green {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 26px 13px; border: 3px solid #2f4732; border-radius: 999px;
+      background: linear-gradient(135deg, #3f6845 0%, #2f4732 56%, #193024 100%);
+      color: #f8fdff; font-family: 'Pretendard', sans-serif; font-size: 16px; font-weight: 800;
+      box-shadow: 0 5px 0 #14291e;
     }
-    .cs__swatch-hex {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 12px;
-      color: rgba(13,45,74,0.45);
-      letter-spacing: 0.05em;
+    .cs__comp-card {
+      width: 260px; margin-top: 0; padding: 20px 22px;
+      border: 3px solid rgba(248,253,255,0.94); border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(248,253,255,0.9)), #dff4ff;
+      box-shadow: 0 6px 0 #9fd2eb, 0 16px 24px rgba(55,127,165,0.12);
     }
-    .cs__swatch-role {
-      font-family: 'Pretendard', sans-serif;
-      font-size: 11px;
-      color: rgba(13,45,74,0.4);
-      line-height: 1.5;
-    }
-    .cs__divider {
-      grid-column: 1 / -1;
-      height: 1px;
-      background: #e4eef6;
-    }
-    .cs__type-row {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-    .cs__type-card {
-      border-radius: 16px;
-      border: 1.5px solid #e4eef6;
-      padding: 24px;
-      background: #fff;
-    }
-    .cs__type-preview {
-      margin-bottom: 16px;
-    }
-    .cs__type-name {
-      font-family: 'Pretendard', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      color: #0d2d4a;
-      margin-bottom: 4px;
-    }
-    .cs__type-detail {
-      font-family: 'Pretendard', sans-serif;
-      font-size: 11px;
-      color: rgba(13,45,74,0.45);
-      line-height: 1.6;
+    .cs__comp-card strong { display: block; font-family: 'Pretendard', sans-serif; font-size: 18px; font-weight: 800; color: #113143; margin-bottom: 4px; }
+    .cs__comp-card span { font-family: 'Pretendard', sans-serif; font-size: 14px; color: rgba(17,49,67,0.6); }
+    @media (max-width: 760px) {
+      .cs__bottom { grid-template-columns: 1fr; gap: 40px; }
+      .cs__v-divider { display: none; }
     }
   </style>
 
   <section class="cs">
-    <div class="cs__header">
-      <span class="cs__label">DESIGN SYSTEM</span>
-      <h2 class="cs__title">겨울 바다를 담은 컬러</h2>
+    <span class="cs__label">DESIGN SYSTEM</span>
+
+    <!-- COLOR -->
+    <div class="cs__color-block">
+      <p class="cs__sub-label">Color Palette</p>
+      <div class="cs__swatches">
+        <div class="cs__swatch">
+          <div class="cs__swatch-color" style="background:#f8fdff; border:1px solid #e4eef6;"><span class="cs__swatch-code" style="color:#113143;">#F8FDFF</span></div>
+          <p class="cs__swatch-name">Snow White</p>
+          <p class="cs__swatch-role">베이스 화이트</p>
+        </div>
+        <div class="cs__swatch">
+          <div class="cs__swatch-color" style="background:#dff4ff; border:1px solid #cce4f0;"><span class="cs__swatch-code" style="color:#113143;">#DFF4FF</span></div>
+          <p class="cs__swatch-name">Ice</p>
+          <p class="cs__swatch-role">섹션 배경</p>
+        </div>
+        <div class="cs__swatch">
+          <div class="cs__swatch-color" style="background:#b8e2fb; border:1px solid #a5d3ee;"><span class="cs__swatch-code" style="color:#113143;">#B8E2FB</span></div>
+          <p class="cs__swatch-name">Sky Blue</p>
+          <p class="cs__swatch-role">카드 · 트랙</p>
+        </div>
+        <div class="cs__swatch">
+          <div class="cs__swatch-color" style="background:#2f4732;"><span class="cs__swatch-code" style="color:#eaf6ec;">#2F4732</span></div>
+          <p class="cs__swatch-name">Pine Green</p>
+          <p class="cs__swatch-role">CTA · 브랜드</p>
+        </div>
+        <div class="cs__swatch">
+          <div class="cs__swatch-color" style="background:#113143;"><span class="cs__swatch-code" style="color:#dff4ff;">#113143</span></div>
+          <p class="cs__swatch-name">Deep Navy</p>
+          <p class="cs__swatch-role">본문 · 제목</p>
+        </div>
+      </div>
     </div>
-    <div class="cs__body">
-      <!-- Primary -->
-      <div>
-        <p class="cs__group-label">Primary — Ice Blue</p>
-        <div class="cs__swatches">
-          <div class="cs__swatch">
-            <div class="cs__swatch-color" style="background:#0d2d4a;"></div>
-            <p class="cs__swatch-name">Deep Navy</p>
-            <p class="cs__swatch-hex">#0D2D4A</p>
-            <p class="cs__swatch-role">제목, 강조 텍스트</p>
+
+    <div class="cs__divider"></div>
+
+    <!-- TYPOGRAPHY | COMPONENTS -->
+    <div class="cs__bottom">
+      <div class="cs__col">
+        <p class="cs__sub-label">Typography</p>
+        <div class="cs__typo-grid">
+          <div>
+            <p class="cs__typo-role">Heading</p>
+            <p class="cs__typo-font">Ownglyph ParkDaHyun</p>
+            <p class="cs__typo-note">제목 · 로고 손글씨</p>
           </div>
-          <div class="cs__swatch">
-            <div class="cs__swatch-color" style="background:#1a6da8;"></div>
-            <p class="cs__swatch-name">Ocean Blue</p>
-            <p class="cs__swatch-hex">#1A6DA8</p>
-            <p class="cs__swatch-role">포인트, 레이블</p>
-          </div>
-          <div class="cs__swatch">
-            <div class="cs__swatch-color" style="background:#5bb8f5;"></div>
-            <p class="cs__swatch-name">Sky Blue</p>
-            <p class="cs__swatch-hex">#5BB8F5</p>
-            <p class="cs__swatch-role">버튼, 링크</p>
+          <div>
+            <p class="cs__typo-role">Body</p>
+            <p class="cs__typo-font">Pretendard</p>
+            <p class="cs__typo-note">본문 · UI 텍스트</p>
           </div>
         </div>
       </div>
-      <!-- Background -->
-      <div>
-        <p class="cs__group-label">Background — Winter Mist</p>
-        <div class="cs__swatches">
-          <div class="cs__swatch">
-            <div class="cs__swatch-color" style="background:#dff1fb; border: 1px solid #cce4f0;"></div>
-            <p class="cs__swatch-name">Ice Mist</p>
-            <p class="cs__swatch-hex">#DFF1FB</p>
-            <p class="cs__swatch-role">섹션 배경 (상단)</p>
+      <div class="cs__v-divider"></div>
+      <div class="cs__col">
+        <p class="cs__sub-label">Components</p>
+        <div class="cs__comp-grid">
+          <span class="cs__comp-btn-green">▶ PLAY NOW</span>
+          <div class="cs__comp-card">
+            <strong>News Card</strong>
+            <span>업데이트 · 공지 카드</span>
           </div>
-          <div class="cs__swatch">
-            <div class="cs__swatch-color" style="background:#c2e5f7; border: 1px solid #b0d8ef;"></div>
-            <p class="cs__swatch-name">Frost</p>
-            <p class="cs__swatch-hex">#C2E5F7</p>
-            <p class="cs__swatch-role">중간 그라데이션</p>
-          </div>
-          <div class="cs__swatch">
-            <div class="cs__swatch-color" style="background:#a8d8f0; border: 1px solid #95cae7;"></div>
-            <p class="cs__swatch-name">Glacier</p>
-            <p class="cs__swatch-hex">#A8D8F0</p>
-            <p class="cs__swatch-role">섹션 배경 (하단)</p>
-          </div>
-        </div>
-      </div>
-      <div class="cs__divider"></div>
-      <!-- Typography row -->
-      <div class="cs__type-row">
-        <div class="cs__type-card">
-          <div class="cs__type-preview">
-            <p style="font-family:'Syne',sans-serif; font-size:22px; font-weight:800; color:#0d2d4a; letter-spacing:-0.01em;">Sledding</p>
-          </div>
-          <p class="cs__type-name">Syne 800</p>
-          <p class="cs__type-detail">영문 제목 / 대형 헤딩<br>Bold Identity</p>
-        </div>
-        <div class="cs__type-card">
-          <div class="cs__type-preview">
-            <p style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:400; font-style:italic; color:#1a6da8; letter-spacing:0.05em;">World-Building</p>
-          </div>
-          <p class="cs__type-name">Cormorant Italic</p>
-          <p class="cs__type-detail">서브레이블 / 카드 영문<br>Elegant Accent</p>
-        </div>
-        <div class="cs__type-card">
-          <div class="cs__type-preview">
-            <p style="font-family:'Pretendard',sans-serif; font-size:18px; font-weight:700; color:#0d2d4a;">게임의 즐거움</p>
-          </div>
-          <p class="cs__type-name">Pretendard 700</p>
-          <p class="cs__type-detail">한글 제목 / 본문 강조<br>가독성 최우선</p>
-        </div>
-        <div class="cs__type-card">
-          <div class="cs__type-preview">
-            <p style="font-family:'Pretendard',sans-serif; font-size:14px; font-weight:400; color:rgba(13,45,74,0.55); line-height:1.7;">웹에서도 자연스럽게<br>전달할 수 있는 경험</p>
-          </div>
-          <p class="cs__type-name">Pretendard 400</p>
-          <p class="cs__type-detail">본문 / 설명 텍스트<br>Readable Body</p>
+          <p class="cs__comp-spec">CTA Button · radius full (pill)</p>
+          <p class="cs__comp-spec">Card · radius 12px</p>
         </div>
       </div>
     </div>
@@ -967,7 +760,7 @@
   <style>
     .ki {
       background: linear-gradient(160deg, #dff1fb 0%, #c2e5f7 40%, #a8d8f0 100%);
-      padding: 100px 80px;
+      padding: 100px max(80px, (100% - 1440px) / 2);
       position: relative;
       overflow: hidden;
     }
@@ -978,7 +771,7 @@
       margin-bottom: 60px;
     }
     .ki__label {
-      font-size: 11px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.22em;
       color: #1a6da8;
@@ -995,9 +788,7 @@
     .ki__grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
+      gap: 24px;
     }
     .ki__card {
       border-radius: 20px;
@@ -1025,8 +816,8 @@
       flex-shrink: 0;
     }
     .ki__card-type {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 11px;
+      font-family: 'Pretendard', sans-serif;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.2em;
       color: #3a78b4;
@@ -1043,7 +834,7 @@
     }
     .ki__card-desc {
       font-family: 'Pretendard', sans-serif;
-      font-size: 14px;
+      font-size: 16px;
       line-height: 1.85;
       color: rgba(13,45,74,0.55);
     }
@@ -1055,7 +846,7 @@
     }
     .ki__tech-tag {
       font-family: 'Pretendard', sans-serif;
-      font-size: 11px;
+      font-size: 16px;
       font-weight: 600;
       color: #1a6da8;
       background: rgba(255,255,255,0.6);
@@ -1208,8 +999,8 @@
     }
     #custom-cursor.is-hovering .cursor-frog { transform: rotate(-45deg) scale(1.2); }
     .cursor-text {
-      font-family: 'Syne', sans-serif;
-      font-size: 11px;
+      font-family: 'Pretendard', sans-serif;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.18em;
       color: rgba(255,255,255,0.8);

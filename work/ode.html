@@ -18,7 +18,7 @@
     :root {
       --bg: #2b3133;
       --text: #ffffff;
-      --font: 'Syne', sans-serif;
+      --font: 'Jost', sans-serif;
     }
 
     .char { display: inline-block; will-change: transform; }
@@ -76,7 +76,7 @@
     }
 
     .detail-header a {
-      font-size: 11px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.18em;
       color: var(--text);
@@ -92,7 +92,7 @@
       display: inline-block;
       overflow: hidden;
       height: 1.4em;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.15em;
       color: var(--text);
@@ -133,7 +133,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 11px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.18em;
       color: var(--text);
@@ -178,7 +178,7 @@
     }
 
     .detail-category {
-      font-size: 11px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.2em;
       opacity: 0.7;
@@ -196,7 +196,7 @@
     }
 
     .detail-tagline {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 400;
       opacity: 0.65;
       color: #fff;
@@ -228,41 +228,41 @@
       flex-direction: column;
       justify-content: space-between;
       min-height: 100vh;
-      padding: 80px 56px 64px 64px;
-      max-width: 52%;
+      padding: 80px 56px 72px 80px;
+      max-width: 56%;
     }
 
     .cover__top { flex: 1; display: flex; flex-direction: column; justify-content: center; }
 
     .cover__logo {
-      width: clamp(80px, 10vw, 140px);
+      width: clamp(110px, 11vw, 190px);
       height: auto;
       display: block;
-      margin-bottom: 28px;
+      margin-bottom: 40px;
       filter: brightness(0) saturate(100%);
     }
 
     .cover__sub {
-      font-size: clamp(24px, 2.8vw, 38px);
+      font-size: clamp(40px, 6vw, 104px);
       font-weight: 400;
-      line-height: 1.35;
+      line-height: 1.25;
       color: #2a2118;
-      margin-bottom: 18px;
+      margin-bottom: 36px;
       font-family: 'Gowun Batang', serif;
     }
 
     .cover__type {
-      font-size: 13px;
+      font-size: clamp(16px, 1.1vw, 18px);
       font-weight: 400;
       color: rgba(42,33,24,0.74);
-      margin-bottom: 40px;
+      margin-bottom: 48px;
       letter-spacing: 0.03em;
     }
 
     .cover__desc {
-      font-size: 16px;
+      font-size: clamp(18px, 1.7vw, 27px);
       font-weight: 400;
-      line-height: 2;
+      line-height: 1.9;
       color: rgba(42,33,24,0.78);
       font-family: 'Gowun Batang', serif;
     }
@@ -270,28 +270,29 @@
     .cover__meta {
       display: flex;
       flex-direction: column;
-      gap: 18px;
-      padding-top: 40px;
+      gap: 22px;
+      padding-top: 44px;
       border-top: 1px solid rgba(42,33,24,0.15);
+      max-width: 620px;          /* 구분선이 모델에 닿지 않도록 길이 축소 */
     }
 
     .cover__meta-row {
       display: grid;
-      grid-template-columns: 130px 1fr;
+      grid-template-columns: 160px 1fr;
       align-items: baseline;
     }
 
     .cover__meta-key {
-      font-size: 11px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.15em;
-      color: rgba(42,33,24,0.45);
+      color: rgba(42,33,24,0.5);
     }
 
     .cover__meta-val {
-      font-size: 13px;
+      font-size: 16px;
       font-weight: 400;
-      color: rgba(42,33,24,0.72);
+      color: rgba(42,33,24,0.78);
     }
 
 
@@ -396,17 +397,18 @@
        02 PROBLEM DEFINITION
   ────────────────────────────────────────────── -->
   <style>
-    .pd { background: #352a20; padding: 130px 80px 140px; color: #f5f1ed; text-align: center; }
-    .pd__label { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: rgba(245,241,237,0.5); margin-bottom: 36px; }
+    /* ── 그리드 토큰: 콘텐츠 max 1200 · margin 80 · gutter 24 (UI DESIGN 섹션 제외) ── */
+    .pd { background: #352a20; padding: 130px max(80px, (100% - 1200px) / 2) 140px; color: #f5f1ed; text-align: center; }
+    .pd__label { display: block; font-size: 16px; font-weight: 700; letter-spacing: 0.2em; color: rgba(245,241,237,0.5); margin-bottom: 36px; }
     .pd__title { font-family: 'Gowun Batang', serif; font-size: clamp(28px, 3vw, 46px); font-weight: 700; line-height: 1.35; letter-spacing: -0.02em; color: #f5f1ed; margin-bottom: 48px; }
     .pd__dots { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-bottom: 28px; }
     .pd__dots span { display: block; width: 4px; height: 4px; border-radius: 50%; background: rgba(245,241,237,0.4); }
     .pd__quote { font-family: 'Gowun Batang', serif; font-size: clamp(16px, 1.6vw, 22px); line-height: 1.8; color: #e7cda9; max-width: 760px; margin: 0 auto 80px; }
-    .pd__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-bottom: 64px; }
+    .pd__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 64px; }
     .pd__card { border-top: 1px solid rgba(245,241,237,0.22); padding: 32px 40px 0; }
-    .pd__card-num { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.15em; color: rgba(245,241,237,0.45); margin-bottom: 16px; }
+    .pd__card-num { display: block; font-size: 16px; font-weight: 700; letter-spacing: 0.15em; color: rgba(245,241,237,0.45); margin-bottom: 16px; }
     .pd__card-title { font-family: 'Gowun Batang', serif; font-size: 20px; font-weight: 700; color: #f5f1ed; margin-bottom: 12px; line-height: 1.4; }
-    .pd__card-desc { font-size: 15px; line-height: 1.85; color: rgba(245,241,237,0.6); font-family: 'Gowun Batang', serif; }
+    .pd__card-desc { font-size: 16px; line-height: 1.85; color: rgba(245,241,237,0.6); font-family: 'Gowun Batang', serif; }
     .pd__insight { display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 20px; }
     .pd__insight-icon { font-size: 28px; color: #e7cda9; line-height: 1; margin: 4px 0; }
     .pd__insight-label { font-size: 22px; font-weight: 400; letter-spacing: 0.08em; color: rgba(245,241,237,0.55); font-family: 'Cormorant Garamond', serif; font-style: italic; }
@@ -448,19 +450,19 @@
        03 MARKET RESEARCH
   ────────────────────────────────────────────── -->
   <style>
-    .mr { background: #ece3d9; padding: 130px 80px 140px; color: #2a2118; }
-    .mr__label { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: rgba(42,33,24,0.45); margin-bottom: 28px; }
-    .mr__title { font-family: 'Gowun Batang', serif; font-size: clamp(32px, 3.4vw, 52px); font-weight: 700; line-height: 1.3; letter-spacing: -0.02em; color: #1a1410; margin-bottom: 72px; }
-    .mr__brands { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 96px; }
+    .mr { background: #ece3d9; padding: 130px max(80px, (100% - 1200px) / 2) 140px; color: #2a2118; }
+    .mr__label { display: block; font-size: 16px; font-weight: 700; letter-spacing: 0.2em; color: rgba(42,33,24,0.45); margin-bottom: 28px; text-align: center; }
+    .mr__title { font-family: 'Gowun Batang', serif; font-size: clamp(32px, 3.4vw, 52px); font-weight: 700; line-height: 1.3; letter-spacing: -0.02em; color: #1a1410; margin-bottom: 72px; text-align: center; }
+    .mr__brands { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 96px; }
     .mr__brand { border: 1px solid rgba(42,33,24,0.18); padding: 32px 24px 32px; display: flex; flex-direction: column; }
-    .mr__brand-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: #8D775F; margin-bottom: 20px; }
+    .mr__brand-tag { font-size: 16px; font-weight: 700; letter-spacing: 0.18em; color: #8D775F; margin-bottom: 20px; }
     .mr__brand-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 2.8vw, 40px); font-style: italic; color: #1a1410; letter-spacing: -0.01em; line-height: 1; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid rgba(42,33,24,0.12); }
     .mr__brand-right { display: none; }
-    .mr__brand-feature-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; color: rgba(42,33,24,0.55); margin-bottom: 10px; }
-    .mr__brand-desc { font-size: 14px; line-height: 1.85; color: rgba(42,33,24,0.85); font-family: 'Gowun Batang', serif; }
+    .mr__brand-feature-label { font-size: 16px; font-weight: 700; letter-spacing: 0.15em; color: rgba(42,33,24,0.55); margin-bottom: 10px; }
+    .mr__brand-desc { font-size: 16px; line-height: 1.85; color: rgba(42,33,24,0.85); font-family: 'Gowun Batang', serif; }
     .mr__opp-wrap { display: flex; flex-direction: column; align-items: center; text-align: center; }
     .mr__opp-arrow { width: 1px; height: 60px; background: rgba(42,33,24,0.25); margin-bottom: 40px; }
-    .mr__opp-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: rgba(42,33,24,0.45); margin-bottom: 20px; }
+    .mr__opp-label { display: block; font-size: 16px; font-weight: 700; letter-spacing: 0.2em; color: rgba(42,33,24,0.45); margin-bottom: 20px; }
     .mr__opp-title { font-family: 'Gowun Batang', serif; font-size: clamp(26px, 2.8vw, 40px); font-weight: 700; color: #1a1410; line-height: 1.45; letter-spacing: -0.02em; margin-bottom: 28px; }
     .mr__opp-desc { font-family: 'Gowun Batang', serif; font-size: 16px; line-height: 2; color: rgba(42,33,24,0.7); max-width: 640px; }
     .mr__opp-desc strong { color: #8D775F; font-weight: 700; }
@@ -540,7 +542,7 @@
       padding: 48px 56px 64px 56px;
     }
     .bn__label {
-      font-size: 13px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.2em;
       color: rgba(255,255,255,0.7);
@@ -599,7 +601,7 @@
       margin-bottom: 10px;
     }
     .bn__tagline-ko {
-      font-size: clamp(14px, 1.4vw, 18px);
+      font-size: clamp(16px, 1.4vw, 18px);
       color: rgba(255,255,255,0.82);
       font-family: 'Gowun Batang', serif;
     }
@@ -636,13 +638,13 @@
   <style>
     .ds {
       background: #3a2e28;
-      padding: 80px 80px 100px;
+      padding: 80px max(80px, (100% - 1200px) / 2) 100px;
       display: flex;
       flex-direction: column;
       gap: 64px;
     }
     .ds__top-label {
-      font-size: 13px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.2em;
       color: rgba(255,255,255,0.45);
@@ -650,12 +652,13 @@
     .ds__body {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 80px;
+      gap: 72px;
     }
+    .ds__left { display: flex; flex-direction: column; }
 
     /* ── TYPOGRAPHY ── */
     .ds__type-label {
-      font-size: 13px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.2em;
       color: rgba(255,255,255,0.4);
@@ -665,7 +668,13 @@
     .ds__fonts {
       display: flex;
       flex-direction: column;
-      gap: 52px;
+      gap: 48px;
+    }
+    .ds__font-item {
+      min-height: 120px;       /* 컬러 행과 동일 슬롯 → 베이스라인 정렬 */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .ds__font-name {
       display: block;
@@ -698,7 +707,7 @@
 
     /* ── COLOR PALETTE ── */
     .ds__color-label {
-      font-size: 13px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.2em;
       color: rgba(255,255,255,0.4);
@@ -708,32 +717,33 @@
     .ds__colors {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 48px;
     }
     .ds__color-row {
       display: grid;
-      grid-template-columns: 120px 1fr;
+      grid-template-columns: 1fr 1fr;
       align-items: center;
-      gap: 28px;
+      gap: 32px;
+      min-height: 120px;       /* 타이포 슬롯과 동일 → 베이스라인 정렬 */
     }
     .ds__swatch {
-      height: 80px;
+      height: 104px;
       border-radius: 8px;
     }
     .ds__color-info-name {
-      font-size: 18px;
+      font-size: 21px;
       font-weight: 600;
       color: #fff;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
     .ds__color-info-hex {
-      font-size: 14px;
+      font-size: 16px;
       color: rgba(255,255,255,0.4);
       letter-spacing: 0.05em;
       margin-bottom: 8px;
     }
     .ds__color-info-desc {
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.7;
       color: rgba(255,255,255,0.72);
       font-family: 'Gowun Batang', serif;
@@ -754,15 +764,15 @@
         <div class="ds__fonts">
           <div class="ds__font-item">
             <span class="ds__font-name ds__font-name--gowun">고운바탕</span>
-            <p class="ds__font-desc">브랜드 스토리 · 국문 헤드라인</p>
-          </div>
-          <div class="ds__font-item">
-            <span class="ds__font-name ds__font-name--jost">Jost</span>
-            <p class="ds__font-desc">제품 정보 · UI 요소</p>
+            <p class="ds__font-desc">국문 헤드라인</p>
           </div>
           <div class="ds__font-item">
             <span class="ds__font-name ds__font-name--cormorant">Cormorant Garamond</span>
-            <p class="ds__font-desc">브랜드 로고 · 영문 헤드라인</p>
+            <p class="ds__font-desc">영문 헤드라인</p>
+          </div>
+          <div class="ds__font-item">
+            <span class="ds__font-name ds__font-name--jost">Jost</span>
+            <p class="ds__font-desc">본문 · UI 요소</p>
           </div>
         </div>
       </div>
@@ -815,10 +825,10 @@
     .rd {
       background: #f5f1eb;
       display: grid;
-      grid-template-columns: 36% 64%;
+      grid-template-columns: 34% 66%;
       min-height: 100vh;
       align-items: center;
-      padding: 100px 0 100px 80px;
+      padding: 100px max(80px, (100% - 1200px) / 2);
       overflow: hidden;
     }
     .rd__left {
@@ -826,10 +836,10 @@
       flex-direction: column;
       justify-content: center;
       gap: 0;
-      padding-right: 48px;
+      padding-right: 24px;
     }
     .rd__label {
-      font-size: 13px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.2em;
       color: rgba(42,33,24,0.45);
@@ -837,7 +847,7 @@
       display: block;
     }
     .rd__title {
-      font-size: clamp(32px, 3.2vw, 48px);
+      font-size: clamp(30px, 3vw, 46px);
       font-weight: 700;
       line-height: 1.25;
       color: #1a1410;
@@ -865,37 +875,37 @@
       padding: 8px 20px;
       border: 1.5px solid rgba(42,33,24,0.25);
       border-radius: 999px;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
       color: #1a1410;
       letter-spacing: 0.04em;
     }
     .rd__right {
       position: relative;
-      height: 560px;
+      height: 760px;
     }
     /* PC — 좌측, 가장 뒤 */
     .rd__mockup-pc {
       position: absolute;
       top: 0;
-      left: -20px;
-      width: 68%;
+      left: 0;
+      width: 120%;
       z-index: 1;
     }
-    /* Laptop — 우측, 중간 */
+    /* Laptop — 중간 */
     .rd__mockup-laptop {
       position: absolute;
-      top: 230px;
-      left: 230px;
-      width: 55%;
+      top: 280px;
+      left: 300px;
+      width: 86%;
       z-index: 2;
     }
-    /* Mobile — PC와 Laptop 사이 하단, 가장 앞 */
+    /* Mobile — PC와 Laptop 사이 하단, 가장 앞 (정사각 캔버스라 폰은 가운데 40%만 → 크게) */
     .rd__mockup-mobile {
       position: absolute;
-      top: 280px;
+      top: 340px;
       left: 130px;
-      width: 18%;
+      width: 50%;
       z-index: 3;
     }
     .rd__mockup-pc img,
@@ -935,7 +945,7 @@
         <img src="../images/ode/laptop-mockup.png" alt="Laptop Mockup">
       </div>
       <div class="rd__mockup-mobile">
-        <img src="../images/ode/mobile-mockup.png" alt="Mobile Mockup">
+        <img src="../images/ode/responsive mobile.png" alt="Mobile Mockup">
       </div>
     </div>
   </section>
@@ -953,7 +963,7 @@
       margin-bottom: 80px;
     }
     .mp__label {
-      font-size: 13px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.2em;
       color: rgba(42,33,24,0.4);
@@ -963,7 +973,7 @@
     /* UI 페이지 4종 시리즈 넘버 (MAIN 01 · ABOUT 02 · SHOP 03 · STORE 04) */
     .ui-num {
       display: block;
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Jost', sans-serif;
       font-size: 17px;
       font-weight: 600;
       letter-spacing: 0.3em;
@@ -1060,7 +1070,7 @@
       margin-right: 2px;
     }
     .mp__annotation-desc {
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.85;
       color: rgba(42,33,24,0.8);
       font-family: 'Gowun Batang', serif;
@@ -1211,7 +1221,7 @@
     .sh__annotation--right .sh__annotation-callout { margin-left: 0; margin-right: 12px; flex-direction: row-reverse; }
     .sh__annotation--right .sh__annotation-callout::after { margin-left: 0; margin-right: 2px; }
     .sh__annotation-desc {
-      font-size: 15px; line-height: 1.85; color: rgba(42,33,24,0.8);
+      font-size: 16px; line-height: 1.85; color: rgba(42,33,24,0.8);
       font-family: 'Gowun Batang', serif; margin-top: 12px;
     }
     .sh__annotation-desc strong { font-weight: 700; }
@@ -1337,7 +1347,7 @@
       margin: 0 auto 80px;
     }
     .ab__label {
-      font-size: 13px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.2em;
       color: rgba(42,33,24,0.4);
@@ -1360,6 +1370,7 @@
     }
     .ab__layout {
       width: 82%;
+      max-width: 1400px;     /* 이미지 크기 고정 → 주석(고정 px) 정렬 안정화 */
       margin: 0 auto;
     }
     .ab__annotations-left {
@@ -1397,6 +1408,24 @@
     .ab__slogan-note .ab__annotation-callout::after { content: ''; display: block; width: 5px; height: 5px; border-radius: 50%; background: rgba(42,33,24,0.35); margin-right: 2px; }
     .ab__slogan-note .ab__annotation-desc { color: rgba(42,33,24,0.8); margin-top: 12px; }
     .ab__slogan-note .ab__annotation-desc strong { color: #1a1410; font-weight: 700; }
+
+    /* 컬렉션 무드 — 좌측 여백에 텍스트, 점은 가운데 콘텐츠 좌측부(이미지 % 앵커) */
+    .ab__collection-note { position: absolute; top: 47%; right: 69%; width: 300px; text-align: left; }
+    .ab__collection-note .ab__annotation-head { display: flex; align-items: center; }
+    .ab__collection-note .ab__annotation-callout { display: flex; flex: 1; align-items: center; margin-left: 12px; }
+    .ab__collection-note .ab__annotation-callout::before { content: ''; display: block; flex: 1; height: 1px; background: rgba(42,33,24,0.35); }
+    .ab__collection-note .ab__annotation-callout::after { content: ''; display: block; width: 5px; height: 5px; border-radius: 50%; background: rgba(42,33,24,0.35); margin-left: 2px; }
+    .ab__collection-note .ab__annotation-desc { color: rgba(42,33,24,0.8); margin-top: 12px; }
+    .ab__collection-note .ab__annotation-desc strong { color: #1a1410; font-weight: 700; }
+
+    /* Parallax — 세로 콜아웃: 점이 위(튀어나온 이미지)를 가리키고 라벨은 아래 */
+    .ab__parallax-note { position: absolute; top: 35%; left: 73%; width: 300px; text-align: center; }
+    .ab__parallax-note .ab__pv { display: flex; flex-direction: column; align-items: center; margin-bottom: 16px; }
+    .ab__parallax-note .ab__pv::before { content: ''; display: block; width: 5px; height: 5px; border-radius: 50%; background: rgba(42,33,24,0.5); margin-bottom: 6px; }
+    .ab__parallax-note .ab__pv::after { content: ''; display: block; width: 0; height: 96px; border-left: 1px solid rgba(42,33,24,0.4); }
+    .ab__parallax-note .ab__annotation-title { color: #1a1410; white-space: normal; }
+    .ab__parallax-note .ab__annotation-desc { color: rgba(42,33,24,0.8); margin-top: 10px; }
+    .ab__parallax-note .ab__annotation-desc strong { color: #1a1410; font-weight: 700; }
     .ab__annotation-head {
       display: flex;
       align-items: center;
@@ -1444,7 +1473,7 @@
       margin-right: 2px;
     }
     .ab__annotation-desc {
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.85;
       color: rgba(42,33,24,0.8);
       font-family: 'Gowun Batang', serif;
@@ -1499,22 +1528,25 @@
       <p class="ab__desc">일상 속 작은 순간과 감정에서 영감을 받은<br>이미지와 메시지를 통해 브랜드 아이덴티티를<br>자연스럽게 경험할 수 있도록 설계했습니다.</p>
     </div>
 
-    <!-- 좌측 주석 -->
-    <div class="ab__annotations-left">
-      <div class="ab__annotation" style="top: 1100px; left: 220px;">
-        <div class="ab__annotation-head">
-          <p class="ab__annotation-title">컬렉션 무드 경험</p>
-          <div class="ab__annotation-callout"></div>
-        </div>
-        <p class="ab__annotation-desc">호버 시 컬러가 드러나며<br><strong>컬렉션의 감성</strong>을 자연스럽게 전달합니다.</p>
-      </div>
-    </div>
-
-    <!-- 중앙 스크린샷 -->
+    <!-- 중앙 스크린샷 + 주석(이미지 % 앵커, 점이 가운데 콘텐츠 위) -->
     <div class="ab__layout">
       <div class="ab__screen-wrap">
         <div class="ab__screen">
           <img src="../images/ode/brand about.png" alt="About Page UI">
+        </div>
+
+        <div class="ab__collection-note">
+          <div class="ab__annotation-head">
+            <p class="ab__annotation-title">컬렉션 무드 경험</p>
+            <div class="ab__annotation-callout"></div>
+          </div>
+          <p class="ab__annotation-desc">호버 시 컬러가 드러나며<br><strong>컬렉션의 감성</strong>을 자연스럽게 전달합니다.</p>
+        </div>
+
+        <div class="ab__parallax-note">
+          <div class="ab__pv"></div>
+          <p class="ab__annotation-title">Parallax Scrolling</p>
+          <p class="ab__annotation-desc">부드러운 속도의 Y축 패럴랙스 스크롤링을<br>사용하여 <strong>감각적인 브랜드의 분위기</strong>를 전달합니다.</p>
         </div>
 
         <div class="ab__slogan-note">
@@ -1525,16 +1557,6 @@
           <p class="ab__annotation-desc">슬로건과 이미지를 결합해<br><strong>일상에 머무는 브랜드</strong>로 인식되도록 설계했습니다.</p>
         </div>
       </div>
-    </div>
-
-    <!-- 우측 주석 -->
-    <div class="ab__annotations-right">
-      <div class="ab__annotation ab__annotation--right" style="top: 980px; right: 80px; text-align: left;">
-        <div class="ab__annotation-callout--vertical"></div>
-        <p class="ab__annotation-title">Parallex Scrolling</p>
-        <p class="ab__annotation-desc">부드러운 속도의 Y축 패럴랙스 스크롤링을<br>사용하여 <strong>감각적인 브랜드의 분위기</strong>를 전달합니다.</p>
-      </div>
-
     </div>
   </section>
 
@@ -1616,7 +1638,7 @@
     .st__annotation-callout { display: flex; align-items: center; flex: 1; margin-left: 12px; }
     .st__annotation-callout::before { content: ''; display: block; flex: 1; height: 1px; background: rgba(42,33,24,0.35); }
     .st__annotation-callout::after { content: ''; display: block; width: 5px; height: 5px; border-radius: 50%; background: rgba(42,33,24,0.35); margin-left: 2px; }
-    .st__annotation-desc { font-size: 15px; line-height: 1.85; color: rgba(42,33,24,0.8); font-family: 'Gowun Batang', serif; margin-top: 12px; }
+    .st__annotation-desc { font-size: 16px; line-height: 1.85; color: rgba(42,33,24,0.8); font-family: 'Gowun Batang', serif; margin-top: 12px; }
     .st__annotation-desc strong { font-weight: 700; }
 
     /* 위로 향하는 세로 화살표 (반응형 웹사이트 → 폰), 점·선 중심 정렬 */
@@ -1646,7 +1668,7 @@
 
     <div class="st__stage">
       <div class="st__shot"><img src="../images/ode/ode-store.jpg" alt="Store Page UI"></div>
-      <div class="st__phone"><img src="../images/ode/ode-store-mobile-mockup.png" alt="Store Mobile Mockup"></div>
+      <div class="st__phone"><img src="../images/ode/mobile-mockup.png" alt="Store Mobile Mockup"></div>
 
       <div class="st__annotation st__annotation--visual">
         <div class="st__annotation-head">
@@ -1682,7 +1704,7 @@
     .cl__inner { position: relative; z-index: 1; text-align: center; }
     .cl__mark { font-family: 'Cormorant Garamond', serif; font-size: clamp(56px, 7vw, 104px); font-weight: 400; letter-spacing: 0.32em; color: #fff; margin-bottom: 28px; }
     .cl__en { font-family: 'Cormorant Garamond', serif; font-size: clamp(20px, 2.4vw, 32px); letter-spacing: 0.05em; color: rgba(255,255,255,0.9); margin-bottom: 12px; }
-    .cl__ko { font-family: 'Gowun Batang', serif; font-size: clamp(15px, 1.5vw, 19px); color: rgba(255,255,255,0.78); letter-spacing: 0.02em; }
+    .cl__ko { font-family: 'Gowun Batang', serif; font-size: clamp(16px, 1.5vw, 19px); color: rgba(255,255,255,0.78); letter-spacing: 0.02em; }
   </style>
 
   <section class="cl">
@@ -1698,19 +1720,19 @@
        REFLECTION + CTA
   ────────────────────────────────────────────── -->
   <style>
-    .rf { background: #f2ebe5; padding: 130px 80px 110px; color: #2a2118; }
-    .rf__label { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: rgba(42,33,24,0.45); margin-bottom: 28px; }
+    .rf { background: #f2ebe5; padding: 130px max(80px, (100% - 1200px) / 2) 110px; color: #2a2118; }
+    .rf__label { display: block; font-size: 16px; font-weight: 700; letter-spacing: 0.2em; color: rgba(42,33,24,0.45); margin-bottom: 28px; }
     .rf__title { font-family: 'Gowun Batang', serif; font-size: clamp(32px, 3.4vw, 52px); font-weight: 700; letter-spacing: -0.02em; color: #1a1410; margin-bottom: 76px; }
-    .rf__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-bottom: 110px; }
+    .rf__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 110px; }
     .rf__card { border-top: 1px solid rgba(42,33,24,0.22); padding-top: 26px; }
-    .rf__card-en { font-family: 'Cormorant Garamond', serif; font-size: 15px; letter-spacing: 0.1em; color: #8D775F; }
+    .rf__card-en { font-family: 'Cormorant Garamond', serif; font-size: 16px; letter-spacing: 0.1em; color: #8D775F; }
     .rf__card-ko { font-family: 'Gowun Batang', serif; font-size: 21px; font-weight: 700; color: #1a1410; margin: 12px 0 16px; }
     .rf__card-desc { font-size: 16px; line-height: 1.95; color: rgba(42,33,24,0.74); font-family: 'Gowun Batang', serif; }
     .rf__cta { border-top: 1px solid rgba(42,33,24,0.12); padding-top: 72px; display: flex; justify-content: space-between; align-items: flex-end; }
     .rf__nav-link { display: flex; flex-direction: column; gap: 10px; text-decoration: none; color: #2a2118; transition: opacity 0.2s; }
     .rf__nav-link:hover { opacity: 0.55; }
     .rf__nav-link--next { align-items: flex-end; }
-    .rf__nav-dir { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: rgba(42,33,24,0.4); }
+    .rf__nav-dir { font-size: 16px; font-weight: 700; letter-spacing: 0.2em; color: rgba(42,33,24,0.4); }
     .rf__nav-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 2.4vw, 34px); font-style: italic; color: #1a1410; line-height: 1; }
     .rf__nav-arrow { font-size: 18px; color: rgba(42,33,24,0.35); margin-top: 4px; }
     @media (max-width: 768px) { .rf__grid { grid-template-columns: 1fr; gap: 28px; } }
@@ -1763,7 +1785,7 @@
       color: #2a2118;
     }
     .po__label {
-      font-size: 13px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.2em;
       color: rgba(42,33,24,0.45);
@@ -1802,7 +1824,7 @@
       font-family: 'Gowun Batang', serif;
     }
     .po__values-label {
-      font-size: 13px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.2em;
       color: rgba(42,33,24,0.45);
@@ -1823,7 +1845,7 @@
       gap: 10px;
     }
     .po__card-num {
-      font-size: 13px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.08em;
       color: rgba(42,33,24,0.3);
@@ -1835,7 +1857,7 @@
       color: #1a1410;
     }
     .po__card-ko {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 400;
       line-height: 1.8;
       color: rgba(42,33,24,0.72);
@@ -1963,10 +1985,10 @@
     .proj-nav--prev { left: 24px; }
     .proj-nav--next { right: 24px; }
     .proj-nav span {
-      font-size: 10px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.15em;
-      font-family: 'Syne', sans-serif;
+      font-family: 'Jost', sans-serif;
       writing-mode: vertical-rl;
       text-orientation: mixed;
     }
@@ -2085,11 +2107,11 @@
       transition: color 0.3s, transform 0.25s;
     }
     .cursor-text {
-      font-size: 11px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.18em;
       color: rgba(255,255,255,0.8);
-      font-family: 'Syne', sans-serif;
+      font-family: 'Jost', sans-serif;
       white-space: nowrap;
       transition: color 0.3s;
     }
@@ -2279,8 +2301,8 @@
       height: 28px;
     }
     .hint-label {
-      font-family: 'Syne', sans-serif;
-      font-size: 10px;
+      font-family: 'Jost', sans-serif;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.14em;
       color: rgba(255,255,255,0.55);

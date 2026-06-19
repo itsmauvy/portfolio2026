@@ -7,13 +7,14 @@
   <title>Sledding Game — SOOBIN</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { background: #0d1117; color: #e8f0f8; font-family: 'Syne', sans-serif; overflow-x: hidden; }
+    body { background: #0d1117; color: #e8f0f8; font-family: 'Syne', 'Pretendard', sans-serif; overflow-x: hidden; }
 
     /* ── HEADER ── */
     .detail-header {
@@ -123,20 +124,37 @@
 
     /* ── PROJECT OVERVIEW ── */
     .po {
-      background: #d6eef8;
       position: relative;
     }
+    .po__bg {
+      position: absolute;
+      inset: -80px 0 0;
+      z-index: 0;
+    }
+    .po__bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .po__bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(214,238,248,0.65);
+    }
     .po__inner {
-      display: grid;
-      grid-template-columns: 45% 55%;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
       min-height: 80vh;
+      padding: 160px 80px 80px 80px;
     }
     .po__left {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      padding: 80px 60px 80px 80px;
-      border-right: none;
     }
     .po__label {
       font-size: 11px;
@@ -146,7 +164,7 @@
       margin-bottom: 32px;
     }
     .po__question {
-      font-family: 'Gowun Batang', serif;
+      font-family: 'Pretendard', sans-serif;
       font-size: clamp(26px, 2.8vw, 42px);
       font-weight: 700;
       line-height: 1.5;
@@ -154,7 +172,7 @@
       margin-bottom: 40px;
     }
     .po__desc {
-      font-family: 'Gowun Batang', serif;
+      font-family: 'Pretendard', sans-serif;
       font-size: 16px;
       line-height: 2;
       color: rgba(13,45,74,0.65);
@@ -162,13 +180,17 @@
     .po__right {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      padding: 80px 80px 80px 60px;
-      gap: 44px;
+      gap: 32px;
+      margin-top: 48px;
+    }
+    .po__meta-row-group {
+      display: flex;
+      flex-direction: row;
+      gap: 80px;
     }
     .po__meta-group { display: flex; flex-direction: column; gap: 12px; }
     .po__meta-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: #3a78b4; }
-    .po__meta-val { font-size: 15px; color: #1a3a5c; font-family: 'Gowun Batang', serif; line-height: 1.7; }
+    .po__meta-val { font-size: 15px; color: #1a3a5c; font-family: 'Pretendard', sans-serif; line-height: 1.7; }
     .po__tags { display: flex; flex-wrap: wrap; gap: 8px; }
     .po__tag {
       font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
@@ -190,12 +212,12 @@
     /* ── REFLECTION ── */
     .rf { background: #e8f5fc; padding: 100px 80px 110px; }
     .rf__label { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: #3a78b4; margin-bottom: 28px; }
-    .rf__title { font-family: 'Gowun Batang', serif; font-size: clamp(32px, 3.4vw, 52px); font-weight: 700; color: #0d2d4a; margin-bottom: 76px; }
+    .rf__title { font-family: 'Pretendard', sans-serif; font-size: clamp(32px, 3.4vw, 52px); font-weight: 700; color: #0d2d4a; margin-bottom: 76px; }
     .rf__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-bottom: 110px; }
     .rf__card { border-top: 2px solid rgba(26,109,168,0.2); padding-top: 26px; }
     .rf__card-en { font-family: 'Cormorant Garamond', serif; font-size: 15px; letter-spacing: 0.1em; color: #3a78b4; }
-    .rf__card-ko { font-family: 'Gowun Batang', serif; font-size: 21px; font-weight: 700; color: #0d2d4a; margin: 12px 0 16px; }
-    .rf__card-desc { font-size: 15px; line-height: 1.95; color: rgba(13,45,74,0.6); font-family: 'Gowun Batang', serif; }
+    .rf__card-ko { font-family: 'Pretendard', sans-serif; font-size: 21px; font-weight: 700; color: #0d2d4a; margin: 12px 0 16px; }
+    .rf__card-desc { font-size: 15px; line-height: 1.95; color: rgba(13,45,74,0.6); font-family: 'Pretendard', sans-serif; }
     .rf__cta { border-top: 1px solid rgba(26,109,168,0.15); padding-top: 72px; display: flex; justify-content: space-between; align-items: flex-end; }
     .rf__nav-link { display: flex; flex-direction: column; gap: 10px; text-decoration: none; color: #0d2d4a; transition: opacity 0.2s; }
     .rf__nav-link:hover { opacity: 0.5; }
@@ -341,13 +363,20 @@
     </div>
   </div>
 
-  <!-- WAVE: hero → overview -->
-  <div style="position:relative; z-index:2; margin-top:-80px; pointer-events:none; line-height:0;">
-    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;"><path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z" fill="#d6eef8"/></svg>
-  </div>
+  <!-- clipPath for wave top of PROJECT OVERVIEW -->
+  <svg width="0" height="0" style="position:absolute;overflow:hidden;">
+    <defs>
+      <clipPath id="poWaveClip" clipPathUnits="userSpaceOnUse">
+        <path id="po-wave-path" d=""/>
+      </clipPath>
+    </defs>
+  </svg>
 
   <!-- PROJECT OVERVIEW -->
-  <section class="po" style="margin-top:-2px;">
+  <section class="po" style="margin-top:-80px; clip-path:url(#poWaveClip);">
+    <div class="po__bg" aria-hidden="true">
+      <img src="../images/sledding/sledding-thumb.jpg" alt="">
+    </div>
     <div class="po__inner">
     <div class="po__left">
       <span class="po__label">PROJECT OVERVIEW</span>
@@ -360,15 +389,13 @@
       </p>
     </div>
     <div class="po__right">
-      <div class="po__meta-group">
-        <span class="po__meta-label">PERIOD</span>
-        <div class="po__meta-row">
-          <span class="po__meta-val">2주</span>
+      <div class="po__meta-row-group">
+        <div class="po__meta-group">
+          <span class="po__meta-label">PERIOD</span>
+          <span class="po__meta-val">2 Weeks</span>
         </div>
-      </div>
-      <div class="po__meta-group">
-        <span class="po__meta-label">TOOLS</span>
-        <div class="po__meta-row">
+        <div class="po__meta-group">
+          <span class="po__meta-label">TOOLS</span>
           <span class="po__meta-val">HTML · CSS · JavaScript · GSAP</span>
         </div>
       </div>
@@ -385,48 +412,713 @@
     </div>
   </section>
 
-  <!-- WAVE: overview → video -->
-  <div class="wave" style="background:#d6eef8">
-    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,20 C360,70 720,0 1080,50 C1260,70 1380,30 1440,20 L1440,80 L0,80 Z" fill="#bde0f5"/></svg>
-  </div>
-
-  <!-- VIDEO SHOWCASE -->
+  <!-- BACKGROUND + PROJECT GOALS -->
   <style>
-    .vs { background: #0d1117; padding: 120px 80px; }
-    .vs__label { font-size: 11px; font-weight: 700; letter-spacing: 0.22em; color: rgba(168,216,234,0.5); margin-bottom: 60px; display: block; }
-    .vs__main { width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
-    .vs__main video { width: 100%; display: block; }
-    .vs__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .vs__item { border-radius: 8px; overflow: hidden; background: #111827; cursor: pointer; }
-    .vs__item video { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
-    .vs__item-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: rgba(168,216,234,0.5); padding: 10px 14px; }
+    .pg {
+      background: linear-gradient(160deg, #dff1fb 0%, #c2e5f7 40%, #a8d8f0 100%);
+      padding: 100px 80px 110px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 겨울 장식 눈송이 */
+    .pg__deco {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+    }
+    .pg__deco--tl { top: 40px; left: -40px; opacity: 0.3; transform: rotate(-15deg); }
+    .pg__deco--tr { top: 30px; right: -30px; opacity: 0.25; transform: rotate(20deg); }
+    .pg__deco--bl { bottom: 60px; left: -30px; opacity: 0.2; transform: rotate(10deg); }
+    .pg__deco--br { bottom: 40px; right: -40px; opacity: 0.35; transform: rotate(-25deg); }
+    .pg__deco--mid { top: 45%; left: 50%; opacity: 0.06; transform: translate(-50%,-50%) rotate(45deg); }
+
+    /* 카드 glassmorphism */
+    .pg__card {
+      position: relative;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1.5px solid rgba(255,255,255,0.7);
+      box-shadow:
+        0 4px 24px rgba(13,45,74,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.8),
+        inset 0 -1px 0 rgba(255,255,255,0.2);
+      padding: 28px 28px 0;
+      overflow: hidden;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 섹션 공통 블록 */
+    .pg__block { margin-bottom: 80px; }
+    .pg__block:last-child { margin-bottom: 0; }
+
+    /* 넘버링 헤더 */
+    .pg__section-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 40px; }
+    .pg__section-num { display: none; }
+    .pg__section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.22em; color: #1a6da8; }
+
+    /* BACKGROUND 2단 레이아웃 */
+    .pg__bg-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .pg__bg-left {}
+    .pg__bg-label { font-size: 11px; font-weight: 700; letter-spacing: 0.22em; color: #1a6da8; margin-bottom: 20px; display: block; }
+    .pg__bg-title { font-family: 'Pretendard', sans-serif; font-size: clamp(28px, 2.8vw, 44px); font-weight: 800; color: #0d2d4a; margin-bottom: 28px; line-height: 1.3; letter-spacing: -0.02em; }
+    .pg__bg-desc { font-family: 'Pretendard', sans-serif; font-size: 15px; line-height: 2; color: rgba(13,45,74,0.6); }
+    .pg__bg-right { position: relative; }
+    .pg__bg-img-wrap {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2.5px solid rgba(255,255,255,0.85);
+      box-shadow: 0 12px 40px rgba(13,45,74,0.12);
+      aspect-ratio: 16/10;
+    }
+    .pg__bg-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pg__bg-badge {
+      position: absolute;
+      bottom: -16px;
+      left: -16px;
+      background: #0d2d4a;
+      color: #fff;
+      border-radius: 14px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 20px rgba(13,45,74,0.25);
+    }
+    .pg__bg-badge img { width: 32px; height: 32px; object-fit: contain; }
+    .pg__bg-badge span { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; line-height: 1.4; }
+
+    /* GOALS 카드 그리드 */
+    .pg__goals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .pg__card {
+      position: relative;
+      border-radius: 20px;
+      background: #cce8f5;
+      border: 2.5px solid rgba(255,255,255,0.85);
+      box-shadow: 0 2px 0px rgba(255,255,255,0.9) inset, 0 6px 24px rgba(13,45,74,0.08);
+      padding: 28px 28px 0;
+      overflow: hidden;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+    }
+    .pg__card-num {
+      position: absolute;
+      bottom: -30px;
+      right: -10px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 220px;
+      font-style: italic;
+      line-height: 1;
+      background: linear-gradient(180deg, rgba(26,109,168,0.18) 0%, transparent 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      pointer-events: none;
+      user-select: none;
+    }
+    .pg__card-en { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: #3a78b4; margin-bottom: 6px; }
+    .pg__card-ko { font-family: 'Pretendard', sans-serif; font-size: 22px; font-weight: 700; color: #0d2d4a; margin-bottom: 20px; }
+    .pg__card-desc { font-size: 13px; line-height: 1.9; color: rgba(13,45,74,0.55); font-family: 'Pretendard', sans-serif; text-align: left; padding-bottom: 140px; }
   </style>
 
-  <section class="vs">
-    <span class="vs__label">IN-GAME FOOTAGE</span>
-    <div class="vs__main">
-      <video autoplay muted loop playsinline>
-        <source src="../images/sledding/minigame.mp4" type="video/mp4">
-      </video>
+  <section class="pg">
+    <!-- 겨울 장식 눈송이 PNG -->
+    <img class="pg__deco pg__deco--tl" src="../images/sledding/snowflake.png" alt="" width="180">
+    <img class="pg__deco pg__deco--tr" src="../images/sledding/snowflake.png" alt="" width="120">
+    <img class="pg__deco pg__deco--bl" src="../images/sledding/snowflake.png" alt="" width="100">
+    <img class="pg__deco pg__deco--br" src="../images/sledding/snowflake.png" alt="" width="220">
+
+    <!-- 01 BACKGROUND -->
+    <div class="pg__block">
+      <div class="pg__bg-wrap">
+        <div class="pg__bg-left">
+          <span class="pg__bg-label">BACKGROUND</span>
+          <h2 class="pg__bg-title">Why Sledding Game?</h2>
+          <p class="pg__bg-desc">
+            출시 5일 만에 100,000장 판매를 달성한<br>
+            Steam 인디 게임의 매력을 웹에서도 자연스럽게 전달하는<br>
+            랜딩 페이지를 기획하고 제작했습니다.
+          </p>
+        </div>
+        <div class="pg__bg-right">
+          <div class="pg__bg-img-wrap">
+            <img src="../images/sledding/Screenshot_2026-05-20_212435.webp" alt="Sledding Game Screen">
+          </div>
+          <div class="pg__bg-badge">
+            <img src="../images/sledding/logo.png" alt="logo">
+            <span>Sledding Game<br>Available on Steam</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="vs__grid">
-      <div class="vs__item">
-        <video muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause()">
-          <source src="../images/sledding/character.mp4" type="video/mp4">
-        </video>
-        <p class="vs__item-label">캐릭터 꾸미기</p>
+
+    <!-- 02 PROJECT GOALS -->
+    <div class="pg__block">
+      <div class="pg__section-header">
+        <span class="pg__section-num">02</span>
+        <span class="pg__section-label">PROJECT GOALS</span>
       </div>
-      <div class="vs__item">
-        <video muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause()">
-          <source src="../images/sledding/design.mp4" type="video/mp4">
-        </video>
-        <p class="vs__item-label">UI 디자인</p>
+      <div class="pg__goals-grid">
+        <div class="pg__card">
+          <p class="pg__card-num">01</p>
+          <span class="pg__card-en">World-Building</span>
+          <p class="pg__card-ko">게임의 첫인상 전달</p>
+          <p class="pg__card-desc">게임의 분위기와 핵심 콘텐츠를 직관적으로 전달하여<br>플레이 전 기대감을 높이는 랜딩 경험을 설계합니다.</p>
+        </div>
+        <div class="pg__card">
+          <p class="pg__card-num">02</p>
+          <span class="pg__card-en">Steam Conversion</span>
+          <p class="pg__card-ko">플레이 유도</p>
+          <p class="pg__card-desc">게임의 특징과 콘텐츠를 자연스럽게 소개하여<br>Steam 페이지까지 이어지는 사용자 흐름을 설계합니다.</p>
+        </div>
+        <div class="pg__card">
+          <p class="pg__card-num">03</p>
+          <span class="pg__card-en">Interactive Experience</span>
+          <p class="pg__card-ko">인터랙티브 경험</p>
+          <p class="pg__card-desc">GSAP 애니메이션과 반응형 인터랙션을 활용해<br>게임의 즐거움을 웹에서도 자연스럽게 전달합니다.</p>
+        </div>
       </div>
-      <div class="vs__item">
-        <video muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause()">
-          <source src="../images/sledding/best sled (2).mp4" type="video/mp4">
-        </video>
-        <p class="vs__item-label">슬레딩 플레이</p>
+    </div>
+
+  </section>
+
+  <!-- TARGET USER -->
+  <style>
+    .tu {
+      background: #fff;
+      padding: 100px 80px;
+      position: relative;
+    }
+    .tu__header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 60px;
+    }
+    .tu__label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: #1a6da8;
+      margin-bottom: 14px;
+    }
+    .tu__title {
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(28px, 2.5vw, 40px);
+      font-weight: 800;
+      color: #0d2d4a;
+      text-align: center;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+    }
+    .tu__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .tu__card {
+      border-radius: 20px;
+      border: 1.5px solid #e4eef6;
+      padding: 36px 32px 40px;
+      position: relative;
+      overflow: hidden;
+      background: #fff;
+      transition: box-shadow 0.2s;
+    }
+    .tu__card:hover {
+      box-shadow: 0 12px 40px rgba(13,45,74,0.1);
+    }
+    .tu__card-accent {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      border-radius: 20px 20px 0 0;
+    }
+    .tu__card--01 .tu__card-accent { background: linear-gradient(90deg, #5bb8f5, #1a6da8); }
+    .tu__card--02 .tu__card-accent { background: linear-gradient(90deg, #7dd3fc, #38bdf8); }
+    .tu__card--03 .tu__card-accent { background: linear-gradient(90deg, #a5f3fc, #67e8f9); }
+    .tu__card-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: #b0cfe4;
+      margin-bottom: 28px;
+    }
+    .tu__card-type {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: #3a78b4;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .tu__card-name {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: #0d2d4a;
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+    .tu__card-sub {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: #3a78b4;
+      margin-bottom: 20px;
+    }
+    .tu__divider {
+      width: 32px;
+      height: 2px;
+      background: #d4e8f5;
+      margin-bottom: 20px;
+    }
+    .tu__card-desc {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 14px;
+      line-height: 1.85;
+      color: rgba(13,45,74,0.55);
+    }
+    .tu__card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+    .tu__tag {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      color: #3a78b4;
+      background: #dff1fb;
+      border-radius: 100px;
+      padding: 5px 12px;
+      letter-spacing: 0.04em;
+    }
+  </style>
+
+  <section class="tu">
+    <div class="tu__header">
+      <span class="tu__label">TARGET USER</span>
+      <h2 class="tu__title">누가 이 사이트를 찾을까?</h2>
+    </div>
+    <div class="tu__grid">
+      <div class="tu__card tu__card--01">
+        <div class="tu__card-accent"></div>
+        <p class="tu__card-num">01</p>
+        <span class="tu__card-type">Casual Gamer</span>
+        <h3 class="tu__card-name">가볍게 즐기는 게이머</h3>
+        <p class="tu__card-sub">20–30대 · 인디 게임 입문자</p>
+        <div class="tu__divider"></div>
+        <p class="tu__card-desc">썰매·눈싸움·충돌 등 단순하고 유쾌한<br>멀티플레이를 즐기는 유저.<br>귀여운 캐릭터(개굴이)와 겨울 비주얼에<br>끌려 페이지에 유입됩니다.</p>
+        <div class="tu__card-tags">
+          <span class="tu__tag">캐주얼 멀티</span>
+          <span class="tu__tag">비주얼 중심</span>
+          <span class="tu__tag">Steam 초보</span>
+        </div>
+      </div>
+      <div class="tu__card tu__card--02">
+        <div class="tu__card-accent"></div>
+        <p class="tu__card-num">02</p>
+        <span class="tu__card-type">Indie Game Fan</span>
+        <h3 class="tu__card-name">인디 게임 애호가</h3>
+        <p class="tu__card-sub">20–35대 · Steam 활성 유저</p>
+        <div class="tu__divider"></div>
+        <p class="tu__card-desc">Steam · Xbox를 통해 인디 게임을<br>발굴하는 것을 즐기는 유저.<br>출시 5일 100K 판매 같은 화제성과<br>Triple-i Showcase 소식에 반응합니다.</p>
+        <div class="tu__card-tags">
+          <span class="tu__tag">Steam · Xbox</span>
+          <span class="tu__tag">인디 탐색형</span>
+          <span class="tu__tag">화제성 반응</span>
+        </div>
+      </div>
+      <div class="tu__card tu__card--03">
+        <div class="tu__card-accent"></div>
+        <p class="tu__card-num">03</p>
+        <span class="tu__card-type">Winter Content Lover</span>
+        <h3 class="tu__card-name">파티 게이머</h3>
+        <p class="tu__card-sub">10–30대 · 멀티플레이 선호</p>
+        <div class="tu__divider"></div>
+        <p class="tu__card-desc">친구들과 함께 즐기는 파티 게임을<br>선호하는 유저. Squad Goals, Party Time<br>같은 갤러리 테마에 공감하며<br>SNS 공유·커뮤니티 활동이 활발합니다.</p>
+        <div class="tu__card-tags">
+          <span class="tu__tag">감성 중심</span>
+          <span class="tu__tag">시즌 테마</span>
+          <span class="tu__tag">비주얼 몰입</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLOR SYSTEM -->
+  <style>
+    .cs {
+      background: #f6fbff;
+      padding: 100px 80px;
+    }
+    .cs__header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 60px;
+    }
+    .cs__label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: #1a6da8;
+      margin-bottom: 14px;
+    }
+    .cs__title {
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(28px, 2.5vw, 40px);
+      font-weight: 800;
+      color: #0d2d4a;
+      text-align: center;
+      letter-spacing: -0.02em;
+    }
+    .cs__body {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .cs__group-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: #3a78b4;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    .cs__swatches {
+      display: flex;
+      gap: 12px;
+    }
+    .cs__swatch {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .cs__swatch-color {
+      width: 100%;
+      aspect-ratio: 1/1;
+      border-radius: 14px;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .cs__swatch-name {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: #0d2d4a;
+    }
+    .cs__swatch-hex {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px;
+      color: rgba(13,45,74,0.45);
+      letter-spacing: 0.05em;
+    }
+    .cs__swatch-role {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 11px;
+      color: rgba(13,45,74,0.4);
+      line-height: 1.5;
+    }
+    .cs__divider {
+      grid-column: 1 / -1;
+      height: 1px;
+      background: #e4eef6;
+    }
+    .cs__type-row {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .cs__type-card {
+      border-radius: 16px;
+      border: 1.5px solid #e4eef6;
+      padding: 24px;
+      background: #fff;
+    }
+    .cs__type-preview {
+      margin-bottom: 16px;
+    }
+    .cs__type-name {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0d2d4a;
+      margin-bottom: 4px;
+    }
+    .cs__type-detail {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 11px;
+      color: rgba(13,45,74,0.45);
+      line-height: 1.6;
+    }
+  </style>
+
+  <section class="cs">
+    <div class="cs__header">
+      <span class="cs__label">DESIGN SYSTEM</span>
+      <h2 class="cs__title">겨울 바다를 담은 컬러</h2>
+    </div>
+    <div class="cs__body">
+      <!-- Primary -->
+      <div>
+        <p class="cs__group-label">Primary — Ice Blue</p>
+        <div class="cs__swatches">
+          <div class="cs__swatch">
+            <div class="cs__swatch-color" style="background:#0d2d4a;"></div>
+            <p class="cs__swatch-name">Deep Navy</p>
+            <p class="cs__swatch-hex">#0D2D4A</p>
+            <p class="cs__swatch-role">제목, 강조 텍스트</p>
+          </div>
+          <div class="cs__swatch">
+            <div class="cs__swatch-color" style="background:#1a6da8;"></div>
+            <p class="cs__swatch-name">Ocean Blue</p>
+            <p class="cs__swatch-hex">#1A6DA8</p>
+            <p class="cs__swatch-role">포인트, 레이블</p>
+          </div>
+          <div class="cs__swatch">
+            <div class="cs__swatch-color" style="background:#5bb8f5;"></div>
+            <p class="cs__swatch-name">Sky Blue</p>
+            <p class="cs__swatch-hex">#5BB8F5</p>
+            <p class="cs__swatch-role">버튼, 링크</p>
+          </div>
+        </div>
+      </div>
+      <!-- Background -->
+      <div>
+        <p class="cs__group-label">Background — Winter Mist</p>
+        <div class="cs__swatches">
+          <div class="cs__swatch">
+            <div class="cs__swatch-color" style="background:#dff1fb; border: 1px solid #cce4f0;"></div>
+            <p class="cs__swatch-name">Ice Mist</p>
+            <p class="cs__swatch-hex">#DFF1FB</p>
+            <p class="cs__swatch-role">섹션 배경 (상단)</p>
+          </div>
+          <div class="cs__swatch">
+            <div class="cs__swatch-color" style="background:#c2e5f7; border: 1px solid #b0d8ef;"></div>
+            <p class="cs__swatch-name">Frost</p>
+            <p class="cs__swatch-hex">#C2E5F7</p>
+            <p class="cs__swatch-role">중간 그라데이션</p>
+          </div>
+          <div class="cs__swatch">
+            <div class="cs__swatch-color" style="background:#a8d8f0; border: 1px solid #95cae7;"></div>
+            <p class="cs__swatch-name">Glacier</p>
+            <p class="cs__swatch-hex">#A8D8F0</p>
+            <p class="cs__swatch-role">섹션 배경 (하단)</p>
+          </div>
+        </div>
+      </div>
+      <div class="cs__divider"></div>
+      <!-- Typography row -->
+      <div class="cs__type-row">
+        <div class="cs__type-card">
+          <div class="cs__type-preview">
+            <p style="font-family:'Syne',sans-serif; font-size:22px; font-weight:800; color:#0d2d4a; letter-spacing:-0.01em;">Sledding</p>
+          </div>
+          <p class="cs__type-name">Syne 800</p>
+          <p class="cs__type-detail">영문 제목 / 대형 헤딩<br>Bold Identity</p>
+        </div>
+        <div class="cs__type-card">
+          <div class="cs__type-preview">
+            <p style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:400; font-style:italic; color:#1a6da8; letter-spacing:0.05em;">World-Building</p>
+          </div>
+          <p class="cs__type-name">Cormorant Italic</p>
+          <p class="cs__type-detail">서브레이블 / 카드 영문<br>Elegant Accent</p>
+        </div>
+        <div class="cs__type-card">
+          <div class="cs__type-preview">
+            <p style="font-family:'Pretendard',sans-serif; font-size:18px; font-weight:700; color:#0d2d4a;">게임의 즐거움</p>
+          </div>
+          <p class="cs__type-name">Pretendard 700</p>
+          <p class="cs__type-detail">한글 제목 / 본문 강조<br>가독성 최우선</p>
+        </div>
+        <div class="cs__type-card">
+          <div class="cs__type-preview">
+            <p style="font-family:'Pretendard',sans-serif; font-size:14px; font-weight:400; color:rgba(13,45,74,0.55); line-height:1.7;">웹에서도 자연스럽게<br>전달할 수 있는 경험</p>
+          </div>
+          <p class="cs__type-name">Pretendard 400</p>
+          <p class="cs__type-detail">본문 / 설명 텍스트<br>Readable Body</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY INTERACTIONS -->
+  <style>
+    .ki {
+      background: linear-gradient(160deg, #dff1fb 0%, #c2e5f7 40%, #a8d8f0 100%);
+      padding: 100px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .ki__header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 60px;
+    }
+    .ki__label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: #1a6da8;
+      margin-bottom: 14px;
+    }
+    .ki__title {
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(28px, 2.5vw, 40px);
+      font-weight: 800;
+      color: #0d2d4a;
+      text-align: center;
+      letter-spacing: -0.02em;
+    }
+    .ki__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .ki__card {
+      border-radius: 20px;
+      background: rgba(255,255,255,0.3);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1.5px solid rgba(255,255,255,0.7);
+      box-shadow: 0 4px 24px rgba(13,45,74,0.06), inset 0 1px 0 rgba(255,255,255,0.8);
+      padding: 36px 36px 40px;
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    .ki__icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.6);
+      border: 1.5px solid rgba(255,255,255,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .ki__card-type {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: #3a78b4;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .ki__card-name {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #0d2d4a;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .ki__card-desc {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 14px;
+      line-height: 1.85;
+      color: rgba(13,45,74,0.55);
+    }
+    .ki__tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .ki__tech-tag {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      color: #1a6da8;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(26,109,168,0.2);
+      border-radius: 100px;
+      padding: 4px 12px;
+    }
+  </style>
+
+  <section class="ki">
+    <div class="ki__header">
+      <span class="ki__label">KEY INTERACTIONS</span>
+      <h2 class="ki__title">웹에서 게임을 경험하다</h2>
+    </div>
+    <div class="ki__grid">
+      <div class="ki__card">
+        <div class="ki__icon">🛷</div>
+        <div>
+          <span class="ki__card-type">Hero Section</span>
+          <h3 class="ki__card-name">히어로 패럴랙스</h3>
+          <p class="ki__card-desc">"같이 굴러야 더 재밌다" 메인 카피와 함께<br>스크롤에 반응해 배경·캐릭터·텍스트가<br>각각 다른 속도로 움직이며 겨울 세계로<br>자연스럽게 빠져드는 진입 경험을 설계했습니다.</p>
+          <div class="ki__tech">
+            <span class="ki__tech-tag">GSAP ScrollTrigger</span>
+            <span class="ki__tech-tag">Parallax</span>
+          </div>
+        </div>
+      </div>
+      <div class="ki__card">
+        <div class="ki__icon">🐸</div>
+        <div>
+          <span class="ki__card-type">Character Section</span>
+          <h3 class="ki__card-name">캐릭터 드래그 인터랙션</h3>
+          <p class="ki__card-desc">개굴이를 클릭하고 드래그할 수 있는<br>"클릭하고 끌어보세요" UI로<br>게임의 조작감을 웹에서 직접 체험하도록<br>설계한 핵심 인터랙션입니다.</p>
+          <div class="ki__tech">
+            <span class="ki__tech-tag">Drag API</span>
+            <span class="ki__tech-tag">GSAP</span>
+          </div>
+        </div>
+      </div>
+      <div class="ki__card">
+        <div class="ki__icon">🖼️</div>
+        <div>
+          <span class="ki__card-type">Media Gallery</span>
+          <h3 class="ki__card-name">미디어 갤러리 슬라이더</h3>
+          <p class="ki__card-desc">Squad Goals, Party Time, Fishing Gang 등<br>게임 내 명장면을 테마별로 큐레이션한<br>갤러리 섹션. Swiper로 부드럽게<br>탐색할 수 있도록 구성했습니다.</p>
+          <div class="ki__tech">
+            <span class="ki__tech-tag">Swiper.js</span>
+            <span class="ki__tech-tag">CSS Transition</span>
+          </div>
+        </div>
+      </div>
+      <div class="ki__card">
+        <div class="ki__icon">❄️</div>
+        <div>
+          <span class="ki__card-type">Atmosphere</span>
+          <h3 class="ki__card-name">눈송이 파티클 + 스크롤 등장</h3>
+          <p class="ki__card-desc">전체 화면에 내리는 눈 파티클로<br>겨울 몰입감을 극대화하고,<br>각 섹션 진입 시 콘텐츠가 자연스럽게<br>페이드인·슬라이드업되어 전개됩니다.</p>
+          <div class="ki__tech">
+            <span class="ki__tech-tag">Canvas API</span>
+            <span class="ki__tech-tag">GSAP</span>
+            <span class="ki__tech-tag">ScrollTrigger</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -611,6 +1303,19 @@
         requestAnimationFrame(draw);
       }
       draw();
+    })();
+  </script>
+
+  <!-- WAVE CLIP PATH -->
+  <script>
+    (function() {
+      function updateWavePath() {
+        var w = window.innerWidth;
+        var path = 'M0,40 C' + (w*240/1440) + ',80 ' + (w*480/1440) + ',0 ' + (w*720/1440) + ',40 C' + (w*960/1440) + ',80 ' + (w*1200/1440) + ',0 ' + w + ',40 L' + w + ',9999 L0,9999 Z';
+        document.getElementById('po-wave-path').setAttribute('d', path);
+      }
+      updateWavePath();
+      window.addEventListener('resize', updateWavePath);
     })();
   </script>
 

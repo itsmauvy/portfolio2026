@@ -2323,5 +2323,76 @@
     })();
   </script>
 
+  <!-- ── Scroll reveal motion — Awwwards minimal-editorial signature (additive · non-destructive) ── -->
+  <script>
+    (function () {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      // 일관된 시그니처: 느린 expo easing + 절제된 상승 + 이미지 스케일 인 + 스태거.
+      // 텍스트는 히어로와 같은 톤(상승 + 블러 클리어)으로 통일 → 사이트 일관성.
+      var P = {
+        label: { opacity: 0, y: 20, duration: 0.9, ease: 'power3.out' },
+        title: { opacity: 0, y: 44, filter: 'blur(6px)', duration: 1.3, ease: 'expo.out' },
+        body:  { opacity: 0, y: 28, duration: 1.1, ease: 'power3.out' },
+        card:  { opacity: 0, y: 40, duration: 1.0, ease: 'power3.out' },
+        img:   { opacity: 0, scale: 1.08, duration: 1.5, ease: 'power2.out' },
+        fade:  { opacity: 0, duration: 1.1, ease: 'power1.out' }
+      };
+      var TKEYS = ['x', 'y', 'scale', 'rotation'];
+
+      var RULES = {
+        '.po': [['.po__label','label'],['.po__title','title'],['.po__lead','body'],['.po__values-label','label'],['.po__rule','fade'],['.po__card','card',1]],
+        '.pd': [['.pd__label','label'],['.pd__title','title'],['.pd__quote','body'],['.pd__dots','fade'],['.pd__card','card',1],['.pd__insight','body']],
+        '.mr': [['.mr__label','label'],['.mr__title','title'],['.mr__brand','card',1],['.mr__opp-label','label'],['.mr__opp-title','title'],['.mr__opp-arrow','fade'],['.mr__opp-desc','body'],['.mr__opp-closing','body']],
+        '.bn': [['.bn__label','label'],['.bn__name','title'],['.bn__circle','fade',1],['.bn__plus','fade'],['.bn__tagline-en','body'],['.bn__tagline-ko','body']],
+        '.ds': [['.ds__top-label','label'],['.ds__font-item','card',1],['.ds__color-row','card',1]],
+        '.rd': [['.rd__label','label'],['.rd__title','title'],['.rd__desc','body'],['.rd__rule','fade'],['.rd__tag','card',1],['.rd__mockup-pc','img'],['.rd__mockup-laptop','img'],['.rd__mockup-mobile','img']],
+        '.mp': [['.mp__title','title'],['.mp__desc','body'],['.mp__screen','img'],['.mp__annotation','fade',1]],
+        '.ab': [['.ab__title','title'],['.ab__desc','body'],['.ab__screen','img'],['.ab__collection-note, .ab__parallax-note, .ab__slogan-note, .ab__pv','fade',1]],
+        '.sh': [['.sh__title','title'],['.sh__desc','body'],['.sh__hero','img'],['.sh__cart-shot','img'],['.sh__card','card',1],['.sh__annotation','fade',1]],
+        '.st': [['.st__title','title'],['.st__desc','body'],['.st__phone','img'],['.st__shot','img'],['.st__annotation','fade',1]],
+        '.cl': [['.cl__en','title'],['.cl__ko','body'],['.cl__mark','fade']],
+        '.rf': [['.rf__label','label'],['.rf__title','title'],['.rf__card','card',1],['.rf__cta','body']]
+      };
+
+      // transform으로 위치 잡힌 요소 보호 → transform 계열 제거(opacity만)
+      function safe(el, preset) {
+        var c = {}, t = getComputedStyle(el).transform !== 'none';
+        for (var k in preset) { if (t && TKEYS.indexOf(k) >= 0) continue; c[k] = preset[k]; }
+        return c;
+      }
+
+      function build() {
+        Object.keys(RULES).forEach(function (secSel) {
+          var sec = document.querySelector(secSel);
+          if (!sec) return;
+          RULES[secSel].forEach(function (rule) {
+            var els = sec.querySelectorAll(rule[0]);
+            if (!els.length) return;
+            if (rule[2]) {
+              var arr = Array.prototype.slice.call(els);
+              var v = safe(arr[0], P[rule[1]]);
+              v.stagger = 0.13;
+              v.scrollTrigger = { trigger: arr[0], start: 'top 88%', once: true };
+              gsap.from(arr, v);
+            } else {
+              els.forEach(function (el) {
+                var v = safe(el, P[rule[1]]);
+                v.scrollTrigger = { trigger: el, start: 'top 86%', once: true };
+                gsap.from(el, v);
+              });
+            }
+          });
+        });
+        ScrollTrigger.refresh();
+      }
+
+      requestAnimationFrame(function () { requestAnimationFrame(build); });
+      window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+    })();
+  </script>
+
 </body>
 </html>

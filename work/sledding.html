@@ -658,7 +658,7 @@
     .cs__bottom { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 56px; align-items: start; }
     .cs__v-divider { width: 1px; background: #d8e8f2; align-self: stretch; }
     .cs__col .cs__sub-label { display: block; margin-bottom: 44px; }
-    .cs__typo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; text-align: center; }
+    .cs__typo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; text-align: left; }
     .cs__typo-role { font-family: 'Pretendard', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.1em; color: #1a6da8; margin-bottom: 18px; }
     .cs__typo-font { font-family: 'Pretendard', sans-serif; font-size: clamp(18px, 1.6vw, 22px); font-weight: 700; color: #0d2d4a; }
     .cs__typo-note { font-family: 'Pretendard', sans-serif; font-size: 14px; color: rgba(13,45,74,0.45); margin-top: 10px; line-height: 1.5; }
@@ -759,160 +759,281 @@
   <!-- KEY INTERACTIONS -->
   <style>
     .ki {
-      background: linear-gradient(160deg, #dff1fb 0%, #c2e5f7 40%, #a8d8f0 100%);
-      padding: 100px max(80px, (100% - 1440px) / 2);
+      background: #ffffff;
+      padding: 110px max(80px, (100% - 1440px) / 2) 130px;
       position: relative;
       overflow: hidden;
     }
-    .ki__header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 60px;
-    }
+    .ki__header { text-align: center; margin-bottom: 96px; }
     .ki__label {
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      color: #1a6da8;
-      margin-bottom: 14px;
+      display: block;
+      font-family: 'Pretendard', sans-serif;
+      font-size: 16px; font-weight: 700; letter-spacing: 0.24em;
+      color: #1a6da8; margin-bottom: 14px;
     }
     .ki__title {
       font-family: 'Pretendard', sans-serif;
-      font-size: clamp(28px, 2.5vw, 40px);
-      font-weight: 800;
-      color: #0d2d4a;
-      text-align: center;
-      letter-spacing: -0.02em;
+      font-size: clamp(28px, 2.5vw, 40px); font-weight: 800;
+      color: #0d2d4a; letter-spacing: -0.02em;
     }
-    .ki__grid {
+
+    .ki__points { position: relative; max-width: 1240px; margin: 0 auto; }
+
+    .ki__point {
+      position: relative;
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-    }
-    .ki__card {
-      border-radius: 20px;
-      background: rgba(255,255,255,0.3);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1.5px solid rgba(255,255,255,0.7);
-      box-shadow: 0 4px 24px rgba(13,45,74,0.06), inset 0 1px 0 rgba(255,255,255,0.8);
-      padding: 36px 36px 40px;
-      display: grid;
-      grid-template-columns: 56px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-    .ki__icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.6);
-      border: 1.5px solid rgba(255,255,255,0.9);
-      display: flex;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
       align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      flex-shrink: 0;
+      margin-bottom: 150px;
     }
-    .ki__card-type {
+    .ki__point:last-child { margin-bottom: 0; }
+    .ki__media { order: 1; position: relative; isolation: isolate; }
+    .ki__media::before {
+      content: "";
+      position: absolute;
+      top: -22px; left: 0;
+      transform: translate(-50%, -50%);
+      width: 92px; height: 92px; border-radius: 50%;
+      background: linear-gradient(135deg, rgba(186,219,248,1) 0%, rgba(186,219,248,0) 100%);
+      z-index: -1; pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1);
+    }
+    .ki__point--reverse .ki__media::before {
+      left: auto; right: 0;
+      transform: translate(50%, -50%);
+      background: linear-gradient(225deg, rgba(186,219,248,1) 0%, rgba(186,219,248,0) 100%);
+    }
+    .ki__point.is-in .ki__media::before { opacity: 1; }
+    .ki__content { order: 2; }
+    .ki__point--reverse .ki__media { order: 2; }
+    .ki__point--reverse .ki__content { order: 1; }
+
+    /* floating point badge */
+    .ki__badge {
+      position: absolute;
+      top: -54px; left: 0;
+      display: inline-flex; align-items: center;
+      z-index: 4; pointer-events: none;
+    }
+    .ki__point--reverse .ki__badge { left: auto; right: 0; }
+    .ki__point--reverse .ki__badge-text { text-align: right; }
+    .ki__badge-text {
       font-family: 'Pretendard', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      color: #3a78b4;
-      margin-bottom: 6px;
-      text-transform: uppercase;
+      font-size: 16px; font-weight: 600; letter-spacing: 0.05em;
+      line-height: 1.4; color: #1d3a4f;
     }
-    .ki__card-name {
+
+    /* media / GIF placeholder */
+    .ki__media-box {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #eef9ff 0%, #e2f3fe 100%);
+      border: 1px solid rgba(255,255,255,0.85);
+      box-shadow: 0 10px 30px rgba(55,127,165,0.10);
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ki__media-label {
+      position: relative; z-index: 1;
       font-family: 'Pretendard', sans-serif;
-      font-size: 20px;
-      font-weight: 800;
-      color: #0d2d4a;
-      margin-bottom: 12px;
-      letter-spacing: -0.01em;
+      font-size: 16px; font-weight: 500; color: rgba(13,45,74,0.4);
     }
-    .ki__card-desc {
+    .ki__media-box::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,0.5) 50%, transparent 62%);
+      transform: translateX(-100%);
+      animation: ki-shimmer 2.6s ease-in-out infinite;
+    }
+    @keyframes ki-shimmer {
+      0% { transform: translateX(-100%); }
+      55%, 100% { transform: translateX(100%); }
+    }
+
+    /* content */
+    .ki__content { max-width: 480px; }
+    .ki__point--reverse .ki__content { margin-left: auto; }
+    .ki__type {
       font-family: 'Pretendard', sans-serif;
-      font-size: 16px;
-      line-height: 1.85;
-      color: rgba(13,45,74,0.55);
+      font-size: 16px; font-weight: 700; letter-spacing: 0.18em;
+      color: #3a78b4; text-transform: uppercase; margin-bottom: 16px;
     }
-    .ki__tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 16px;
-    }
-    .ki__tech-tag {
+    .ki__name {
       font-family: 'Pretendard', sans-serif;
-      font-size: 16px;
-      font-weight: 600;
-      color: #1a6da8;
-      background: rgba(255,255,255,0.6);
-      border: 1px solid rgba(26,109,168,0.2);
-      border-radius: 100px;
-      padding: 4px 12px;
+      font-size: 18px; font-weight: 600; color: rgba(13,45,74,0.62);
+      margin-bottom: 10px;
+    }
+    .ki__headline {
+      font-family: 'Pretendard', sans-serif;
+      font-size: clamp(22px, 1.9vw, 28px); font-weight: 800;
+      color: #0d2d4a; letter-spacing: -0.01em; line-height: 1.4;
+      margin-bottom: 20px;
+    }
+    .ki__desc {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 16px; line-height: 1.85; color: rgba(13,45,74,0.55);
+      margin-bottom: 24px;
+    }
+    .ki__tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .ki__tag {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 16px; font-weight: 600; color: #1a6da8;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(26,109,168,0.25);
+      border-radius: 100px; padding: 5px 16px;
+    }
+
+    /* scroll reveal */
+    .ki__badge, .ki__media-box, .ki__content {
+      opacity: 0; transform: translateY(36px);
+      transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
+    }
+    .ki__point.is-in .ki__badge,
+    .ki__point.is-in .ki__media-box,
+    .ki__point.is-in .ki__content { opacity: 1; transform: none; }
+    .ki__point.is-in .ki__media-box { opacity: 0.2; transition-delay: 0.05s; }
+    .ki__point.is-in .ki__content { transition-delay: 0.12s; }
+
+    @media (max-width: 1024px) {
+      .ki { padding: 80px max(28px, (100% - 1440px) / 2) 90px; }
+      .ki__header { margin-bottom: 64px; }
+      .ki__point {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        margin-bottom: 96px;
+        padding-top: 44px;
+      }
+      .ki__point .ki__badge {
+        position: static; order: 0;
+        margin: 0 0 18px 34px;
+      }
+      .ki__point .ki__media { order: 1; }
+      .ki__point .ki__content { order: 2; max-width: none; margin-left: 0; }
     }
   </style>
 
   <section class="ki">
     <div class="ki__header">
-      <span class="ki__label">KEY INTERACTIONS</span>
+      <span class="ki__label">KEY INTERACTION</span>
       <h2 class="ki__title">웹에서 게임을 경험하다</h2>
     </div>
-    <div class="ki__grid">
-      <div class="ki__card">
-        <div class="ki__icon">🛷</div>
-        <div>
-          <span class="ki__card-type">Hero Section</span>
-          <h3 class="ki__card-name">히어로 패럴랙스</h3>
-          <p class="ki__card-desc">"같이 굴러야 더 재밌다" 메인 카피와 함께<br>스크롤에 반응해 배경·캐릭터·텍스트가<br>각각 다른 속도로 움직이며 겨울 세계로<br>자연스럽게 빠져드는 진입 경험을 설계했습니다.</p>
-          <div class="ki__tech">
-            <span class="ki__tech-tag">GSAP ScrollTrigger</span>
-            <span class="ki__tech-tag">Parallax</span>
-          </div>
+
+    <div class="ki__points">
+      <!-- POINT 01 -->
+      <div class="ki__point">
+        <div class="ki__badge"><span class="ki__badge-text">INTERACTION<br>POINT 01</span></div>
+        <div class="ki__media"><div class="ki__media-box"><span class="ki__media-label">GIF 삽입 예정</span></div></div>
+        <div class="ki__content">
+          <p class="ki__type">Loading Page</p>
+          <p class="ki__name">로딩 화면</p>
+          <h3 class="ki__headline">게임이 시작되기 전, 기대감을 높이는 첫 경험</h3>
+          <p class="ki__desc">캐릭터 애니메이션을 활용해 대기 시간을 자연스럽게 연결하고,<br>게임의 분위기를 첫 화면부터 전달했습니다.</p>
+          <div class="ki__tags"><span class="ki__tag">CSS</span><span class="ki__tag">GSAP</span></div>
         </div>
       </div>
-      <div class="ki__card">
-        <div class="ki__icon">🐸</div>
-        <div>
-          <span class="ki__card-type">Character Section</span>
-          <h3 class="ki__card-name">캐릭터 드래그 인터랙션</h3>
-          <p class="ki__card-desc">개굴이를 클릭하고 드래그할 수 있는<br>"클릭하고 끌어보세요" UI로<br>게임의 조작감을 웹에서 직접 체험하도록<br>설계한 핵심 인터랙션입니다.</p>
-          <div class="ki__tech">
-            <span class="ki__tech-tag">Drag API</span>
-            <span class="ki__tech-tag">GSAP</span>
-          </div>
+
+      <!-- POINT 02 -->
+      <div class="ki__point ki__point--reverse">
+        <div class="ki__badge"><span class="ki__badge-text">INTERACTION<br>POINT 02</span></div>
+        <div class="ki__media"><div class="ki__media-box"><span class="ki__media-label">GIF 삽입 예정</span></div></div>
+        <div class="ki__content">
+          <p class="ki__type">Video Section</p>
+          <p class="ki__name">스크롤 프로그</p>
+          <h3 class="ki__headline">스크롤에 맞춰 비탈을 내려오는 개구리</h3>
+          <p class="ki__desc">스크롤 진행도에 1:1로 연동해 개구리가 비탈을 따라 미끄러지며,<br>게임의 썰매 활강 감각을 웹으로 옮겼습니다.</p>
+          <div class="ki__tags"><span class="ki__tag">GSAP ScrollTrigger</span><span class="ki__tag">Scrub</span></div>
         </div>
       </div>
-      <div class="ki__card">
-        <div class="ki__icon">🖼️</div>
-        <div>
-          <span class="ki__card-type">Media Gallery</span>
-          <h3 class="ki__card-name">미디어 갤러리 슬라이더</h3>
-          <p class="ki__card-desc">Squad Goals, Party Time, Fishing Gang 등<br>게임 내 명장면을 테마별로 큐레이션한<br>갤러리 섹션. Swiper로 부드럽게<br>탐색할 수 있도록 구성했습니다.</p>
-          <div class="ki__tech">
-            <span class="ki__tech-tag">Swiper.js</span>
-            <span class="ki__tech-tag">CSS Transition</span>
-          </div>
+
+      <!-- POINT 03 -->
+      <div class="ki__point">
+        <div class="ki__badge"><span class="ki__badge-text">INTERACTION<br>POINT 03</span></div>
+        <div class="ki__media"><div class="ki__media-box"><span class="ki__media-label">GIF 삽입 예정</span></div></div>
+        <div class="ki__content">
+          <p class="ki__type">Intro Section</p>
+          <p class="ki__name">게임 소개 카드</p>
+          <h3 class="ki__headline">마우스를 따라 튀어나오고 떨어지는 개구리</h3>
+          <p class="ki__desc">마우스가 닿는 모서리에서 개구리가 톡 튀어나오고,<br>빠져나가는 방향으로 쏙 떨어지듯 사라지는 두더지식 위트를 더했습니다.</p>
+          <div class="ki__tags"><span class="ki__tag">GSAP</span><span class="ki__tag">Hover</span><span class="ki__tag">back.out</span></div>
         </div>
       </div>
-      <div class="ki__card">
-        <div class="ki__icon">❄️</div>
-        <div>
-          <span class="ki__card-type">Atmosphere</span>
-          <h3 class="ki__card-name">눈송이 파티클 + 스크롤 등장</h3>
-          <p class="ki__card-desc">전체 화면에 내리는 눈 파티클로<br>겨울 몰입감을 극대화하고,<br>각 섹션 진입 시 콘텐츠가 자연스럽게<br>페이드인·슬라이드업되어 전개됩니다.</p>
-          <div class="ki__tech">
-            <span class="ki__tech-tag">Canvas API</span>
-            <span class="ki__tech-tag">GSAP</span>
-            <span class="ki__tech-tag">ScrollTrigger</span>
-          </div>
+
+      <!-- POINT 04 -->
+      <div class="ki__point ki__point--reverse">
+        <div class="ki__badge"><span class="ki__badge-text">INTERACTION<br>POINT 04</span></div>
+        <div class="ki__media"><div class="ki__media-box"><span class="ki__media-label">GIF 삽입 예정</span></div></div>
+        <div class="ki__content">
+          <p class="ki__type">Character Section</p>
+          <p class="ki__name">눈덩이 맞기</p>
+          <h3 class="ki__headline">클릭하면 팡 터지는 눈덩이</h3>
+          <p class="ki__desc">캐릭터 영역을 클릭하면 그 자리에 눈덩이가 팡 터지며,<br>게임 속 눈싸움의 재미를 인터랙션으로 옮겼습니다.</p>
+          <div class="ki__tags"><span class="ki__tag">GSAP</span><span class="ki__tag">Click</span><span class="ki__tag">back.out</span></div>
+        </div>
+      </div>
+
+      <!-- POINT 05 -->
+      <div class="ki__point">
+        <div class="ki__badge"><span class="ki__badge-text">INTERACTION<br>POINT 05</span></div>
+        <div class="ki__media"><div class="ki__media-box"><span class="ki__media-label">GIF 삽입 예정</span></div></div>
+        <div class="ki__content">
+          <p class="ki__type">Media Gallery</p>
+          <p class="ki__name">frogback 스크롤바</p>
+          <h3 class="ki__headline">개구리 썰매로 보는 갤러리 진행도</h3>
+          <p class="ki__desc">갤러리를 넘길 때마다 개구리 썰매가 눈길 트랙을 따라 이동하며 진행도를 보여주고,<br>트랙을 직접 끌어 원하는 장면으로 미끄러질 수 있습니다.</p>
+          <div class="ki__tags"><span class="ki__tag">GSAP</span><span class="ki__tag">Custom Scrollbar</span><span class="ki__tag">power3.out</span></div>
+        </div>
+      </div>
+
+      <!-- POINT 06 -->
+      <div class="ki__point ki__point--reverse">
+        <div class="ki__badge"><span class="ki__badge-text">INTERACTION<br>POINT 06</span></div>
+        <div class="ki__media"><div class="ki__media-box"><span class="ki__media-label">GIF 삽입 예정</span></div></div>
+        <div class="ki__content">
+          <p class="ki__type">News Section</p>
+          <p class="ki__name">방향키 내비게이션</p>
+          <h3 class="ki__headline">방향키로 카드 사이를 뛰어다니는 개구리</h3>
+          <p class="ki__desc">뉴스 섹션이 화면에 들어오면 ←→ 방향키로 개구리가 카드 사이를 폴짝 건너뛰고,<br>↑↓ 키로 점프·착지하는 작은 게임성을 더했습니다.</p>
+          <div class="ki__tags"><span class="ki__tag">GSAP</span><span class="ki__tag">Keyboard</span><span class="ki__tag">Game-like</span></div>
+        </div>
+      </div>
+
+      <!-- POINT 07 -->
+      <div class="ki__point">
+        <div class="ki__badge"><span class="ki__badge-text">INTERACTION<br>POINT 07</span></div>
+        <div class="ki__media"><div class="ki__media-box"><span class="ki__media-label">GIF 삽입 예정</span></div></div>
+        <div class="ki__content">
+          <p class="ki__type">Global Cursor</p>
+          <p class="ki__name">개구리 커서 &amp; 눈가루</p>
+          <h3 class="ki__headline">커서를 따라 흩날리고, 클릭하면 퍼지는 눈</h3>
+          <p class="ki__desc">마우스가 움직이면 이동 경로를 따라 눈가루가 흩날리고, 빈 곳을 클릭하면<br>눈이 팡 퍼지는 splash 효과로 전역에 게임 무드를 더했습니다.</p>
+          <div class="ki__tags"><span class="ki__tag">Canvas</span><span class="ki__tag">GSAP</span><span class="ki__tag">Custom Cursor</span></div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- KI SCROLL REVEAL -->
+  <script>
+    (function() {
+      const points = document.querySelectorAll('.ki__point');
+      if (!points.length) return;
+      if (!('IntersectionObserver' in window)) {
+        points.forEach(function(p){ p.classList.add('is-in'); });
+        return;
+      }
+      const io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-in');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.25 });
+      points.forEach(function(p){ io.observe(p); });
+    })();
+  </script>
 
   <!-- WAVE: video → reflection -->
   <div class="wave" style="background:#bde0f5">
